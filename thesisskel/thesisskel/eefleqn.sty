@@ -1,0 +1,54 @@
+\def\[{\relax\ifmmode\@badmath\else\begingroup\trivlist \item[]\leavevmode
+\hbox to\linewidth\bgroup$ \displaystyle
+\hskip\mathindent\bgroup\fi}
+\def\]{\relax\ifmmode \egroup $\hfil \egroup \endtrivlist \endgroup\else
+\@badmath \fi}
+\def\normequation{\refstepcounter{equation}\trivlist \item[]\leavevmode
+\hbox to\linewidth\bgroup $ \displaystyle
+\hskip\mathindent}
+\def\endnormequation{$\hfil \displaywidth\linewidth\@eqnnum\egroup \endtrivlist}
+\def\normeqnarray{\stepcounter{equation}\let\@currentlabel=\theequation
+\global\@eqnswtrue
+\global\@eqcnt\z@\tabskip\mathindent\let\\=\@eqncr
+\abovedisplayskip\topsep\ifvmode\advance\abovedisplayskip\partopsep\fi
+\belowdisplayskip\abovedisplayskip
+\belowdisplayshortskip\abovedisplayskip
+\abovedisplayshortskip\abovedisplayskip
+$$\halign to
+\linewidth\bgroup\@eqnsel\hskip\@centering$\displaystyle\tabskip\z@
+{##}$&\global\@eqcnt\@ne \hskip 2\arraycolsep \hfil${##}$\hfil
+&\global\@eqcnt\tw@ \hskip 2\arraycolsep $\displaystyle{##}$\hfil 
+\tabskip\@centering&\llap{##}\tabskip\z@\cr}
+\def\endnormeqnarray{\@@eqncr\egroup
+\global\advance\c@equation\m@ne$$\global\@ignoretrue }
+\newdimen\mathindent 
+\mathindent = \leftmargini
+%
+\def\abcequation{\stepcounter{subequation}\let\@currentlabel=\theequation
+\trivlist \item[]\leavevmode
+\hbox to\linewidth\bgroup $ \displaystyle
+\hskip\mathindent}
+\def\abceqnarray{\stepcounter{subequation}\let\@currentlabel=\theequation
+\global\@eqnswtrue
+\global\@eqcnt\z@\tabskip\mathindent\let\\=\@eqncr
+\abovedisplayskip\topsep\ifvmode\advance\abovedisplayskip\partopsep\fi
+\belowdisplayskip\abovedisplayskip
+\belowdisplayshortskip\abovedisplayskip
+\abovedisplayshortskip\abovedisplayskip
+$$\halign to
+\linewidth\bgroup\@eqnsel\hskip\@centering$\displaystyle\tabskip\z@
+{##}$&\global\@eqcnt\@ne \hskip 2\arraycolsep \hfil${##}$\hfil
+&\global\@eqcnt\tw@ \hskip 2\arraycolsep $\displaystyle{##}$\hfil 
+\tabskip\@centering&\llap{##}\tabskip\z@\cr}  
+\def\@@abceqncr{\let\@tempa\relax 
+    \ifcase\@eqcnt \def\@tempa{& & &}\or \def\@tempa{& &} 
+      \else \def\@tempa{&}\fi 
+     \@tempa \if@eqnsw\@eqnnum\stepcounter{subequation}\fi
+     \global\@eqnswtrue\global\@eqcnt\z@\cr}  
+\def\endabceqnarray{\@@eqncr\egroup
+\global\advance\c@subequation\m@ne$$\global\@ignoretrue }  
+\renewenvironment{abc}{\stepcounter{equation}\let\equation\abcequation%
+	\let\eqnarray\abceqnarray\let\endeqnarray\endabceqnarray
+	\let\@@eqncr\@@abceqncr}{}
+\let\equation\normequation\let\endequation\endnormequation
+\let\eqnarray\normeqnarray\let\endeqnarray\endnormeqnarray

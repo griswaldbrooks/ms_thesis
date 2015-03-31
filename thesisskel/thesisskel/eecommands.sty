@@ -1,0 +1,196 @@
+%
+% This is a set of commands for the eereport and eearticle styles.
+% Written by Randy Moses, last revision:  24 Feb 1986
+% BoxChart and PrintChart macros added by fdg for Scott Sands: 12 June 1987
+%
+% 1.  The abc environment -- lets you number equations with a, b, c, etc.
+%
+\def\abcequation{$$\stepcounter{subequation}\let\@currentlabel=\theequation}
+\def\abceqnarray{\stepcounter{subequation}\let\@currentlabel=\theequation
+  \global\@eqnswtrue
+  \global\@eqcnt\z@\tabskip\@centering\let\\=\@eqncr
+  $$\halign to \displaywidth\bgroup\@eqnsel\hskip\@centering
+  $\displaystyle\tabskip\z@{##}$&\global\@eqcnt\@ne 
+  \hskip 2\arraycolsep \hfil${##}$\hfil
+  &\global\@eqcnt\tw@ \hskip 2\arraycolsep $\displaystyle\tabskip\z@{##}$\hfil 
+  \tabskip\@centering&\llap{##}\tabskip\z@\cr}
+\def\endabceqnarray{\@@eqncr\egroup
+  \global\advance\c@subequation\m@ne$$\global\@ignoretrue}
+\def\@@abceqncr{\let\@tempa\relax 
+    \ifcase\@eqcnt \def\@tempa{& & &}\or \def\@tempa{& &} 
+      \else \def\@tempa{&}\fi 
+     \@tempa \if@eqnsw\@eqnnum\stepcounter{subequation}\fi
+     \global\@eqnswtrue\global\@eqcnt\z@\cr}  
+\newenvironment{abc}{\stepcounter{equation}\let\equation\abcequation%
+	\let\eqnarray\abceqnarray\let\endeqnarray\endabceqnarray
+	\let\@@eqncr\@@abceqncr}{\relax}
+%
+% 2. The hangitem environment -- like description, but text lines up with 
+%    the item descriptor.  You give an additional argument containing text
+%    of the width that you want indentations.
+%
+\def\hangitem#1{\list{}{\settowidth\labelwidth{#1}
+	\leftmargin\labelwidth\advance\leftmargin\labelsep }}
+\let\endhangitem\endlist
+%
+% 3. The spacingset command -- changes spacing.
+%
+\def\spacingset#1{\def\baselinestretch{#1}\small\normalsize}
+%
+% 4. The BoxChart, PrintChart macros -- allows the inclusion of  *.ps files
+%    directly into LaTeX documents
+%
+\def\PrintChart#1#2#3#4#5#6{
+\nobreak
+ \hbox to \hsize{%
+  \hss
+  \dimen0=#3in%
+  \hbox to #6\dimen0{%
+   \dimen0=#2in%
+   \vbox to #6\dimen0{
+     \vss
+     \special{ps::[asis, begin]
+        0 SPB
+        /ChartCheckPoint save def
+          /showpage {} def
+          /initgraphics {} def
+          Xpos Ypos translate
+          #6 dup scale
+          #4 72 mul neg #5 72 mul neg translate
+          newpath
+          #4 72 mul #5 72 mul moveto
+          #3 72 mul 0 rlineto
+          0 #2 72 mul rlineto
+          #3 72 mul neg 0 rlineto
+	  closepath
+          clip
+      }
+      \special{ps: plotfile #1 asis}
+      \special{ps::[asis,end]
+         ChartCheckPoint restore
+         0 SPE
+      }
+     }%
+     \hss
+    }
+    \hss
+    }
+  }
+\def\BoxChart#1#2#3#4#5#6{
+\nobreak
+ \hbox to \hsize{%
+  \hss
+  \dimen0=#3in%
+  \hbox to #6\dimen0{%
+   \dimen0=#2in%
+   \vbox to #6\dimen0{
+     \vss
+     \special{ps::[asis, begin]
+        0 SPB
+        /ChartCheckPoint save def
+          /showpage {} def
+          /initgraphics {} def
+          Xpos Ypos translate
+          #6 dup scale
+          #4 72 mul neg #5 72 mul neg translate
+          newpath
+          #4 72 mul #5 72 mul moveto
+          #3 72 mul 0 rlineto
+          0 #2 72 mul rlineto
+          #3 72 mul neg 0 rlineto
+	  closepath
+          clip
+          newpath
+          #4 72 mul .5 add #5 72 mul .5 add  moveto
+          #3 72 mul 1 sub 0 rlineto
+          0 #2 72 mul 1 sub rlineto
+          #3 72 mul 1 sub neg 0 rlineto
+	  closepath
+          stroke
+      }
+      \special{ps: plotfile #1 asis}
+      \special{ps::[asis,end]
+         ChartCheckPoint restore
+         0 SPE
+      }
+     }%
+     \hss
+    }
+    \hss
+    }
+  }
+\def\FloatPrintChart#1#2#3#4#5#6{
+\begin{tabular}{c}
+\nobreak
+  \dimen0=#3in%
+  \hbox to #6\dimen0{%
+   \dimen0=#2in
+   \vbox to #6\dimen0{
+     \vss
+     \special{ps::[asis, begin]
+        0 SPB
+        /ChartCheckPoint save def
+          /showpage {} def
+          /initgraphics {} def
+          Xpos Ypos translate
+          #6 dup scale
+          #4 72 mul neg #5 72 mul neg translate
+          newpath
+          #4 72 mul #5 72 mul moveto
+          #3 72 mul 0 rlineto
+          0 #2 72 mul rlineto
+          #3 72 mul neg 0 rlineto
+	  closepath
+          clip
+      }
+      \special{ps: plotfile #1 asis}
+      \special{ps::[asis,end]
+         ChartCheckPoint restore
+         0 SPE
+      }
+     }
+     \hss
+    }
+\end{tabular}
+  }
+\def\FloatBoxChart#1#2#3#4#5#6{
+\begin{tabular}{c}
+\nobreak
+  \dimen0=#3in%
+  \hbox to #6\dimen0{%
+   \dimen0=#2in
+   \vbox to #6\dimen0{
+     \vss
+     \special{ps::[asis, begin]
+        0 SPB
+        /ChartCheckPoint save def
+          /showpage {} def
+          /initgraphics {} def
+          Xpos Ypos translate
+          #6 dup scale
+          #4 72 mul neg #5 72 mul neg translate
+          newpath
+          #4 72 mul #5 72 mul moveto
+          #3 72 mul 0 rlineto
+          0 #2 72 mul rlineto
+          #3 72 mul neg 0 rlineto
+	  closepath
+          clip
+          newpath
+          #4 72 mul .5 add #5 72 mul .5 add  moveto
+          #3 72 mul 1 sub 0 rlineto
+          0 #2 72 mul 1 sub rlineto
+          #3 72 mul 1 sub neg 0 rlineto
+	  closepath
+          stroke
+      }
+      \special{ps: plotfile #1 asis}
+      \special{ps::[asis,end]
+         ChartCheckPoint restore
+         0 SPE
+      }
+     }
+     \hss
+    }
+\end{tabular}
+  }

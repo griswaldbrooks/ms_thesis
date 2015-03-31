@@ -1,0 +1,69 @@
+\chapter{GODZILA Path Planning Algorithm}
+
+GODZILA \cite{KK05b_jirs} is a general computationally lightweight path planning and obstacle avoidance algorithm that does not require any a priori knowledge of environment and does not rely on building of an obstacle map.
+
+GODZILA is based on three components:		
+
+\begin{itemize}
+\item
+Optimization based on a cost that penalizes motion in directions other than the direction to the target, motion towards obstacles, and back-tracking.
+\item
+A local straight-line planner utilized if the target is visible.
+\item
+Navigation towards a random target when a local ``trap'' is detected.
+\end{itemize}
+
+The desired motion direction is generated through online minimization of an optimization cost at each sampling instant.  It can be shown that the optimization cost can be chosen so that the minimizer can be obtained in closed form.  The optimization cost has three terms which penalize, respectively, motion in directions other than the direction to the target, motion towards obstacles, and back-tracking.  In addition to the optimization algorithm, GODZILA includes two components, a local straight-line planner utilized if the target is visible and navigation towards a random target (utilized when local minima or traps are detected). 
+
+GODZILA can utilize obstacle range measurement data  measured using a variety of sensors such as ultrasonic sensors or laser range finders or obstacle ranges estimated using sensors such as camera, Radar, etc. The GODZILA algorithm is formulated in terms of a set of directions in which obstacle range measurements are measured/estimated. Denoting by $q_i$, the unit vector defining the $i^{th}$ sensor direction, the obstacle range measurements/estimates are denoted as $s_i,i=1,\ldots,n$; $s=(s_1,s_2,\ldots,s_n)$.
+$x_p$ and $x_h$ are used to denote the current position and the unit vector along the current heading, respectively, and
+$u_e$ is used to denote the obstacle set (possibly time-varying) of the environment, i.e., the set of points in the environment occupied by obstacles. The sensors in the GODZILA algorithm are defined as returning the distance from the current position to the obstacle set in the directions of the sensors. The sensor measurements can be modified to enforce a clearance zone by exaggerating the physical dimensions of the robot.  Since this exaggeration is only relevant when the obstacles are close to the robot, introducing, for instance, $s_i'=s_i-p_i e^{-a s_i}$ with $p_i,i=1,\ldots,n$, and $a$ being positive constants, we have $s_i'\approx s_i$ in the far zone and $s_i'\approx s_i-p_i$ in the near zone. This weighting induces large penalties when obstacles are near and small penalties when obstacles are distant.  
+
+The path planning objective is essentially to generate a trajectory that tracks a target trajectory $x_d (t)$ (nominally a goal location $x_d$) while avoiding the obstacle set $u_e(t)$. The GODZILA path planning and obstacle avoidance algorithm \cite{KK05b_jirs} achieves this objective using a combination of an optimization procedure, a random walk, and approach to a visible target.  At any time, the optimal heading is computed by an optimization procedure using as effective target one of the following
+
+\begin{enumerate}
+\item The actual target $x_d$
+\item A fictitious target location on an intermediate straight-line
+  trajectory to the target $x_d$
+\item A random target. 
+\end{enumerate}
+
+The optimization to find a desired motion direction is performed with respect to an objective function given by 
+$J(y)=J_1(y)+J_2(y)+J_3(y)$
+which has the following three components:
+
+\begin{enumerate}
+\item $J_1(y)$ - a component that penalizes motion in directions other than the target direction, 
+\item $J_2(y)$ - a component that penalizes motion towards obstacles, and
+\item $J_3(y)$ - a component that penalizes back-tracking.
+\end{enumerate}
+
+The first component $J_1(y)$ attempts to make the robot move in the direction of the target and is designed such that it is an increasing function in terms of 
+$\left|\left| y-\frac{(x_d-x_p)}{||x_d-x_p||}\right|\right|$ 
+and is a decreasing function in terms of 
+$||x_d-x_p||$
+and such that in the immediate vicinity of the target, $J_1(y)$ is dominant in the objective function $J(y)$.
+The second component $J_2(y)$ attempts to prevent motion in directions that would bring the robot to the proximity of obstacles. Direction-weighted terms \cite{KK05b_jirs} are usually included in $J_2(y)$ to model the property that the effect of this component is more important in directions that are either along the current heading or along the straight-line heading to the target. This component is designed to also encourage motion in directions along which obstacles are far away, especially if such a direction is along the straight-line heading to the target, and also such that in the close vicinity of obstacles, the effect $J_2(y)$ of obstacles predominates in the objective function. The third component $J_3(y)$ is designed to be an increasing function in terms of
+$||y-x_h||$, thus penalizing changes in heading and is inspired by the physical notion of inertia. $J_3(y)$ is instrumental in preventing limit-cycle oscillations (wherein, without $J_3(y)$, oscillatory motions can arise with the obstacle avoidance incentive and the target-reaching incentive alternatively becoming dominant). $J_3(y)$ essentially makes a potential limit cycle spatially larger and hence provides better chance of finding a way around a blocking obstacle. If the objective function $J(y)$ has a unique minimum over the unit ball ${\cal B}=\{y:||y||=1\}$, the output of the algorithm is the unique minimizer.  If the minimizer is not unique, the output is defined as one which gives the smallest $J_3(y)$.   
+
+It was shown in \cite{KK05b_jirs} that the minimizer (i.e., the optimal heading) of the objective function $J(y)$ can be found in closed form if quadratic forms of functions are utilized within components appearing in $J_1(y)$, $J_2(y)$, and $J_3(y)$, in which case the closed form optimal solution can also be equivalently interpreted in terms of force components towards the goal, away from obstacles, and in the current motion direction (i.e., the inertia component).
+The desired heading found from the optimization algorithm is translated into a heading rate that takes into account the kinematic capabilities of the robot. Also, the linear velocity of the robot is designed to be such that it is small in the close vicinity of obstacles and in the proximity of the target location.  
+
+As mentioned before, GODZILA also incorporates two additional components in addition to the optimization-based computation of the optimal heading, i.e., a local straight-line planner utilized if the target is visible and navigation towards a random target.
+At any time, if the target is visible, i.e., the nearest obstacle in the direction of the target is estimated to be farther than the target, then the robot can proceed in a straight-line towards the target. However, since a direct straight-line path to the target may bring the robot in close proximity with obstacles, the straight-line path to the target is instead prescribed as a desired trajectory and the navigation along this path is performed using the optimization-based approach described above. This local
+straight-line based virtual reference trajectory is of particular use when the robot needs to pass through a narrow corridor to approach the target. The random target component addresses possible limit cycle oscillations. While the introduction of the inertial term in the optimization cost has the effect of increasing the spatial extent of possible limit cycles, limit cycle oscillations can still occur if the obstacle set is spatially large since the GODZILA algorithm is based on local sensor data and no map of the environment is built. A local limit cycle or a {\em trap} can be detected using, for instance, the variance of the position variable over some number of successive sampling instants.  Alternatively, the distance to the target can be used as a metric and a trap situation can be inferred if this distance does not change significantly over some period of time. If a trap is detected at a time $t_0$, a random target location $\hat x_d$ is chosen and the navigation is performed for a time duration $T_{roam}$ using the optimization procedure described above with $x_d$ replaced by $\hat x_d$. If a trap situation is detected multiple times, then progressively longer sequences of random moves are utilized to escape the local minima.
+
+\section{Virtual Sensors} 
+In the application to the humanoid robot navigation problem using ultrasonic sensors considered here, a primary sensory challenge is, as described earlier, the wide beam angle which results in large angular uncertainty as to where the sonar returns are from
+(i.e., the $X$-$Y$ locations of the points in the environment that correspond to a single measured distance from each of the ultrasonic sensors). To address this angular uncertainty, the obstacle range measurements/estimates for the GODZILA algorithm are generated as a combination of actual and virtual sensor measurements as follows:
+
+\begin{enumerate}
+	\item
+    For each ultrasonic sensor with a beam width of $\theta_w$ (which is 60$^o$ for the ultrasonic sensors on the NAO robot), if the corresponding distance measurement at a sampling time is $d$, this distance measurement is mapped to multiple sensing directions spanning the beam width (typically, 5 directions, i.e., angular offsets of $0$, $\pm k\theta_w/2$, $k=1,2$, relative to the center of the sensor beam). The distance corresponding to the center of the sensor field of view (i.e., offset of
+    $0$ degrees) is defined to be $d$ and the distances corresponding to the other {\em virtual} sensor directions are defined to be larger, e.g., $(1+ak)d$, $k=1,2$, with $a$ being a positive constant to model the decreasing confidence that the returned distance values are due to obstacles at the edges of the beam. 
+    
+    \item The sensor measurements from a few prior sampling instants are also utilized as virtual sensor measurements for the current time instant. The robot-relative obstacle locations corresponding to the multiple virtual sensor directions as described above that are modeled for each ultrasonic sensor are utilized along with estimates of the robot pose (position and heading) at the previous time steps. These obstacle locations are mapped into the current robot-relative frame at the current time instant by utilizing estimates of relative translations and rotations over successive sampling instants. The directions corresponding to these obstacle locations are also now utilized as virtual sensor directions with the corresponding estimated ranges for the GODZILA algorithm; hence, the range measurements for use in the GODZILA algorithm is comprised of  measurements over a sliding window of time including the current and a few past sampling instants. Denoting the time horizon utilized by $n_h$ and using 5 virtual sensor directions per sonar to model the beam width as described above, the total number of virtual range sensors (taking into account both the ultrasonic sensors) utilized in the GODZILA algorithm is $2(5)n_h=10n_h$. To model the reduction in
+    confidence on the measurements from prior sampling times projected into the current robot pose, the weights for sensor directions corresponding to older time instants can be defined to be smaller in the optimization component $J_2(y)$ utilized in the GODZILA algorithm to penalize motion towards obstacles.
+\end{enumerate}
+
+More general variants of these concepts of virtual sensors are currently being addressed in ongoing work including the incorporation of additional weighting terms on virtual sensor directions that are more often perceived as having closer obstacles. While implementation of the virtual sensors as described above requires keeping a memory of a sliding window of time of sensor measurements and relative robot poses, the resulting computational requirements (both memory and processing requirements) are significantly lower than for incrementally building an environment map during robot operation.  Thus, the approach proposed here provides a computationally light-weight technique that can be easily implemented on small embedded platforms.

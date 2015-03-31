@@ -1,0 +1,9 @@
+\chapter{Conclusion}
+
+The GODZILA path planning algorithm has proven its effectiveness in allowing the Nao humanoid platform to navigate in office-like environments. While the Nao was able to sucessfully navigate, the vague and spurious nature of the distance data limited the effectiveness of the algorithm. Future work will add infrared distance sensors or some form of 3D sensor to the Nao to improve the quality and quanity of the range data for use with the algorithm. 
+Adding magnetometers to combine with the onboard gyroscopes will allow for the creation of a better yaw estimate for the Nao. With this, a basic form of localized map can be implemented and GODZILA can use the map data to generate more comprehensive force vectors.
+The posibility for improved pose estimation will also allow for pose variance computations to be improved for the implementation of the trap detector. Additionally, a provision for goal location estimation for when the goal is not in sight or when sight of the goal has been lost will be explored.
+
+Implementation of all of these features while running the software onboard the Nao will be researched in order to free the Nao from using an external computer and improve its range. Running the code onboard will also improve the speed of computation, which as the algorithms intensify, will be appreciable from running the code externally.
+
+The Nao humanoid platform is a robust, multi-featured robot, which will allow for many types of algorithms to be tested, including gaiting and vison, as well as other types of path planners.
