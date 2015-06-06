@@ -1,0 +1,11 @@
+\contentsline {chapter}{VITA}{ii}
+\contentsline {chapter}{LIST OF FIGURES}{viii}
+\contentsline {chapter}{LIST OF TABLES}{ix}
+\contentsline {chapter}{\numberline {I. }Introduction}{1}
+\contentsline {section}{\numberline {1.1}Central Pattern Generators for Gait Control}{2}
+\contentsline {section}{\numberline {1.2}Zero Moment Point Body Placement Control}{4}
+\contentsline {section}{\numberline {1.3}Trunk Stabilization}{6}
+\contentsline {section}{\numberline {1.4}Potential-Fields Navigation}{8}
+\contentsline {section}{\numberline {1.5}3D Surface Reconstruction for Rough Terrain Planning}{11}
+\contentsline {section}{\numberline {1.6}Overview of Thesis}{12}
+\contentsline {chapter}{References}{14}

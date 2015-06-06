@@ -1,0 +1,303 @@
+\begin{thebibliography}{10}
+
+\bibitem{McGhee1965}
+R.B. McGhee and A.A. Frank.
+\newblock On the stability properties of quadruped creeping gaits.
+\newblock {\em Mathematical Biosciences}, 3(0):331 -- 351, 1968.
+
+\bibitem{Hodgins1991}
+J.K. Hodgins and M.~Raibert.
+\newblock Adjusting step length for rough terrain locomotion.
+\newblock volume~7, pages 289--298, Jun 1991.
+
+\bibitem{Altendorfer2001}
+R.~Altendorfer, N.~Moore, H.~Komsuoglu, M.~Buehler, Jr. Brown, H.B.,
+  D.~McMordie, U.~Saranli, R.~Full, and D.E. Koditschek.
+\newblock R{H}ex: {A} {B}iologically {I}nspired {H}exapod {R}unner.
+\newblock volume~11, pages 207--213. Kluwer Academic Publishers, 2001.
+
+\bibitem{Kolter2008}
+J.Z. Kolter, M.P. Rodgers, and A.Y. Ng.
+\newblock A control architecture for quadruped locomotion over rough terrain.
+\newblock In {\em {IEEE} {I}nternational {C}onference on {R}obotics and
+  {A}utomation}, pages 811--818, May 2008.
+
+\bibitem{Wieber2015}
+Tedrake R. Kuindersma~S. Wieber, P.-B.
+\newblock Modeling and control of legged robots.
+\newblock In Siciliano and Khatib, editors, {\em Springer Handbook of Robotics,
+  2nd Ed}, Lecture Notes in Control and Information Sciences, chapter~48.
+  Springer Berlin Heidelberg, 2015.
+
+\bibitem{Fukuoka2003}
+Y.~Fukuoka, H.~Kimura, Y.~Hada, and K.~Takase.
+\newblock Adaptive dynamic walking of a quadruped robot '{T}ekken' on irregular
+  terrain using a neural system model.
+\newblock In {\em {IEEE} {I}nternational {C}onference on {R}obotics and
+  {A}utomation}, volume~2, pages 2037--2042 vol.2, Sept 2003.
+
+\bibitem{Estremera2006}
+Joaquin Estremera and Kenneth~J. Waldron.
+\newblock Leg {T}hrust {C}ontrol for {S}tabilization of {D}ynamic {G}aits in a
+  {Q}uadruped {R}obot.
+\newblock In Teresa Zielińska and Cezary Zieliński, editors, {\em Romansy
+  16}, volume 487 of {\em CISM Courses and Lectures}, pages 213--220. Springer
+  Vienna, 2006.
+
+\bibitem{BigDog2008}
+Marc Raibert.
+\newblock {BigDog, the Rough-Terrain Quadruped Robot}.
+\newblock In Myung~J. Chung, editor, {\em Proceedings of the 17th IFAC World
+  Congress, 2008}, volume~17.
+
+\bibitem{Semini2010_PHD}
+C.~Semini.
+\newblock {\em Hy{Q} – {D}esign and {D}evelopment of a {H}ydraulically
+  {A}ctuated {Q}uadruped {R}obot}.
+\newblock PhD thesis, Apr 2010.
+
+\bibitem{Rebula2007}
+J.R. Rebula, P.D. Neuhaus, B.V. Bonnlander, M.J. Johnson, and J.E. Pratt.
+\newblock A {C}ontroller for the {L}ittledog quadruped walking on {R}ough
+  {T}errain.
+\newblock In {\em {IEEE} {I}nternational {C}onference on {R}obotics and
+  {A}utomation}, pages 1467--1473, April 2007.
+
+\bibitem{Ajallooeian2013}
+M.~Ajallooeian, S.~Pouya, A~Sproewitz, and A.J. Ijspeert.
+\newblock Central {P}attern {G}enerators augmented with virtual model control
+  for quadruped rough terrain locomotion.
+\newblock In {\em {IEEE} {I}nternational {C}onference on {R}obotics and
+  {A}utomation}, pages 3321--3328, May 2013.
+
+\bibitem{Rutishauser2008}
+Simon Rutishauser, A~Sprowitz, L.~Righetti, and A.J. Ijspeert.
+\newblock Passive compliant quadruped robot using {C}entral {P}attern
+  {G}enerators for locomotion control.
+\newblock In {\em 2nd {IEEE} {RAS} {EMBS} {I}nternational {C}onference on
+  {B}iomedical {R}obotics and {B}iomechatronics}, pages 710--715, Oct 2008.
+
+\bibitem{Ijspeert2008}
+Auke~Jan Ijspeert.
+\newblock Central pattern generators for locomotion control in animals and
+  robots: {A} review.
+\newblock {\em Neural networks}, 21(4), 2008.
+
+\bibitem{Arena2000}
+P.~Arena.
+\newblock The central pattern generator: a paradigm for artificial locomotion.
+\newblock {\em Soft Computing}, 4(4):251--266, 2000.
+
+\bibitem{Righetti2006}
+L.~Righetti and A.J. Ijspeert.
+\newblock Programmable central pattern generators: an application to biped
+  locomotion control.
+\newblock In {\em {P}roceedings 2006 {IEEE} {I}nternational {C}onference on
+  {R}obotics and {A}utomation}, pages 1585--1590, May 2006.
+
+\bibitem{Matos2010}
+Vitor Matos and Cristina~P. Santos.
+\newblock Omnidirectional locomotion in a quadruped robot: {A} {C}{P}{G}-based
+  approach.
+\newblock In {\em {IEEE/RSJ} {I}nternational {C}onference on {I}ntelligent
+  {R}obots and {S}ystems}, pages 3392--3397, Oct 2010.
+
+\bibitem{Endo2004}
+G.~Endo, J.~Morimoto, J.~Nakanishi, and G.~Cheng.
+\newblock An empirical exploration of a neural oscillator for biped locomotion
+  control.
+\newblock In {\em Robotics and Automation, 2004. Proceedings. ICRA '04. 2004
+  IEEE Int. Conf. on}, volume~3, pages 3036--3042 Vol.3, April 2004.
+
+\bibitem{Arena2001}
+Paolo Arena.
+\newblock {A mechatronic lamprey controlled by analog circuits}.
+\newblock In {\em MED'01 9th Mediterranean Conference on Control and
+  Automation}. IEEE, June 2001.
+
+\bibitem{Klaassen2002}
+Bernhard Klaassen, Ralf Linnemann, Dirk Spenneberg, and Frank Kirchner.
+\newblock Biomimetic walking robot scorpion: Control and modeling.
+\newblock {\em Robotics and Autonomous Systems}, 41(2–3):69 -- 76, 2002.
+\newblock Ninth International Symposium on Intelligent Robotic Systems.
+
+\bibitem{Arena2004}
+P.~Arena, L.~Fortuna, M.~Frasca, and G.~Sicurella.
+\newblock An adaptive, self-organizing dynamical system for hierarchical
+  control of bio-inspired locomotion.
+\newblock {\em Systems, Man, and Cybernetics, Part B: Cybernetics, IEEE
+  Transactions on}, 34(4):1823--1837, Aug 2004.
+
+\bibitem{Inagaki2003}
+Shinkichi Inagaki, Hideo Yuasa, and Tamio Arai.
+\newblock \{CPG\} model for autonomous decentralized multi-legged robot
+  system—generation and transition of oscillation patterns and dynamics of
+  oscillators.
+\newblock {\em Robotics and Autonomous Systems}, 44(3–4):171 -- 179, 2003.
+\newblock Best papers presented at IAS-7.
+
+\bibitem{Inagaki2006}
+Shinkichi Inagaki, Hideo Yuasa, Takanori Suzuki, and Tamio Arai.
+\newblock Wave \{CPG\} model for autonomous decentralized multi-legged robot:
+  Gait generation and walking speed control.
+\newblock {\em Robotics and Autonomous Systems}, 54(2):118 -- 126, 2006.
+\newblock Intelligent Autonomous Systems 8th Conference on Intelligent
+  Autonomous Systems (IAS-8).
+
+\bibitem{Billard2000}
+A.~Billard and A.J. Ijspeert.
+\newblock Biologically inspired neural controllers for motor control in a
+  quadruped robot.
+\newblock In {\em Neural Networks, 2000. IJCNN 2000, Proceedings of the
+  IEEE-INNS-ENNS International Joint Conference on}, volume~6, pages 637--641
+  vol.6, 2000.
+
+\bibitem{Brambilla2006}
+Giorgio Brambilla, Jonas Buchli, and AukeJan Ijspeert.
+\newblock Adaptive four legged locomotion control based on nonlinear dynamical
+  systems.
+\newblock In Stefano Nolfi, Gianluca Baldassarre, Raffaele Calabretta, JohnC.T.
+  Hallam, Davide Marocco, Jean-Arcady Meyer, Orazio Miglino, and Domenico
+  Parisi, editors, {\em From Animals to Animats 9}, volume 4095 of {\em Lecture
+  Notes in Computer Science}, pages 138--149. Springer Berlin Heidelberg, 2006.
+
+\bibitem{Buchli2006}
+J.~Buchli, F.~Iida, and A.J. Ijspeert.
+\newblock Finding resonance: Adaptive frequency oscillators for dynamic legged
+  locomotion.
+\newblock In {\em Intelligent Robots and Systems, 2006 IEEE/RSJ International
+  Conference on}, pages 3903--3909, Oct 2006.
+
+\bibitem{Tsujita2001}
+K.~Tsujita, K.~Tsuchiya, and A.~Onat.
+\newblock Adaptive gait pattern control of a quadruped locomotion robot.
+\newblock In {\em Intelligent Robots and Systems, 2001. Proceedings. 2001
+  IEEE/RSJ International Conference on}, volume~4, pages 2318--2325 vol.4,
+  2001.
+
+\bibitem{Tsujita2004}
+K.~Tsujita, H.~Toui, and K.~Tsuchiya.
+\newblock Dynamic turning control of a quadruped robot using oscillator
+  network.
+\newblock In {\em Robotics and Automation, 2004. Proceedings. ICRA '04. 2004
+  IEEE International Conference on}, volume~3, pages 2613--2618 Vol.3, April
+  2004.
+
+\bibitem{Vuko1972}
+Miomir~K. Vukobratović.
+\newblock Contribution to the study of anthropomorphic systems.
+\newblock {\em Kybernetika}, 08(5):(404)--418, 1972.
+
+\bibitem{Yamaguchi1993}
+J.-I. Yamaguchi, A.~Takanishi, and I.~Kato.
+\newblock Development of a biped walking robot compensating for three-axis
+  moment by trunk motion.
+\newblock In {\em Intelligent Robots and Systems '93, IROS '93. Proceedings of
+  the 1993 IEEE/RSJ International Conference on}, volume~1, pages 561--566
+  vol.1, Jul 1993.
+
+\bibitem{Sardain2004}
+P.~Sardain and G.~Bessonnet.
+\newblock Forces acting on a biped robot. center of pressure-zero moment point.
+\newblock {\em Trans. Sys. Man Cyber. Part A}, 34(5):630--637, September 2004.
+
+\bibitem{Goswami1999}
+A.~Goswami.
+\newblock Foot rotation indicator (fri) point: a new gait planning tool to
+  evaluate postural stability of biped robots.
+\newblock In {\em Robotics and Automation, 1999. Proceedings. 1999 IEEE
+  International Conference on}, volume~1, pages 47--52 vol.1, 1999.
+
+\bibitem{Tsungnan1996}
+Tsungnan Lin, B.G. Horne, P.~Tino, and C.L. Giles.
+\newblock Learning long-term dependencies in {NARX} recurrent neural networks.
+\newblock {\em Neural Networks, IEEE Transactions on}, 7(6):1329--1338, Nov
+  1996.
+
+\bibitem{ChenBillings1990}
+Grant P.~M. Chen~S., Billings S.~A.
+\newblock Non-linear system identification using neural networks.
+\newblock In {\em Int. Journal of Control}, volume~51 of {\em Lecture Notes in
+  Control and Information Sciences}, pages 1191--1214. Taylor and Francis,
+  1990.
+
+\bibitem{Hihi1996}
+Salah~El Hihi and Yoshua Bengio.
+\newblock Hierarchical recurrent neural networks for long-term dependencies,
+  1996.
+
+\bibitem{Billings2013}
+S.~A Billings.
+\newblock {\em Nonlinear system identification : NARMAX methods in the time,
+  frequency, and spatio-temporal domains}.
+\newblock John Wiley and Sons Ltd, 2013.
+
+\bibitem{Nelles2001}
+Oliver Nelles.
+\newblock Neural networks with internal dynamics.
+\newblock In {\em Nonlinear System Identification}, pages 645--651. Springer
+  Berlin Heidelberg, 2001.
+
+\bibitem{Rumelhart1988}
+David~E. Rumelhart, Geoffrey~E. Hinton, and Ronald~J. Williams.
+\newblock Neurocomputing: Foundations of research.
+\newblock chapter Learning Representations by Back-propagating Errors, pages
+  696--699. MIT Press, Cambridge, MA, USA, 1988.
+
+\bibitem{Rumelhart1995}
+David~E. Rumelhart, Richard Durbin, Richard Golden, and Yves Chauvin.
+\newblock Backpropagation.
+\newblock chapter Backpropagation: The Basic Theory, pages 1--34. L. Erlbaum
+  Associates Inc., Hillsdale, NJ, USA, 1995.
+
+\bibitem{Rojas1996ch7}
+Ra\'{u}l Rojas.
+\newblock The backpropagation algorithm.
+\newblock In {\em Neural Networks: A Systematic Introduction}, chapter~7.
+  Springer-Verlag New York, Inc., New York, NY, USA, 1996.
+
+\bibitem{Hogan1984}
+N.~Hogan.
+\newblock Impedance control: An approach to manipulation.
+\newblock In {\em American Control Conference, 1984}, pages 304--313, June
+  1984.
+
+\bibitem{Koren1991}
+Y.~Koren and J.~Borenstein.
+\newblock Potential field methods and their inherent limitations for mobile
+  robot navigation.
+\newblock In {\em Robotics and Automation, 1991. Proceedings., 1991 IEEE
+  International Conference on}, pages 1398--1404 vol.2, Apr 1991.
+
+\bibitem{ArambulaCosio2004}
+F.~Arambula Cosío and M.A.~Padilla Castañeda.
+\newblock Autonomous robot navigation using adaptive potential fields.
+\newblock {\em Mathematical and Computer Modelling}, 40(9–10):1141 -- 1156,
+  2004.
+
+\bibitem{Krishnamurthy2007}
+P.~Krishnamurthy and F.~Khorrami.
+\newblock Godzila: A low-resource algorithm for path planning in unknown
+  environments.
+\newblock {\em Journal of Intelligent and Robotic Systems}, 48(3):357--373,
+  2007.
+
+\bibitem{Rusu2009}
+Radu~Bogdan Rusu.
+\newblock {\em Semantic 3D Object Maps for Everyday Manipulation in Human
+  Living Environments}.
+\newblock PhD thesis, Computer Science department, Technische Universitaet
+  Muenchen, Germany, October 2009.
+
+\bibitem{openpcl_library}
+Radu~Bogdan Rusu and Steve Cousins.
+\newblock {3D is here: Point Cloud Library (PCL)}.
+\newblock In {\em {IEEE International Conference on Robotics and Automation
+  (ICRA)}}, Shanghai, China, May 9-13 2011.
+
+\bibitem{Pearson1901}
+K.~Pearson.
+\newblock {On lines and planes of closest fit to systems of points in space}.
+\newblock {\em Philosophical Magazine}, 2(6):559--572, 1901.
+
+\end{thebibliography}

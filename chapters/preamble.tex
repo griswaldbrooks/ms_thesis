@@ -1,0 +1,133 @@
+%\documentclass{report}[10pt]
+%\usepackage{fancyhdr}
+%\usepackage{amssymb}
+%\usepackage{geometry}
+%\usepackage{makecell}
+%\usepackage[pdftex]{graphicx}
+%\usepackage{mathtools}
+%\usepackage{multicol}
+%\usepackage[mathscr]{euscript}
+%\usepackage[toc,page]{appendix}
+%\usepackage[T1]{fontenc}
+%\usepackage{titlesec, blindtext, color}
+%\usepackage{framed}
+%\usepackage{color}
+%\usepackage{listings}
+%\usepackage{dsfont}
+%\usepackage{subcaption}
+%\usepackage{natbib}
+%\usepackage{tabularx}
+%\usepackage[table]{xcolor}
+%\usepackage{fullpage}
+\newcolumntype{L}[1]{>{\hsize=#1\hsize\raggedright\arraybackslash}X}
+\newcolumntype{R}[1]{>{\hsize=#1\hsize\raggedleft\arraybackslash}X}
+\newcolumntype{C}[1]{>{\hsize=#1\hsize\centering\arraybackslash}X}
+
+% Format Parameters
+%\setlength{\parskip}{14pt plus 4pt minus 4pt}
+%\linespread{1.125}
+
+\newcommand{\col}[2]{\text{col}(#1)_{#2}}
+\newcommand{\wrap}[1]{\left(#1\right)}
+\newcommand{\sbrack}[1]{\left[#1\right]}
+\newcommand{\setwrap}[1]{\left\{#1\right\}}
+\newcommand{\abs}[1]{\left\lVert#1\right\rVert}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\ciel}[1]{\left\lceil#1\right\rceil}
+%\definecolor{gray75}{gray}{0.75}
+
+\newcommand{\mmathcal}[1]{{\cal #1}}
+\newcommand{\mmathbb}[1]{{\Bbb #1}}
+
+\newcommand{\Bellman}{T_{\gamma}^{\pi}}
+\newcommand{\BellmanOpt}{T_{\gamma}^{*}}
+\newcommand{\BellmanPiOpt}{T_{\gamma}^{\pi^{*}}}
+\newcommand{\expect}[1]{\emph{E}\left[#1\right]}
+\newcommand{\condexpect}[2]{\expect{#1 \middle\vert #2 }}
+\newcommand{\expw}[1]{\exp\wrap*{#1}}
+\newcommand{\Ssize}{\abs{S}}
+\newcommand{\Asize}{\abs{A}}
+\newcommand{\OptV}{V^{*}}
+\newcommand{\Vpi}{V^{\pi}}
+\newcommand{\OptPi}{\pi^{*}}
+\newcommand{\OptVpi}{V^{\OptPi}}
+\newcommand{\Aspace}{\mathcal{A}}
+\newcommand{\Sspace}{\mathcal{S}}
+\newcommand{\linedsection}[1]{\section*{#1}\vspace{-8mm}\hrulefill}
+\newcommand{\hsp}{\hspace{20pt}}
+\newcommand{\ith}{\hspace{0.1mm}$i^{th}$}
+\newcommand{\jth}{\hspace{0.1mm}$j^{th}$}
+\newcommand{\kth}{\hspace{0.1mm}$k^{th}$}
+\newcommand{\Ith}{\hspace{0.1mm}$i^{th}$\hspace{0.5mm}}
+\newcommand{\Jth}{\hspace{0.1mm}$j^{th}$\hspace{0.5mm}}
+\newcommand{\Kth}{\hspace{0.1mm}$k^{th}$\hspace{0.5mm}}
+\newcommand{\Forall}{\hspace{1mm}\forall\hspace{1mm}}
+\newcommand{\SmallThenNormal}[1]{#1}
+\newcommand{\RealVec}[1]{\in \emph{R}^{#1}}
+\newcommand{\RealMat}[2]{\in \emph{R}^{#1\times#2}}
+\newcommand{\Real}{\Re}
+\newcommand{\RRe}{\mmathcal{R}}
+\newcommand{\RRealVec}[1]{\in \RRe^{#1}}
+\newcommand{\RRealMat}[2]{\in \RRe^{#1\times#2}}
+\newcommand{\RReal}{\RRe}
+\newcommand{\InRe}[1]{\in\RReal^{#1}}
+\newcommand{\EqRef}[1]{Equation \ref{eq:#1}}
+\newcommand{\EqLabel}[1]{\label{eq:#1}}
+\newcommand{\FigRef}[1]{Figure \ref{fig:#1}}
+\newcommand{\FigLabel}[1]{\label{fig:#1}}
+\newcommand{\TableRef}[1]{Table \ref{tab:#1}}
+\newcommand{\TableLabel}[1]{\label{tab:#1}}
+\newcommand{\Sep}{\hspace{5mm}}
+\newcommand{\SSep}{\hspace{2mm}}
+\newcommand{\IE}{\emph{i.e.},\hspace{1mm}}
+\newcommand{\EG}{\emph{e.g.},\hspace{1mm}}
+\newcommand{\DotProd}[2]{\DotBrack*{#1,#2}}
+\newcommand{\DiagMat}[1]{\text{diag}\wrap{#1}}
+\newcommand{\Maps}[3]{ #1 \hspace{2mm} \Real^{#2} \rightarrow \Real^{#3}}
+\newcommand{\Normalize}[1]{\frac{#1}{\norm{#1}}}
+\newcommand{\Sig}[1]{\text{sig}\wrap{#1}}
+\newcommand{\Unit}[1]{\emph{U}\wrap{#1}}
+\newcommand{\Skew}[1]{\emph{S}\wrap{#1}}
+\newcommand{\ForI}{ \forall i \in \SetWrap*{1,2,3,4} }
+\newcommand{\Half}{0.5}
+\newcommand{\Where} {\noindent where}
+\newcommand{\SectionLabel}[1]{\label{sec:#1}}
+\newcommand{\SectionRef}[1]{Section \ref{sec:#1}}
+\newcommand{\SectionRefH}[1]{Section #1}
+\newcommand{\SectionsRefH}[1]{Sections #1}
+\newcommand{\SectionHead}[1]{\normalsize}
+\newcommand{\SectionTail}[1]{\SectionLabel{#1}\normalsize}
+\newcommand{\Project}[2]{{P}_{#2}\wrap{#1}}
+%\newcommand{\Markup}[1]{ {\noindent\color{red}#1} }
+\newcommand{\Markup}[1]{#1}
+\newcommand{\NeedsRef}[1]{\Markup{Needs Ref : \emph{#1}}}
+\newcommand{\MissingRef}{\Markup{[*]}}
+\newcommand{\MissingFig}{\Markup{[NEED FIG]}}
+\newcommand{\CaseIf}{ \text{if}\hspace{1mm}}
+\newcommand{\Sum}[3]{\sum_{#1=#2}^{#3}}
+\newcommand{\Para}[1]{\indent{#1}\\}
+\newcommand{\R}[2]{R_{#1}\wrap{#2}}
+\newcommand{\SQuotes}[1]{`#1'}
+\newcommand{\DQuotes}[1]{``#1''}
+\newcommand{\InlineSeg}{\SSep , \SSep}
+\newcommand{\convhull}[1]{\text{conv}\wrap{#1}}
+\newcommand{\zcomp}[1]{\sbrack{#1}_{z}}
+\newcommand{\ycomp}[1]{\sbrack{#1}_{y}}
+\newcommand{\xcomp}[1]{\sbrack{#1}_{x}}
+
+
+%% Image Settings
+\newcommand{\ImageWidthRatio}{1.00}
+\newcommand{\ImageWidthRatioSmall}{0.400}
+\newcommand{\ImageWidthRatioSub}{0.950}
+\newcommand{\ImagePostNoGap}{\vspace{-2mm}}
+\newcommand{\SetImage}[2]{\fbox{\includegraphics[width=#1\textwidth]{#2}}}
+
+
+% Equations
+%\DeclareMathSizes{4}{4}{2}{2}
+
+
+% Title Formatting
+%\titleformat{\chapter}{\vspace{-40mm}\Huge\bfseries}{\thechapter\hsp\textcolor{gray75}{|}\hsp}{0pt}{\Huge\bfseries}
+

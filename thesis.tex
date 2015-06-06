@@ -1,38 +1,112 @@
-\documentclass[letterpaper,12pt]{report}
-\usepackage{pstricks}
-\usepackage{amsmath}
-\usepackage{wrapfig}
-\usepackage{graphicx}
-\usepackage{float}
-\usepackage{comment}
-\usepackage{url}
-\usepackage{appendix}
+\documentstyle[amsmath,epic,eepic,graphicx,tabularx,cite,subfig,caption,appendix,algorithm,algorithmicx,algpseudocode,amssymb,listings,color,afterpage]{poly3}
 
-\include{code_formatting}
+%\mathindent 0pt
+\input{./chapters/preamble}
+% \input{epsf}
 
+% Override the double parenthesis
+% \newtagform{defaultoveride}{}{}
+% \usetagform{defaultoveride}
+
+% Set default code formatting scheme
+\include{./chapters/code_formatting}
 % Set path for images
 \graphicspath{{./pictures/}}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\baselinestretch}{1.6}
+\newtheorem{theorem}{Theorem}[chapter]
+\newcommand{\btheorem}{\begin{theorem}\rm}
+\newcommand{\etheorem}{$\diamond$\end{theorem}}
+\newtheorem{definition}{Definition}[chapter]
+\newcommand{\bdefn}{\begin{definition}\rm}
+\newcommand{\edefn}{\end{definition}}
+\newtheorem{lemma}{Lemma}[chapter]
+\newtheorem{remark}{Remark}[chapter]
+\newcommand{\bremark}{\begin{remark}\rm}
+\newcommand{\eremark}{\end{remark}}
+\newtheorem{example}{Example}[chapter]
+\newcommand{\bexample}{\begin{example}\rm}
+\newcommand{\eexample}{\end{example}}
+\newtheorem{assumption}{Assumption}[chapter]
+\newcommand{\bassump}{\begin{assumption}\rm}
+\newcommand{\eassump}{\end{assumption}}
+
 \begin{document}
-
-% Title
-\title{Humanoid Robot Navigation and Obstacle Avoidance in Unknown Environments}
+\title{DOING THINGS WITH THE NAO :\\LIKE LASERS AND STUFF}
 \author{Griswald Brooks}
-\maketitle
+\date{July, 2015}
+\committee{1}
 
-% \include{abstract}
+\mstitlepage
+\topmargin=0.4in
+\textwidth=6.0in
+\textheight=9.0in
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% I think this is how it's going to be laid out %%
+% Abstract
+% Chapter 1 Introduction
+% Chapter 2 Nao Humanoid Platform
+%  Hardware, Software, SDK
+% Chapter 3 Navigation 
+% Chapter 4 Path Planning and Obstacle Avoidance
+%  GODZILA, Multi Gait Planner, SFM, SLAM...
+% Chapter 5 Projected Profile Gait
+%  Gaiting problem, formulation, optimization structure
+% Chapter 6 Experimental Results
+% Chapter 7 Conclusion
+% References
+%%%
+
+%%% About me and Abstract
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{page}{1}
+\pagenumbering{roman}
+\include{./chapters/vita}
+\include{./chapters/publications}
+\include{./chapters/acknowledgements}
+\include{./chapters/dedications}
+\include{./chapters/abstract}
+
+\normalsize
 \tableofcontents
 \listoffigures
+\listoftables
+\newpage
+\setcounter{page}{1}
+\pagenumbering{arabic}
 
-% \include{./chapters/introduction}
-% \include{./chapters/godzila}
-% \include{./chapters/nao}
-% \include{./chapters/simulation}
-% \include{./chapters/results}
-% \include{./chapters/conclusion}
-\include{./chapters/appendix}
-\include{./chapters/bibliography}
+%%% Thesis go!
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\include{./chapters/ch1_introduction}
+	% \include{./chapters/ch2_hardware}
+	% \include{./chapters/ch3_software}
+	% \include{./chapters/ch4_modeling}
+	% \include{./chapters/ch5_gaitcontrol}
+	% \include{./chapters/ch6_navigation}
+	% \include{./chapters/ch7_closing_remarks}
+	% \begin{appendices}
+	% 	\include{./chapters/appendix_e}
+	% 	\include{./chapters/appendix_a}
+	% 	\include{./chapters/appendix_b}
+	% 	%\include{appendix_c}
+	% 	%\include{appendix_d}
+	% \end{appendices}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Thesis stop!
 
+%%% Who did I steal from
+\addcontentsline{toc}{chapter}{References}
+\newpage
+	\begin{center}
+		\textbf{REFERENCES}
+	\end{center}
+\bibliographystyle{unsrt}
+\bibliography{./chapters/refs}
 
 \end{document}
+

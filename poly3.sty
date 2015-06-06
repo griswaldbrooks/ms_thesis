@@ -1,0 +1,523 @@
+% EETHESIS DOCUMENT STYLE -- Released 22 Sep 1986
+%    for LaTeX version 2.08
+% Copyright (C) 1985 by Leslie Lamport
+% Modified by Jim Bingham and Randy Moses
+%
+\typeout{Document Style 'eethesis', version 1.0,  Released 16 May 1986}
+\@options
+\lineskip 1pt   \normallineskip 1pt \def\baselinestretch{2}  
+%
+\def\@normalsize{\@setsize\normalsize{12pt}\xiipt\@xiipt
+\abovedisplayskip 12pt plus3pt minus7pt \belowdisplayskip \abovedisplayskip
+\abovedisplayshortskip  \z@ plus3pt 
+\belowdisplayshortskip  6.5pt plus3.5pt minus3pt}
+\scriptscriptfont0=\textfont0 \scriptfont0=\textfont0
+\scriptscriptfont1=\textfont1 \scriptfont1=\textfont1
+\scriptscriptfont2=\textfont2 \scriptfont2=\textfont2
+\scriptscriptfont3=\textfont3 \scriptfont3=\textfont3
+\scriptscriptfont4=\textfont4 \scriptfont4=\textfont4
+%
+% this redefines script and scriptscript sizes in the \xiipt command
+%
+%\def\@xiipt{\scriptfont\z@\tenrm \scriptscriptfont\z@\ninrm
+%\scriptfont\@ne\tenmi \scriptscriptfont\@ne\ninmi
+%\scriptfont\tw@\tensy \scriptscriptfont\tw@\ninsy
+%\scriptfont\itfam\tenit \scriptscriptfont\itfam\ninit
+%\scriptfont\lyfam\tenly \scriptscriptfont\lyfam\ninly}
+%
+\def\small{\@setsize\small{9.5pt}\xipt\@xipt
+\abovedisplayskip 11pt plus3pt minus6pt \belowdisplayskip \abovedisplayskip
+\abovedisplayshortskip  \z@ plus3pt% 
+\belowdisplayshortskip  6.5pt plus3.5pt minus3pt
+\def\@listi{\parsep 4.5pt plus 2pt minus 1pt
+            \itemsep \parsep
+            \topsep 9pt plus 3pt minus 5pt}}
+
+\def\footnotesize{\@setsize\footnotesize{9.5pt}\xpt\@xpt
+\abovedisplayskip 10pt plus2pt minus5pt%
+\belowdisplayskip \abovedisplayskip
+\abovedisplayshortskip  \z@ plus3pt%   
+\belowdisplayshortskip  6pt plus3pt minus3pt
+\def\@listi{\topsep 6pt plus 2pt minus 2pt\parsep 3pt plus 2pt minus 1pt
+\itemsep \parsep}}
+
+\def\scriptsize{\@setsize\scriptsize{9.5pt}\viiipt\@viiipt}
+\def\tiny{\@setsize\tiny{9.5pt}\vipt\@vipt} %set all smaller type to 12pt
+\def\large{\@setsize\large{18pt}\xivpt\@xivpt}
+\def\Large{\@setsize\Large{22pt}\xviipt\@xviipt}
+\def\LARGE{\@setsize\LARGE{25pt}\xxpt\@xxpt}
+\def\huge{\@setsize\huge{30pt}\xxvpt\@xxvpt}
+\let\Huge=\huge
+
+\normalsize \oddsidemargin 0.5in  \evensidemargin 0.5in  \marginparwidth 68pt 
+\marginparsep 10pt \topmargin 0pt \headheight 0pt \headsep 0pt \footheight 12pt 
+\footskip 30pt  \textheight 22.6cm  \textwidth 15.7cm \columnsep 10pt  
+\columnseprule 0pt
+\footnotesep 14pt \skip\footins 8pt plus 2pt minus 4pt  
+\floatsep 14pt plus 2pt minus 4pt  \textfloatsep 20pt plus 2pt minus 4pt
+\intextsep 14pt plus 4pt minus 4pt \@maxsep 20pt                     
+\dblfloatsep 14pt plus 2pt minus 4pt     
+\dbltextfloatsep 20pt plus 2pt minus 4pt 
+\@dblmaxsep 20pt                         
+\@fptop 0pt plus 1fil \@fpsep 10pt plus 2fil \@fpbot 0pt plus 1fil 
+\@dblfptop 0pt plus 1fil \@dblfpsep 10pt plus 2fil \@dblfpbot 0pt plus 1fil 
+\marginparpush 7pt
+
+\parskip 0pt plus 2pt \parindent 2em \topsep 10pt plus 4pt minus 3pt 
+\partopsep 3pt plus 2pt minus 1pt \itemsep 5pt plus 2.5pt minus 1pt
+\@lowpenalty   51 \@medpenalty  151 \@highpenalty 301
+
+\@beginparpenalty -\@lowpenalty \@endparpenalty   -\@lowpenalty 
+\@itempenalty     -\@lowpenalty 
+
+\def\part{\cleardoublepage 
+\thispagestyle{plain} \hbox{}\vfil \bgroup  \centering    
+  \secdef\@part\@spart}     
+\def\@part[#1]#2{\ifnum \c@secnumdepth >-2\relax 
+        \refstepcounter{part} \addcontentsline{toc}{part}{\thepart
+        \hspace{1em}#1}\else \addcontentsline{toc}{part}{#1}\fi 
+	   \markboth{}{}
+    	\ifnum \c@secnumdepth >-2\relax \huge\bf Part \thepart \par
+    	\vskip 20pt \fi \normalsize \bf #1\@endpart}                   
+\def\@endpart{\par\egroup \vfil\newpage}
+\def\@spart#1{\Huge \bf #1\@endpart}
+\def\@makechapterhead#1{\vspace*{50pt}
+  	{ \centering   \bf \@chapapp{} \thechapter \par  \vskip 5pt
+    	\normalsize \bf  #1 \par\nobreak\vskip 30pt  } }
+\def\@makeschapterhead#1{\vspace*{50pt}{ \centering \normalsize \bf
+    	#1\par \nobreak\vskip 30pt } }
+\def\chapter{\clearpage \global\@topnum\z@ \@afterindenttrue
+   \secdef\@chapter\@schapter}   
+\def\@chapter[#1]#2{\ifnum \c@secnumdepth >\m@ne
+        \refstepcounter{chapter} \typeout{\@chapapp\space\thechaptera}
+        \addcontentsline{toc}{chapter}{\protect
+        \numberline{\thechapter. }#1}\else
+      \addcontentsline{toc}{chapter}{#1}\fi
+   \chaptermark{#1}
+   \addtocontents{lof}{\protect\addvspace{10pt}} 
+   \addtocontents{lot}{\protect\addvspace{10pt}} 
+   \@makechapterhead{#2} \@afterheading}
+\def\@schapter#1{ \addcontentsline{toc}{chapter}{#1}  \@makeschapterhead{#1} 
+	 \@afterheading}
+
+\def\section{\@startsection {section}{1}{\z@}{3.5ex plus 1ex minus 
+    .2ex}{2.3ex plus .2ex}
+{\small\renewcommand{\baselinestretch}{1}\normalsize\bf}}
+\def\subsection{\@startsection{subsection}{2}{\z@}{3.25ex plus 1ex minus 
+   .2ex}{1.5ex plus .2ex}
+{\small\renewcommand{\baselinestretch}{1}\normalsize\bf}}
+\def\subsubsection{\@startsection{subsubsection}{3}{\z@}{3.25ex plus 
+   1ex minus .2ex}{1.5ex plus .2ex}
+{\small\renewcommand{\baselinestretch}{1}\normalsize\bf}}
+\def\paragraph{\@startsection
+     {paragraph}{4}{\z@}{3.25ex plus 1ex minus .2ex}{-1em}{\normalsize\bf}}
+\def\subparagraph{\@startsection
+     {subparagraph}{4}{\parindent}{3.25ex plus 1ex minus 
+     .2ex}{-1em}{\normalsize\bf}}
+\def\chaptermark#1{}
+
+\setcounter{secnumdepth}{2}
+\def\appendix{\par
+  \setcounter{chapter}{0}
+  \setcounter{section}{0}
+  \def\@chapapp{APPENDIX}
+  \def\thechapter{\Alph{chapter}}
+  \def\thechaptera{\Alph{chapter}}}
+
+\leftmargini 2.5em \leftmarginii 2.2em \leftmarginiii 1.87em   
+\leftmarginiv 1.7em \leftmarginv 1em \leftmarginvi 1em
+\leftmargin\leftmargini \labelwidth\leftmargini\advance\labelwidth-\labelsep
+\labelsep .5em \parsep 5pt plus 2.5pt minus 1pt
+\def\@listi{\leftmargin\leftmargini}
+\def\@listii{\leftmargin\leftmarginii
+   \labelwidth\leftmarginii\advance\labelwidth-\labelsep
+   \topsep 5pt plus 2.5pt minus 1pt
+   \parsep 2.5pt plus 1pt minus 1pt
+   \itemsep \parsep}
+\def\@listiii{\leftmargin\leftmarginiii
+    \labelwidth\leftmarginiii\advance\labelwidth-\labelsep
+    \topsep 2.5pt plus 1pt minus 1pt 
+    \parsep \z@ \partopsep 1pt plus 0pt minus 1pt
+    \itemsep \topsep}
+\def\@listiv{\leftmargin\leftmarginiv
+     \labelwidth\leftmarginiv\advance\labelwidth-\labelsep}
+\def\@listv{\leftmargin\leftmarginv
+     \labelwidth\leftmarginv\advance\labelwidth-\labelsep}
+\def\@listvi{\leftmargin\leftmarginvi
+     \labelwidth\leftmarginvi\advance\labelwidth-\labelsep}
+%
+\input eecommands.sty
+%
+\def\vitaentry#1#2{\par\noindent #1 \dotfill
+	\parbox[t]{4in}{\spacingset{1}#2} }
+%
+\def\entry#1#2#3{
+	#1 \hfill\ \parbox[t]{#3}{\spacingset{1}#2 } \\[2ex] }
+
+
+\def\labelenumi{\arabic{enumi}.}    \def\theenumi{\arabic{enumi}}     
+\def\labelenumii{(\alph{enumii})}  \def\theenumii{\alph{enumii}}
+\def\p@enumii{\theenumi} \def\labelenumiii{\roman{enumiii}.}
+\def\theenumiii{\roman{enumiii}} \def\p@enumiii{\theenumi(\theenumii)}
+\def\labelenumiv{\Alph{enumiv}.} \def\theenumiv{\Alph{enumiv}}     
+\def\p@enumiv{\p@enumiii\theenumiii} \def\labelitemi{$\bullet$}
+\def\labelitemii{\bf --} \def\labelitemiii{$\ast$} 
+\def\labelitemiv{$\cdot$} \def\verse{\let\\=\@centercr  
+  \list{}{\itemsep\z@ \itemindent -1.5em\listparindent \itemindent 
+          \rightmargin\leftmargin\advance\leftmargin 1.5em}\item[]}
+\let\endverse\endlist
+
+\def\quotation{\list{}{\listparindent 1.5em
+    \itemindent\listparindent
+    \rightmargin\leftmargin\parsep 0pt plus 1pt}\item[]}
+\let\endquotation=\endlist
+
+\def\quote{\list{}{\rightmargin\leftmargin}\item[]}
+\let\endquote=\endlist
+
+\def\descriptionlabel#1{\hspace\labelsep \bf #1}
+\def\description{\list{}{\labelwidth\z@ \itemindent-\leftmargin
+       \let\makelabel\descriptionlabel}}
+
+\let\enddescription\endlist
+
+\newdimen\descriptionmargin
+\descriptionmargin=3em
+
+\def\@begintheorem#1#2{\it \trivlist \item[\hskip \labelsep{\bf #1\ #2}]}
+
+\def\@endtheorem{\endtrivlist}
+\newcounter{subequation}[equation]
+\def\theequation{(\thechaptera.\arabic{equation}\alph{subequation})}
+\def\@eqnnum{\theequation}
+
+\arraycolsep 5pt     
+\tabcolsep 6pt       
+\arrayrulewidth .4pt 
+\doublerulesep 2pt   
+\tabbingsep \labelsep 
+\skip\@mpfootins = \skip\footins
+
+\fboxsep = 3pt \fboxrule = .4pt
+\newcounter{part}
+\newcounter {chapter}
+\newcounter {section}[chapter]
+\newcounter {subsection}[section]
+\newcounter {subsubsection}[subsection]
+\newcounter {paragraph}[subsubsection]
+\newcounter {subparagraph}[paragraph]
+
+\def\thepart          {\Roman{part}}
+\def\thechapter       {\Roman{chapter}}
+\def\thechaptera      {\arabic{chapter}}
+\def\thesection       {\thechaptera.\arabic{section}}
+\def\thesubsection    {\thesection.\arabic{subsection}}
+\def\thesubsubsection {\thesubsection .\arabic{subsubsection}}
+\def\theparagraph     {\thesubsubsection.\arabic{paragraph}}
+\def\thesubparagraph  {\theparagraph.\arabic{subparagraph}}
+                     
+\def\@chapapp{CHAPTER}
+
+
+
+
+\def\@pnumwidth{1.55em}
+\def\@tocrmarg {2.55em}
+\def\@dotsep{4.5}
+\setcounter{tocdepth}{2}
+\def\tableofcontents{
+  \thispagestyle{plain}
+	\clearpage\vspace*{36pt}
+	\begin{center} \normalsize \bf TABLE OF CONTENTS \end{center}
+	\vskip 10pt\@afterheading
+  \@starttoc{toc}}
+
+\def\l@part#1#2{\addpenalty{-\@highpenalty}
+   \addvspace{2.25em plus 1pt}  
+   \begingroup
+   \@tempdima 3em         
+     \parindent \z@ \rightskip \@pnumwidth             
+     \parfillskip -\@pnumwidth   
+     {\large \bf          
+     \leavevmode          
+     #1\hfil \hbox to\@pnumwidth{\hss #2}}\par
+     \nobreak             
+   \endgroup}
+
+\def\l@chapter#1#2{\pagebreak[3] 
+   \vskip 1.0em plus 1pt  
+  \@tempdima 3em       
+   \begingroup
+     \parindent \z@ \rightskip \@pnumwidth 
+     \parfillskip -\@pnumwidth   
+     \bf  \leavevmode
+     #1\hfil \hbox to\@pnumwidth{\hss #2}\par
+   \endgroup}
+      
+\def\l@section{\@dottedtocline{1}{3em}{2.3em}}   % 3em from 1.5 for chapter 
+\def\l@subsection{\@dottedtocline{2}{5.3em}{3.2em}} %space increase. similarly
+\def\l@subsubsection{\@dottedtocline{3}{8.5em}{4.1em}}% for the others
+\def\l@paragraph{\@dottedtocline{4}{11.5em}{5em}}
+\def\l@subparagraph{\@dottedtocline{5}{13.5em}{6em}}
+
+\def\listoffigures{ \chapter*{LIST OF FIGURES}
+	\@starttoc{lof} }
+
+\def\l@figure{\@dottedtocline{1}{1.5em}{2.3em}}
+
+\def\listoftables{
+  \chapter*{LIST OF TABLES} \@starttoc{lot} }
+
+\let\l@table\l@figure
+
+
+
+\def\thebibliography#1{\list
+{[\arabic{enumi}]}{\settowidth\labelwidth{[#1]}\leftmargin\labelwidth
+\advance\leftmargin\labelsep\usecounter{enumi}}
+\def\newblock{\hskip .11em plus .33em minus -.07em}
+\sloppy
+\sfcode`\.=1000\relax}
+\let\endthebibliography=\endlist
+
+
+\newif\if@restonecol
+
+\def\theindex{
+\columnseprule \z@
+\columnsep 35pt\twocolumn[\@makeschapterhead{Index}]
+    \markboth{INDEX}{INDEX}\thispagestyle{plain}\parindent\z@
+    \parskip\z@ plus .3pt\relax\let\item\@idxitem}
+
+\def\@idxitem{\par\hangindent 40pt}
+
+\def\subitem{\par\hangindent 40pt \hspace*{20pt}}
+
+\def\subsubitem{\par\hangindent 40pt \hspace*{30pt}}
+
+\def\endtheindex{\if@restonecol\onecolumn\else\clearpage\fi}
+
+\def\indexspace{\par \vskip 10pt plus 5pt minus 3pt\relax}
+
+
+\def\footnoterule{\kern-1\p@   
+  \hrule width .4\columnwidth 
+  \kern .6\p@}
+
+\@addtoreset{footnote}{chapter}  
+\long\def\@makefntext#1{\@setpar{\@@par\@tempdima \hsize 
+  \advance\@tempdima-10pt\parshape \@ne 10pt \@tempdima}\par
+  \parindent 1em\noindent \hbox to \z@{\hss$^{\@thefnmark}$}#1}
+
+
+\setcounter{topnumber}{2}
+\def\topfraction{.7}
+\setcounter{bottomnumber}{1}
+\def\bottomfraction{.3}
+\setcounter{totalnumber}{3}
+\def\textfraction{.2}
+\def\floatpagefraction{.5}
+\setcounter{dbltopnumber}{2}
+\def\dbltopfraction{.7}
+\def\dblfloatpagefraction{.5}
+\long\def\@makecaption#1#2{
+   \vskip 10pt 
+   \setbox\@tempboxa\hbox{#1: #2}
+   \ifdim \wd\@tempboxa >\hsize   
+	#1: 
+\small\renewcommand{\baselinestretch}{1}\normalsize 
+\centering #2
+	\par
+     \else  
+       \hbox to\hsize{\hfil\box\@tempboxa\hfil}  
+   \fi}
+\newcounter{figure}
+\def\thefigure{\arabic{figure}}
+
+\def\fps@figure{tbp}
+\def\ftype@figure{1}
+\def\ext@figure{lof}
+\def\fnum@figure{Figure \thefigure}
+\def\figure{\@float{figure}}
+\let\endfigure\end@float
+\@namedef{figure*}{\@dblfloat{figure}}
+\@namedef{endfigure*}{\end@dblfloat}
+
+%ssssss
+%      Table numbering changed to conform to figure numbering convention;
+%      that is, consecutive numbering throughout
+%						fdg 6/17/86
+%
+%\newcounter{table}[chapter]
+%\def\thetable{\thechaptera.\@arabic\c@table}
+
+\newcounter{table}
+\def\thetable{\@arabic\c@table}
+
+
+\def\fps@table{tbp}
+\def\ftype@table{2}
+\def\ext@table{lot}
+\def\fnum@table{Table \thetable}
+\def\table{\@float{table}}
+\let\endtable\end@float
+\@namedef{table*}{\@dblfloat{table}}
+\@namedef{endtable*}{\end@dblfloat}
+\gdef\committee#1{\def\@committee{#1}}
+
+\def\mscoverpage{\thispagestyle{empty}\vspace*{-15mm}
+  \begin{center}\large\@title\\\vspace{8mm}\normalsize
+  THESIS\\
+  \vspace{8mm}
+  Submitted in Partial Fulfillment of\\\vspace{2mm}
+        the Requirements for\\\vspace{2mm}
+        the Degree of\\
+        \vspace{8mm}
+        MASTER OF SCIENCE (Electrical Engineering)\\ 
+        \vspace{8mm}
+        at the\\
+        \vspace{2mm}
+        NEW YORK UNIVERSITY\\
+        POLYTECHNIC SCHOOL OF ENGINEERING\\
+  \vspace{6mm}
+  by\\
+  \vspace{6mm}
+  \@author \\
+  \vspace{4mm}
+  July 2015
+  \end{center}
+\newpage}
+
+
+\def\mstitlepage{\addtocounter{page}{-1}\thispagestyle{empty}\vspace*{-15mm}
+	\begin{center}\large\@title\\\vspace{8mm}\normalsize
+	THESIS\\
+  \vspace{8mm}
+	Submitted in Partial Fulfillment of\\\vspace{2mm}
+        the Requirements for\\\vspace{2mm}
+        the Degree of\\
+        \vspace{8mm}
+        MASTER OF SCIENCE (Electrical Engineering)\\ 
+        \vspace{8mm}
+        at the\\
+        \vspace{2mm}
+        NEW YORK UNIVERSITY\\
+        POLYTECHNIC SCHOOL OF ENGINEERING\\
+  \vspace{6mm}
+	by\\
+  \vspace{5mm}
+	\@author \\
+  \vspace{5mm}
+  July 2015
+	\end{center}\vskip 20pt 
+\hspace{245pt}
+\begin{minipage}[t]{185pt}
+	\begin{raggedright}\spacingset{1}
+	Approved:\\[18pt]
+  \end{raggedright}
+  \begin{center}\spacingset{1}
+	      \rule{185pt}{1pt}\\Advisor\\[18pt]
+        \rule{185pt}{1pt}\\Date\\[18pt]
+        \rule{185pt}{1pt}\\Department Head Signature\\[18pt]
+        \rule{185pt}{1pt}\\Date\\
+	\end{center}
+\end{minipage}
+
+\vspace{-5mm}
+\begin{flushleft}
+Copy No.          \hspace{8.25mm}\noindent\underline{\makebox[2.0in][l]{\hspace{10pt}\# \@committee}}\\
+University ID:    \hspace{0.10mm}\noindent\underline{\makebox[2.0in][l]{\hspace{10pt}N17150539}}\\
+\end{flushleft}
+}
+
+\def\endmstitlepage{\newpage}
+%
+\def\phdtitlepage{\thispagestyle{empty}
+\vspace*{0.3cm}
+	\begin{center} \large\@title\\ \vspace*{0.8cm}\normalsize
+	DISSERTATION\\\vspace*{0.8cm} 
+	Submitted  in Partial Fulfillment \\ of the Requirements for the  \\
+	 Degree of \\\vspace*{0.55cm} DOCTOR OF PHILOSOPHY
+		 (Electrical
+			     Engineering) \\ \vspace*{0.3cm} 
+			     at  the\\\vspace*{0.3cm}
+	NYU POLYTECHNIC SCHOOL OF ENGINEERING \\\vspace*{0.4cm}
+	by\\\vspace*{0.2cm}
+	\@author \\\vspace*{0.6cm}
+	May 2001
+	\end{center}
+	\vfill
+%	\vspace*{0.0cm}
+%	\vskip 0pt plus 1fill
+\begin{minipage}[t]{240pt}{
+	\vspace*{1cm}
+	\begin{flushleft}
+	% Dissertation Committee:\\ \@committee
+	\vspace*{2.2cm}
+	Copy No. \rule{1.2cm}{1pt}
+	\end{flushleft}}
+\end{minipage} \hspace{10pt}
+\begin{minipage}[t]{150pt}{
+	\spacingset{1}
+	Approved: \\[0.12cm]
+	\begin{center} \rule{5.5cm}{1pt} \\
+	Department Head \\[1.0cm]
+	\rule{4.0cm}{1pt}~20~\rule{0.91cm}{1pt}
+	\end{center}}
+\end{minipage}}
+\def\endphdtitlepage{\newpage}
+%
+\def\msabstract#1{
+\newpage\spacingset{1}\thispagestyle{empty}\vspace*{50pt}
+\begin{center}%\vspace{-20mm}
+    {\bf ABSTRACT}\\
+    \vspace{6mm}
+    \spacingset{2}
+    {\bf\large\@title}\\
+    \spacingset{1}
+    \normalsize
+    \vspace{12mm}
+    {\bf\large by}\\
+    \vspace{12mm}
+    {\bf\large \@author}\\
+    \vspace{12mm}
+    {\bf\large Advisor: #1}\\
+    \vspace{12mm}
+    {\bf
+      Submitted in Partial Fulfillment of the Requirements for\\
+      \vspace{4mm}
+      the Degree of Master of Science (Electrical Engineering)
+    }\\
+    \vspace{12mm}
+    {\bf July 2015}
+    \vspace{8mm}
+\end{center}
+}
+\def\endmsabstract{\newpage}
+
+
+\mark{{}{}}   % Initializes TeX's marks
+\def\ps@headings{\def\@oddfoot{}\def\@evenfoot{}%     No feet.
+\def\@oddhead{\hbox {}\sl \rightmark \hfil \rm\thepage}% Heading.
+\def\chaptermark##1{\markright {\uppercase{\ifnum \c@secnumdepth >\m@ne
+  \@chapapp\ \thechapter. \ \fi ##1}}}}
+
+\def\ps@headings{\def\@oddfoot{}\def\@evenfoot{}\def\@oddhead{\hbox
+{}\sl \rightmark \hfil \rm\thepage}\def\chaptermark##1{\markright
+{\uppercase{\ifnum \c@secnumdepth >\m@ne
+\@chapapp\ \thechapter. \ \fi ##1}}}}
+
+\def\today{\ifcase\month\or
+  January\or February\or March\or April\or May\or June\or
+  July\or August\or September\or October\or November\or December\fi
+  \space\number\day, \number\year}
+
+
+\ps@plain                
+\pagenumbering{roman}    
+\onecolumn       
+\raggedbottom
+\@addtoreset{equation}{chapter}  % Makes \chapter reset 'equation' counter.
+%
+\clubpenalty=1000
+\widowpenalty=1000

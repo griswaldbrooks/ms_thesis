@@ -1,0 +1,49 @@
+This is BibTeX, Version 0.99dThe top-level auxiliary file: thesis.aux
+A level-1 auxiliary file: ./chapters/vita.aux
+A level-1 auxiliary file: ./chapters/publications.aux
+A level-1 auxiliary file: ./chapters/acknowledgements.aux
+A level-1 auxiliary file: ./chapters/dedications.aux
+A level-1 auxiliary file: ./chapters/abstract.aux
+A level-1 auxiliary file: ./chapters/ch1_introduction.aux
+The style file: unsrt.bst
+Database file #1: ./chapters/refs.bib
+You're missing a field part---line 45 of file ./chapters/refs.bib
+ : title = 
+ :         ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 590 of file ./chapters/refs.bib
+ : @article{Ajallooeian2013
+ :                         ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 654 of file ./chapters/refs.bib
+ : @article{Righetti2006
+ :                      ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 664 of file ./chapters/refs.bib
+ : @article{Rutishauser2008
+ :                         ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 673 of file ./chapters/refs.bib
+ : @article{Ijspeert2008
+ :                      ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 686 of file ./chapters/refs.bib
+ : @inproceedings{Matos2010
+ :                         ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 712 of file ./chapters/refs.bib
+ : @inproceedings{Fukuoka2003
+ :                           ,
+I'm skipping whatever remains of this entry
+Warning--empty booktitle in Hodgins1991
+Warning--can't use both volume and number fields in Hodgins1991
+Warning--empty booktitle in Altendorfer2001
+Warning--can't use both volume and number fields in Altendorfer2001
+Too many commas in name 1 of "Wieber, P.-B., Tedrake R., Kuindersma S." for entry Wieber2015
+while executing---line 944 of file unsrt.bst
+Warning--can't use both volume and number fields in BigDog2008
+Warning--empty year in BigDog2008
+Warning--empty school in Semini2010_PHD
+Warning--empty booktitle in Rumelhart1988
+Warning--empty booktitle in Rumelhart1995
+(There were 8 error messages)
