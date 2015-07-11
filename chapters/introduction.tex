@@ -101,9 +101,33 @@ must be specified.
 % These are the things we developed: thing 1, thing 2, thing 3.
 
 \subsection{Navigation}
-\subsection{Crawlspace Detector}
+% \subsection{Crawlspace Detector}
 % Used the camera data (and gyro) to detect openings using SFM and Lidar to confirm.
 \subsection{Crawl Gait}
+
+Many robots that enjoy practical use are not mobile. They are affixed to a table or floor
+and do not depend on their environment in order to produce a commanded movement. They 
+utilize a motion model that describes how their parts interact with each other to move an
+end effector and typically avoid interacting with objects in their environment other than those
+they are required to manipulate.
+Mobile robots also use a motion model to plan their movements but, in contrast to fixed robots, must interact
+with their environment to produce movement. 
+While this can be a more challenging problem than motion planning for fixed robots, the use of
+the environment to produce motion leads to mobile robots having a richer and more adaptable set of movements.
+Aerial and aquatic vehicles push against water or air,
+wheeled robots roll over the ground, legged robots walk, run, and crawl.
+Not only can mobile robots operate through a wider set of environments than fixed robots, but different
+actuation schemes can be employed to produce different movements. Legged robots are a particularly interesting
+platform for ground locomotion, as opposed to wheeled platforms, because they are more adaptable
+to a wide range of environments by actuating their legs according to a different strategy.
+Collectively, the method by which legged robots actuate their legs as a function of time is called 
+gaiting. Different gaits produce different characteristics such as the range of
+achievable speeds, endurance, terrain adaptability and a host of other things.
+
+
+
+% Approaches to solving the problem - CPG actor critic paper
+Someone else used a CPG network with an actor-critic scheme to generate a baby gait on a Nao and iCub.
 
 \section{Thesis Structure}
 This thesis is organized as follows: 

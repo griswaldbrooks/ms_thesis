@@ -21,9 +21,23 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
-\bibitem{Brooks13}
-G.~Brooks, P.~Krishnamurthy, and F.~Khorrami, ``Humanoid robot navigation and
-  obstacle avoidance in unknown environments,'' in \emph{Control Conference
-  (ASCC), 2013 9th Asian}, June 2013, pp. 1--6.
+\bibitem{Krishnamurthy07}
+
+
+\bibitem{Dudek2000}
+G.~Dudek and M.~Jenkin, \emph{Computational Principles of Mobile
+  Robotics}.\hskip 1em plus 0.5em minus 0.4em\relax New York, NY, USA:
+  Cambridge University Press, 2000.
+
+\bibitem{armyfieldmanual2008}
+\emph{The Warrior Ethos and Soldier Combat Skills, FM 3-21.75}, Headquarters,
+  Department of the Army, 2008.
+
+\bibitem{zatsiorskybiomechanics}
+\BIBentryALTinterwordspacing
+V.~Zatsiorsky and B.~Prilutsky, \emph{Biomechanics of Skeletal Muscles}.\hskip
+  1em plus 0.5em minus 0.4em\relax Human Kinetics 10\%. [Online]. Available:
+  \url{https://books.google.co.in/books?id=THXfHT8L5MEC}
+\BIBentrySTDinterwordspacing
 
 \end{thebibliography}

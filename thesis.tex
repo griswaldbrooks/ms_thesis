@@ -1,12 +1,16 @@
-\documentstyle[amsmath,epic,eepic,graphicx,tabularx,cite,subfig,caption,appendix,algorithm,algorithmicx,algpseudocode,amssymb,listings,color,afterpage]{poly3}
-
+% \documentstyle[amsmath,epic,eepic,graphicx,tabularx,cite,subfig,caption,appendix,algorithm,algorithmicx,algpseudocode,amssymb,listings,color,afterpage]{poly3}
+\documentstyle[epic,eepic,graphicx,tabularx,mathtools,cite,subfig,caption,appendix,algorithm,algorithmicx,algpseudocode,amssymb,listings,color,afterpage]{poly3}
 %\mathindent 0pt
+
+%%% Use includeonly to pdf only one chapter %%% <-------------------------------------------------------------------------------------------------------------
+\includeonly{./chapters/crawl_gait}
+
 \input{./chapters/preamble}
-% \input{epsf}
+\input{epsf}
 
 % Override the double parenthesis
-% \newtagform{defaultoveride}{}{}
-% \usetagform{defaultoveride}
+\newtagform{defaultoveride}{}{}
+\usetagform{defaultoveride}
 
 % Set default code formatting scheme
 \include{./chapters/code_formatting}
@@ -34,12 +38,15 @@
 \newcommand{\eassump}{\end{assumption}}
 
 \begin{document}
-\title{DOING THINGS WITH THE NAO :\\LIKE LASERS AND STUFF}
-\author{Griswald Brooks}
-\date{July, 2015}
-\committee{1}
+%%% Comment out below when pdfing only one chapter %%% <-------------------------------------------------------------------------------------------------------------
+% \title{DOING THINGS WITH THE NAO :\\LIKE LASERS AND STUFF}
+% \author{Griswald Brooks}
+% \date{July, 2015}
+% \committee{1}
 
-\mstitlepage
+% \mstitlepage
+%%% Comment out above when pdfing only one chapter %%% <-------------------------------------------------------------------------------------------------------------
+
 \topmargin=0.4in
 \textwidth=6.0in
 \textheight=9.0in
@@ -73,9 +80,11 @@
 \include{./chapters/abstract}
 
 \normalsize
-\tableofcontents
-\listoffigures
-\listoftables
+%%% Comment out below when pdfing only one chapter %%% <-------------------------------------------------------------------------------------------------------------
+% \tableofcontents
+% \listoffigures
+% \listoftables
+%%% Comment out above when pdfing only one chapter %%% <-------------------------------------------------------------------------------------------------------------
 \newpage
 \setcounter{page}{1}
 \pagenumbering{arabic}
@@ -83,10 +92,10 @@
 %%% Thesis go!
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\include{./chapters/introduction}
-	% \include{./chapters/platform}
-	% \include{./chapters/navigation}
+	\include{./chapters/platform}
+	\include{./chapters/navigation}
 	% \include{./chapters/detector}
-	% \include{./chapters/crawl_gait}
+	\include{./chapters/crawl_gait}
 	% \include{./chapters/simulations}
 	% \include{./chapters/results}
 	% \include{./chapters/conclusion}
@@ -101,13 +110,31 @@
 %%% Thesis stop!
 
 %%% Who did I steal from?
-\addcontentsline{toc}{chapter}{References}
-\newpage
-	\begin{center}
-		\textbf{REFERENCES}
-	\end{center}
-\bibliographystyle{ieeetran}
-\bibliography{./chapters/refs}
+%%% Comment out below when pdfing only one chapter %%% <-------------------------------------------------------------------------------------------------------------
+% \addcontentsline{toc}{chapter}{References}
+% \newpage
+% 	\begin{center}
+% 		\textbf{REFERENCES}
+% 	\end{center}
+% \bibliographystyle{ieeetran}
+% \bibliography{./chapters/refs}
+%%% Comment out above when pdfing only one chapter %%% <-------------------------------------------------------------------------------------------------------------
 
 \end{document}
 
+% introduction
+% platform - 
+
+% navigation - 1
+% 	mention that one aspect of navigation is vertically constrained spaces, connect to next chapter
+% crawl gait - 2
+% 	mention how crawling and navigation can be coupled, with simulation explanation
+
+% simulations (contains simulation results of obstacle avoidance, OA with crawling, crawling sim)(consider putting it in upper chapters)
+
+% results
+% 	lidar based OA
+% 	lidar based crawlspace detection
+% 	crawl gait
+
+% conclusion

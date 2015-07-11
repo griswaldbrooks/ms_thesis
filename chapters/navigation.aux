@@ -1,0 +1,102 @@
+\relax 
+\@writefile{toc}{\contentsline {chapter}{\numberline {III. }Navigation}{7}}
+\@writefile{lof}{\addvspace {10pt}}
+\@writefile{lot}{\addvspace {10pt}}
+\newlabel{ch:navigation}{{III}{7}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Sonar sensors are typically preferred when needing to detect the presence of an obstacle without needing precise position information. The location of a chair leg in the path of a robot would be detected by sonar while not knowing its position in the sonar cone. Laser rangefinders have very narrow beam width, typically requiring many of them to be effective at describing an environment. If many measurements are available at high angular resolution, then they can be very effective at describing the width of narrow apertures.\relax }}{9}}
+\newlabel{fig:sonar_vs_lidar1}{{3}{9}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.1}Algorithm Classifications}{9}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.1}Global}{9}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces In global approaches, an entire path is planned to the goal before commanding the robot. In local schemes, the robot is given commands calculated as a function of its position and the local environment and a complete path to the goal is typically precomputed. \relax }}{10}}
+\newlabel{fig:global_vs_local1}{{4}{10}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.2}Local}{10}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.3}Discrete}{10}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces The environment here is being represented as occlusions in a discrete grid of locations. This allows the robot to plan through successive locations to the goal using graph-based techniques.\relax }}{11}}
+\newlabel{fig:grid_world1}{{5}{11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.4}Continuous}{11}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces This figure shows two sample environments. On the left, the robot can follow a trajectory that takes a cubic form and reaches the goal location. On the right, a more complicated environment is shown where a single cubic cannot describe an appropriate path.\relax }}{12}}
+\newlabel{fig:cubic1}{{6}{12}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.5}Composite Approaches}{12}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.2}Potential Fields}{12}}
+\newlabel{sec:navpotfields}{{3.2}{12}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces A lattice planner is an example of a composite discrete and continuous path planner. The planner first plans through a discrete grid and then designs trajectories that bring the robot from each point in the planned discrete grid to the next.\relax }}{13}}
+\newlabel{fig:lattice1}{{7}{13}}
+\newlabel{eq:potentials_eq1}{{(3.2)}{13}}
+\citation{Krishnamurthy07}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Visualization of potential fields idea. Objects in the environment emit a field that repels the robot and the goal emits an attractive field. This can be visualized as a 2D or 3D vector field.\relax }}{14}}
+\newlabel{fig:potentials1}{{8}{14}}
+\newlabel{eq:potentials_eq2}{{(3.4)}{14}}
+\newlabel{eq:potentials_eq3}{{(3.5)}{14}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.3}GODZILA}{14}}
+\newlabel{sec:navgodzila}{{3.3}{14}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Illustration of various variables utilized in GODZILA. Range and bearing of the goal relative to the robot are required as well as being able to take range measurements to occlusions and knowing the relative bearings of these measurements.\relax }}{15}}
+\newlabel{fig:godzila_setup1}{{9}{15}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}Optimization Formulation}{16}}
+\newlabel{subsec:navoptimization}{{3.3.1}{16}}
+\citation{Krishnamurthy07}
+\newlabel{eq:j2}{{(3.8)}{17}}
+\newlabel{eq:j2_i1}{{(3.9)}{17}}
+\newlabel{eq:j2_i2}{{(3.10)}{17}}
+\newlabel{eq:j3}{{(3.11)}{17}}
+\newlabel{eq:closed_form1}{{(3.12)}{18}}
+\newlabel{eq:closed_form2}{{(3.13)}{18}}
+\newlabel{eq:closed_form3}{{(3.14)}{18}}
+\newlabel{eq:closed_form4}{{(3.15)}{18}}
+\newlabel{eq:closed_form5}{{(3.16)}{18}}
+\newlabel{eq:closed_form6}{{(3.17)}{18}}
+\newlabel{eq:linear_velocity1}{{(3.18)}{18}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.2}Straight Line Planner}{18}}
+\citation{Krishnamurthy07}
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces A degenerate case where the attractive force of the goal combines with the repulsive force of the wall producing a local optima where the robot gets trapped.\relax }}{19}}
+\newlabel{fig:trap1}{{10}{19}}
+\newlabel{eq:line_path1}{{(3.19)}{19}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.3}Escape Strategy}{19}}
+\@setckpt{./chapters/navigation}{
+\setcounter{page}{21}
+\setcounter{equation}{19}
+\setcounter{enumi}{3}
+\setcounter{enumii}{0}
+\setcounter{enumiii}{0}
+\setcounter{enumiv}{0}
+\setcounter{footnote}{0}
+\setcounter{mpfootnote}{0}
+\setcounter{subequation}{0}
+\setcounter{part}{0}
+\setcounter{chapter}{3}
+\setcounter{section}{3}
+\setcounter{subsection}{3}
+\setcounter{subsubsection}{0}
+\setcounter{paragraph}{0}
+\setcounter{subparagraph}{0}
+\setcounter{figure}{10}
+\setcounter{table}{0}
+\setcounter{parentequation}{0}
+\setcounter{ContinuedFloat}{0}
+\setcounter{KVtest}{0}
+\setcounter{subfigure}{0}
+\setcounter{subfigure@save}{0}
+\setcounter{lofdepth}{1}
+\setcounter{subtable}{0}
+\setcounter{subtable@save}{0}
+\setcounter{lotdepth}{1}
+\setcounter{@pps}{0}
+\setcounter{@ppsavesec}{0}
+\setcounter{@ppsaveapp}{0}
+\setcounter{float@type}{16}
+\setcounter{algorithm}{0}
+\setcounter{ALG@line}{0}
+\setcounter{ALG@rem}{0}
+\setcounter{ALG@nested}{0}
+\setcounter{ALG@Lnr}{2}
+\setcounter{ALG@blocknr}{10}
+\setcounter{ALG@storecount}{0}
+\setcounter{ALG@tmpcounter}{0}
+\setcounter{lstnumber}{1}
+\setcounter{theorem}{0}
+\setcounter{definition}{0}
+\setcounter{lemma}{0}
+\setcounter{remark}{0}
+\setcounter{example}{0}
+\setcounter{assumption}{0}
+\setcounter{lstlisting}{0}
+}
