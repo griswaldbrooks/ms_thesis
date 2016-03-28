@@ -121,7 +121,7 @@ If we actuate the joints at an appropriate rate, dynamic effects from the robot'
 As detailed in Chapter \ref{ch:results}, this gait can be performed on the Nao at a speed of 1 ft every 6 to 8 seconds. 
 The wide surface area of the forearm provides a high coefficient of friction against slipping and the small surface area of
 the toes can act as a point of high pressure which can dig into soft surfaces such as carpets.
-The gait is statically stable in the sense that the robot's motion can be paused at any point and the robot will not fall.
+The gait is statically stable in the sense that the robot's motion can be paused at any point and the robot will maintain that pose.
 The gait does not depend on the robot
 sliding along the surface nor does it highly depend on surface friction to pull the robot forward.
 The gait has a very low profile. The highest point on the robot during the gait (which is the top of the head)
@@ -350,5 +350,7 @@ as the crawl with the constants works.
 Optimization cost was this: ... which we weighted according to which joints were stronger.
 We threw this into a basic genetic algorithm which tweaked the 12 parameters (4 for each configuration spline)
 and iterated on this X many times. 
+
+New.
 
 
