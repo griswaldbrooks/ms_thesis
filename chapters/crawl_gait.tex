@@ -258,6 +258,28 @@ direct correspondence and must be derived from the projection of the arm onto th
 \end{figure}
 
 [More to come on this part. Continue reading.]
+This is the part where we talk about the arm kinematics.
+Unlike the feet, etc, the arms are not inline with the rest of the body.
+We want to be able to position the arms a certain width apart to give a wider base and allow the elbows to
+rotate the projection of the forearm more before the actual forearm hits the humerus.
+
+The shoulder roll is computable as a function of the desired width, shoulder width, and the length of the humerus.
+
+The elbow roll is a function of the humerus vector and the desired forearm direction vector.
+The elbow yaw is a function of the humerus vector, the desired forearm direction vector, and the axis of rotation
+the the elbow roll revolves around.
+
+With these three angles, the arm can be positioned.
+
+To explain how to compute these, we have to define a whole bunch of vectors and scalars.
+First the scalars.
+Desired forearm-to-forearm spacing is denoted $d_f$.
+The shoulder-to-shoulder spacing is denoted $d_s$
+Then, as can be seen in one of the diagrams, we can define a quantity
+$d = frac{d_f - d_s}{2}$ as the y-component of the elbow, where the origin is placed at the shoulder joint,
+the z-axis pointing up, x-axis facing forward.
+$l_h$ is the length of the humerus.
+$\tilde l_h = \sqrt{l_h^2 - d^2}$ is the length of the humerus, projected onto the z-x plane.
 
 %%% Pseudo-static modelling %%%
 \section{Optimization}
