@@ -276,10 +276,40 @@ First the scalars.
 Desired forearm-to-forearm spacing is denoted $d_f$.
 The shoulder-to-shoulder spacing is denoted $d_s$
 Then, as can be seen in one of the diagrams, we can define a quantity
-$d = frac{d_f - d_s}{2}$ as the y-component of the elbow, where the origin is placed at the shoulder joint,
+$d = \frac{d_f - d_s}{2}$ as the y-component of the elbow, where the origin is placed at the shoulder joint,
 the z-axis pointing up, x-axis facing forward.
 $l_h$ is the length of the humerus.
 $\tilde l_h = \sqrt{l_h^2 - d^2}$ is the length of the humerus, projected onto the z-x plane.
+
+Now the vectors.
+The first vector is the desired forearm orientation $u_f = [1, 0, 0]^T$. We want the forearm to lie on the ground
+and pointing forward. On the ground to maximize surface contact so the robot is well supported and forward so the
+ground contact is parallel to the direction of travel.
+The next vector is the unit vector representing the direction that the humerus is pointing.
+This vector represents the rotation axis for the elbow yaw joint on the Nao.
+$v_{ey} = [\tilde l_h \cos(\alpha), d, \tilde l_h \sin(\alpha)]^T / l_h$.
+As can be seen by Figure \ref{fig:nao_arm_vectors1} $[\tilde l_h \cos(\alpha), d, \tilde l_h \sin(\alpha)]^T$ represents
+the humerus with the shoulder at the origin, which is then normalized by the length of the humerus $l_h$.
+The next vector is the unit vector representing the rotation axis for the elbow roll joint on the Nao.
+When the elbow yaw is zero, the rotation axis for the elbow roll is $v_{er} = [-\sin(\alpha), 0, \cos(\alpha)]^T$.
+This vector $v_{er}$ is perpendicular to $v_{ey}$.
+
+The goal here is to put the forearm to be $u_f$. When elbow yaw and elbow roll are zero, the orientation of the
+forearm is coincident with the vector $v_{ey}$. We will denote the forearm vector as $v_f$ which is initialized to
+$v_f = v_{ey}$.
+In order to move $v_f$ to $u_f$ we have to rotate $v_f$ around $v_{ey}$ by an amount $\theta_{ey}$ and then about
+$v_{er}$ by an amount $\theta_{er}$.
+
+\begin{equation}
+	u_f = R_{v_{er}, \theta_{er}} R_{v_{ey}, \theta_{ey}} v_f
+\end{equation}
+
+To find $\theta_{ey}$, we must first compute $v_f \times u_f$ to find the desired vector $u_{er}$ that
+$v_{er}$ must be rotated to. Then, $\theta_{ey} = \arccos(v_{er} \cdot u_{er})$.
+Then, $\theta_{er} = \arccos(v_{ey} \cdot u_f)$.
+
+These four angles complete the arm kinematics and compute the joints angles given the projected profile angle $\alpha$
+and the desired forearm-to-forearm spacing.
 
 %%% Pseudo-static modelling %%%
 \section{Optimization}
@@ -369,7 +399,73 @@ Now that we have things set up and we have our model/function/table thing we can
 The method of optimization we used was a genetic algorithm on cubic splines. We knew where the parameters have to start
 and end so we set the cubics terminations there. We told it to do it in 1 second because we knew that would work
 as the crawl with the constants works.
-Optimization cost was this: ... which we weighted according to which joints were stronger.
+Optimization cost was this: 
+
+% Sum up all of the torques incurred in the time sequence but weight T4 (the shoulder joint)
+  % more heavily because it is the weakest joint.
+% cTorque = sum(sum(T1_.^2 + T2_.^2 + T3_.^2 + 5*T4_.^2));
+The nominal optimization cost based on joint torques was computed as:
+\begin{equation}
+	\int_0^T \sum_{i=1}^4 w_i \tau_i^2(t) dt
+\end{equation}
+
+Where the weight vector $w = [1, 1, 1, 5]^T$ in order to reduce the use of the shoulder since it has the
+weaker motor.
+
+In addition to this nominal cost, several indicator functions were introduced to enforce kinematic
+constraints and to ensure that $\alpha$ is a decreasing function. Experimentally, when $\alpha$ was not 
+constrained to be strictly decreasing, the genetic algorithm would tend to hold $\alpha$ at a certain value or
+increase $\alpha$, and then towards the end of the sequence, lunge forward.
+This can be seen as an issue with the setup, because each time step is equal, incurring a high torque for a short
+period of time holds a lower cost than small torques for a long period of time.
+
+The indicator functions were then multiplied by a high cost and added to the total cost so the resultant
+cost of that parameter triplet would be high.
+
+\begin{equation} 
+	c_{\alpha[n]}(\alpha[n], \alpha[n - 1]) =
+  	\begin{cases} 
+    	\hfill 1 \hfill & \text{ if $\alpha[n] - \alpha[n - 1] > 0$ } \\
+      	\hfill 0 \hfill & \text{ otherwise } \\
+  	\end{cases}
+\end{equation}
+
+\begin{equation} 
+	c_{z_{hip}}(z_{hip}, z_{hip_{max}}) =
+  	\begin{cases} 
+    	\hfill 1 \hfill & \text{ if $z_{hip} > z_{hip_{max}}$ } \\
+      	\hfill 0 \hfill & \text{ otherwise } \\
+  	\end{cases}
+\end{equation}
+
+\begin{equation} 
+	c_{\theta_i}(\theta_i, \theta_{i_{max}}, \theta_{i_{min}}) =
+  	\begin{cases} 
+      	\hfill 0 \hfill & \text{ if \theta_{i_{max}} > \theta_i > \theta_{i_{min}} } \\
+    	\hfill 1 \hfill & \text{ otherwise } \\
+  	\end{cases}
+\end{equation}
+
+% Check to see if alpha ever backtracks (has a positive velocity).
+COST_ALPHA = 1e5;
+cAlpha = COST_ALPHA*sum(diff(x1_) > 0);
+
+% Ensure that the height of the hips don't hit the floor.
+HIP_HEIGHT_THRESH = 40; % in mm
+COST_HIP_HEIGHT = 1e5;
+cHeight = COST_HIP_HEIGHT*sum(hip_height < HIP_HEIGHT_THRESH);
+
+% Enforce joint limits.
+COST_JOINT_LIMIT = 1e5;
+alphaViolations = sum(x1_ < alpha_min) + sum(x1_ > alpha_max);
+theta3Violations = sum(x2_ < theta3_min) + sum(x2_ > theta3_max);
+theta4Violations = sum(x3_ < theta4_min) + sum(x3_ > theta4_max);
+cLimits = COST_JOINT_LIMIT*(alphaViolations + theta3Violations + theta4Violations);
+
+% Sum all of the costs.
+c = cTorque + cAlpha + cHeight + cLimits;
+
+... which we weighted according to which joints were stronger.
 We threw this into a basic genetic algorithm which tweaked the 12 parameters (4 for each configuration spline)
 and iterated on this X many times. 
 
