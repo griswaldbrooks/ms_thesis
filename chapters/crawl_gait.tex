@@ -413,7 +413,7 @@ Where the weight vector $w = [1, 1, 1, 5]^T$ in order to reduce the use of the s
 weaker motor.
 
 In addition to this nominal cost, several indicator functions were introduced to enforce kinematic
-constraints and to ensure that $\alpha$ is a decreasing function. Experimentally, when $\alpha$ was not 
+constraints and to ensure that $\alpha(t)$ (which is the cubic produced by the genetic algorithm say this better) is a decreasing function. Experimentally, when $\alpha(t)$ was not 
 constrained to be strictly decreasing, the genetic algorithm would tend to hold $\alpha$ at a certain value or
 increase $\alpha$, and then towards the end of the sequence, lunge forward.
 This can be seen as an issue with the setup, because each time step is equal, incurring a high torque for a short
@@ -422,48 +422,59 @@ period of time holds a lower cost than small torques for a long period of time.
 The indicator functions were then multiplied by a high cost and added to the total cost so the resultant
 cost of that parameter triplet would be high.
 
-\begin{equation} 
-	c_{\alpha[n]}(\alpha[n], \alpha[n - 1]) =
+\begin{align} 
+	c_{\dot \alpha}(t) &=
   	\begin{cases} 
-    	\hfill 1 \hfill & \text{ if $\alpha[n] - \alpha[n - 1] > 0$ } \\
-      	\hfill 0 \hfill & \text{ otherwise } \\
+    	\hfill 1 \hfill & \text{ if $\dot \alpha(t) > 0$ } \\
+      \hfill 0 \hfill & \text{ otherwise }
+  	\end{cases} \\
+  c_{\alpha}(t) &=
+  	\begin{cases} 
+    	\hfill 1 \hfill & \text{ if $\alpha(t) > \alpha_{max}$ or $\alpha(t) < \alpha_{min}$ } \\
+      \hfill 0 \hfill & \text{ otherwise }
+  	\end{cases} \\
+	c_{z_{hip}}(t) &=
+  	\begin{cases} 
+    	\hfill 1 \hfill & \text{ if $z_{hip}(t) > z_{hip_{max}}$ } \\
+      \hfill 0 \hfill & \text{ otherwise }
+  	\end{cases} \\
+	c_{\theta_i}(t) &=
+  	\begin{cases} 
+  		\hfill 1 \hfill & \text{ if $\theta_i (t) > \theta_{i_{max}}$ or $\theta_i (t) < \theta_{i_{min}}$ } \\
+    	\hfill 0 \hfill & \text{ otherwise }
   	\end{cases}
+\end{align}
+
+What's this $z$ function you ask? Well it's the height of the hip at time $t$ given the spline triplet at time $t$ and the forward kinematics of the rest of the robot.
+
+% The sequence of $\alpha$'s and $\theta$'s is then passed through these functions and summed.
+These cost functions are integrated to find the cost of the spline triplet.
+
+\begin{equation}
+	C_s = C_v \int_0^T c_{\dot \alpha}(t) + c_{\alpha}(t) + c_{z_{hip}}(t) + \sum_3^4 c_{\theta_i}(t) \, dt
 \end{equation}
 
-\begin{equation} 
-	c_{z_{hip}}(z_{hip}, z_{hip_{max}}) =
-  	\begin{cases} 
-    	\hfill 1 \hfill & \text{ if $z_{hip} > z_{hip_{max}}$ } \\
-      	\hfill 0 \hfill & \text{ otherwise } \\
-  	\end{cases}
-\end{equation}
+In practice of course this was approximated using a sum.
+$C_v$ is some constant so that even a small violation for a short time would incur a high cost.
 
-\begin{equation} 
-	c_{\theta_i}(\theta_i, \theta_{i_{max}}, \theta_{i_{min}}) =
-  	\begin{cases} 
-      	\hfill 0 \hfill & \text{ if \theta_{i_{max}} > \theta_i > \theta_{i_{min}} } \\
-    	\hfill 1 \hfill & \text{ otherwise } \\
-  	\end{cases}
-\end{equation}
+% % Check to see if alpha ever backtracks (has a positive velocity).
+% COST_ALPHA = 1e5;
+% cAlpha = COST_ALPHA*sum(diff(x1_) > 0);
 
-% Check to see if alpha ever backtracks (has a positive velocity).
-COST_ALPHA = 1e5;
-cAlpha = COST_ALPHA*sum(diff(x1_) > 0);
+% % Ensure that the height of the hips don't hit the floor.
+% HIP_HEIGHT_THRESH = 40; % in mm
+% COST_HIP_HEIGHT = 1e5;
+% cHeight = COST_HIP_HEIGHT*sum(hip_height < HIP_HEIGHT_THRESH);
 
-% Ensure that the height of the hips don't hit the floor.
-HIP_HEIGHT_THRESH = 40; % in mm
-COST_HIP_HEIGHT = 1e5;
-cHeight = COST_HIP_HEIGHT*sum(hip_height < HIP_HEIGHT_THRESH);
+% % Enforce joint limits.
+% COST_JOINT_LIMIT = 1e5;
+% alphaViolations = sum(x1_ < alpha_min) + sum(x1_ > alpha_max);
+% theta3Violations = sum(x2_ < theta3_min) + sum(x2_ > theta3_max);
+% theta4Violations = sum(x3_ < theta4_min) + sum(x3_ > theta4_max);
+% cLimits = COST_JOINT_LIMIT*(alphaViolations + theta3Violations + theta4Violations);
 
-% Enforce joint limits.
-COST_JOINT_LIMIT = 1e5;
-alphaViolations = sum(x1_ < alpha_min) + sum(x1_ > alpha_max);
-theta3Violations = sum(x2_ < theta3_min) + sum(x2_ > theta3_max);
-theta4Violations = sum(x3_ < theta4_min) + sum(x3_ > theta4_max);
-cLimits = COST_JOINT_LIMIT*(alphaViolations + theta3Violations + theta4Violations);
-
-% Sum all of the costs.
-c = cTorque + cAlpha + cHeight + cLimits;
+% % Sum all of the costs.
+% c = cTorque + cAlpha + cHeight + cLimits;
 
 ... which we weighted according to which joints were stronger.
 We threw this into a basic genetic algorithm which tweaked the 12 parameters (4 for each configuration spline)
