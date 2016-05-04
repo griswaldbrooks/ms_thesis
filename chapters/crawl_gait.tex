@@ -314,12 +314,14 @@ and the desired forearm-to-forearm spacing.
 %%% Pseudo-static modelling %%%
 \section{Optimization}
 
-In the previous section, the Projected Profile crawl gait was parameterized on angle triplet $[ \theta_3, \theta_4, \alpha ]$ .
+In the previous section, the Projected Profile crawl gait was parameterized on angle triplet 
+$[ \theta_3, \theta_4, \alpha ]$ .
 To achieve a crawling gait, $\theta_3$ and $\theta_4$ can be set to be constant and $\alpha$ linearly incremented
 from an initial angle to a final angle as a function of time. While this configuration successfully gaits the robot,
-it is heuristic. To improve the approach, the selection of this triplet as a function of time is considered as an optimization 
-problem. While many different quantities such as gait speed or the levelness of the back (for transportation of payloads) could
-be considered as optimization metrics, in this thesis the energy usage was minimized via joint torque measurements.
+it is heuristic. To improve the approach, the selection of this triplet as a function of time is considered as an
+optimization problem. While many different quantities such as gait speed or the levelness of the back 
+(for transportation of payloads) could be considered as optimization metrics, in this thesis the energy usage was 
+minimized via joint torque measurements.
 The aim was to increase the amount of time the crawling gait could be performed and reduce the stress on the robot's joints.
 
 \subsection{Pseudo-static Model}
@@ -331,7 +333,7 @@ motor controllers must counteract.
 During any part of the gait the robot will not slide if the gaiting direction is orthogonal to gravity and
 if the robot were to relax its joints it would collapse.
 Considering this, the resultant joint torques can be seen to be a function of gravity. 
-This pseudo-static model of the robot can then be used to produce cost metric for the optimization procedure.
+This pseudo-static model of the robot can then be used to produce a cost metric for the optimization procedure.
 While conceptually simple, analyzing the projected profile closed chain manipulator to produce the 
 system dynamics is challenging.
 In lieu of this, the robot was simulated for different values of the angle triplet in the closed chain 
@@ -375,12 +377,12 @@ after a period of one second.
 
 \begin{table}
 	\centering
-	\begin{tabularx}{0.65\textwidth}{|X||X|X|}
+	\begin{tabularx}{0.65 \textwidth}{|X||X|X|}
 		\hline
 		\textbf{Configuration Parameter} 	&	\textbf{Minimum Angle (degrees)} 		&	\textbf{Maximum Angle (degrees)} 	\\	\hline\hline
-		$\theta_3$ 							& 	-5										&	45	 								\\	\hline
-		$\theta_4$							&	15										&	-30									\\ 	\hline
-		$\alpha$							&	-30										&	-90									\\ 	\hline
+		$\theta_3$ 	  & 	-5   &	 45 	\\	\hline
+		$\theta_4$		&	  15	 &	-30	  \\ 	\hline
+		$\alpha$			&  -30	 &	-90		\\ 	\hline
 	\end{tabularx} 
 	
 	\caption{Table of initial and final joint angles for each angle in the configuration triplet used to generate the set of
@@ -389,97 +391,107 @@ after a period of one second.
 	\label{tab:angle_set_params1}
 \end{table}
 
-%%% Optimization procedure %%%
-\subsection{Optimize <-------- Everything after this still needs to be edited}
+\subsection{Cost Functions}
+
+% So, in order to do an optimization, you have to have costs. We defined some cost functions.
+% The obvious cost function is like what we talked about, which is minimizing joint torques.
+% We did it like this:
+To find the optimal parameters for the angle triplet splines, a cost $c_s$ has to be attributed
+to that spline triplet, which is a function of the spline parameters.
+The cost function contains terms regarding the joint torques given by the pseudo-static model, as
+the primary goal of the optimization procedure is to reduce the overall usage of torque
+(and therefore energy) of the gait. Additionally, a number of indicator functions
+were introduced to the cost function in order to ensure kinematic constraints were not violated
+and to deter problems with the algorithm's implementation, which will be discussed.
+
+The cost function based on joint torques was computed as:
+\begin{equation}
+	c_{\tau}(t) = \sum_{i=1}^4 w_i \tau_i^2(t) \label{eq:cost_joint}
+\end{equation}
+
+In this notation, $\tau_1, \tau_2, \tau_3, \tau_4$ are the torques of the ankle, knee, hip, and shoulder, respectively.
+These torques are taken from the pseudo-static model and, as stated, are a function of 
+$\alpha(t), \theta_3(t),$ and $\theta_4(t)$.
+The weight vector is constant and equal to $w = [1, 1, 1, 5]^T$.
+$w_4$ has a higher value in order to reduce the use of Nao's shoulder, as its actuator can produce about 3 to 4 times
+less torque than each of the leg actuators.
+
+The first set of indicator functions introduced deter violation of kinematic constrains, such as joint limits
+in $\theta_3$ and $\theta_4$ \ref{eq:fn_ind_theta}, starting and stopping conditions for $\alpha$ \ref{eq:fn_ind_alpha},
+and to prevent the Nao from being in a kinematic configuration where the hips are making contact with the crawling
+surface \ref{eq:fn_ind_z}.
+
+\begin{align}
+	c_{\theta_i}(t) &=
+  	\begin{cases} 
+  		\hfill 1 \hfill & \text{ if $\theta_i (t) > \theta_{i_{max}}$ or $\theta_i (t) < \theta_{i_{min}}$ } \\
+    	\hfill 0 \hfill & \text{ otherwise }
+  	\end{cases} \label{eq:fn_ind_theta} \\
+  c_{\alpha}(t) &=
+  	\begin{cases} 
+    	\hfill 1 \hfill & \text{ if $\alpha(t) > \alpha_{max}$ or $\alpha(t) < \alpha_{min}$ } \\
+      \hfill 0 \hfill & \text{ otherwise }
+  	\end{cases} \label{eq:fn_ind_alpha} \\
+	c_{z_{hip}}(t) &=
+  	\begin{cases} 
+    	\hfill 1 \hfill & \text{ if $z_{hip}(t) < z_{hip_{thresh}}$ } \\
+      \hfill 0 \hfill & \text{ otherwise }
+  	\end{cases} \label{eq:fn_ind_z}
+\end{align}
+
+The function $z_{hip}(t)$ returns the height of the hips at time $t$ using the the forward kinematics of the
+closed chain model of the gait. $z_{hip_{thresh}} \ne 0$, and is chosen to be the height of the hip joint when
+the robot is touching the crawling surface.
+
+The next indicator function exists to deter a problem observed with the gaits being produced. 
+Experimentally, it was seen that the optimizer would produce splines in which the parameter
+$\alpha$ would, for a large part of the gait, either stay nearly stationary or increase for some time, before
+decreasing by a large amount. To review, $\alpha$ is initialized at approximately $-30^\circ$ and terminates at about $-90^\circ$.
+This appeared as the robot lunging forward at the end of the gait.
+This can most readily intepreted as the robot incurring a large cost for a small time, which is perhaps
+a local optima. An indicator function \ref{eq:fn_ind_dalpha} was added to penalize splines in which 
+$\alpha (t)$ was not monotonically decreasing, which allowed the optimizer to find a more efficient gait.
+
+\begin{equation} 
+	c_{\dot \alpha}(t) =
+  	\begin{cases} 
+    	\hfill 1 \hfill & \text{ if $\dot \alpha(t) \ge 0$ } \\
+      \hfill 0 \hfill & \text{ otherwise }
+  	\end{cases} \label{eq:fn_ind_dalpha}
+\end{equation}
+
+The indicator functions are then summed and multiplied by a large constant $C_v$ so that the cost to
+violate any of these constraints is prohibitively large.
+
+\begin{equation}
+	c_I(t) = C_v \Big( c_{\dot \alpha}(t) + c_{\alpha}(t) + c_{z_{hip}}(t) + \sum_3^4 c_{\theta_i}(t) \Big) \label{eq:cost_ind}
+\end{equation}
+
+The cost of the spline triplet is then given by integrating the sum of cost functions \ref{eq:cost_joint} and
+\ref{eq:cost_ind}, and can be seen in equation \ref{eq:cost_spline}.
+
+\begin{equation}
+c_s = \int_0^T c_{\tau}(t) + c_I(t) \, dt \label{eq:cost_spline}
+\end{equation}
+
+where $T$ is equal to one second, as it was seen that this was a reasonable time frame for this phase of the gait
+to be performed. 
+
+\subsection{Optimization Procedure}
+
+Here something is said about the genetic algorithm and so on...
+
+This was copied from the above to be tweaked and so the above can focus on the cost function stuff:
 
 As a requirement of the gait, the initial and final poses for the closed chain phase needed to be common to the
 open chain phase of the gait. 
 
 Now that we have things set up and we have our model/function/table thing we can try to optimize the gait.
 The method of optimization we used was a genetic algorithm on cubic splines. We knew where the parameters have to start
-and end so we set the cubics terminations there. We told it to do it in 1 second because we knew that would work
+and end so we set the cubics terminations there. We told it to do the gait in 1 second because we knew that would work
 as the crawl with the constants works.
-Optimization cost was this: 
 
-% Sum up all of the torques incurred in the time sequence but weight T4 (the shoulder joint)
-  % more heavily because it is the weakest joint.
-% cTorque = sum(sum(T1_.^2 + T2_.^2 + T3_.^2 + 5*T4_.^2));
-The nominal optimization cost based on joint torques was computed as:
-\begin{equation}
-	\int_0^T \sum_{i=1}^4 w_i \tau_i^2(t) dt
-\end{equation}
-
-Where the weight vector $w = [1, 1, 1, 5]^T$ in order to reduce the use of the shoulder since it has the
-weaker motor.
-
-In addition to this nominal cost, several indicator functions were introduced to enforce kinematic
-constraints and to ensure that $\alpha(t)$ (which is the cubic produced by the genetic algorithm say this better) is a decreasing function. Experimentally, when $\alpha(t)$ was not 
-constrained to be strictly decreasing, the genetic algorithm would tend to hold $\alpha$ at a certain value or
-increase $\alpha$, and then towards the end of the sequence, lunge forward.
-This can be seen as an issue with the setup, because each time step is equal, incurring a high torque for a short
-period of time holds a lower cost than small torques for a long period of time.
-
-The indicator functions were then multiplied by a high cost and added to the total cost so the resultant
-cost of that parameter triplet would be high.
-
-\begin{align} 
-	c_{\dot \alpha}(t) &=
-  	\begin{cases} 
-    	\hfill 1 \hfill & \text{ if $\dot \alpha(t) > 0$ } \\
-      \hfill 0 \hfill & \text{ otherwise }
-  	\end{cases} \\
-  c_{\alpha}(t) &=
-  	\begin{cases} 
-    	\hfill 1 \hfill & \text{ if $\alpha(t) > \alpha_{max}$ or $\alpha(t) < \alpha_{min}$ } \\
-      \hfill 0 \hfill & \text{ otherwise }
-  	\end{cases} \\
-	c_{z_{hip}}(t) &=
-  	\begin{cases} 
-    	\hfill 1 \hfill & \text{ if $z_{hip}(t) > z_{hip_{max}}$ } \\
-      \hfill 0 \hfill & \text{ otherwise }
-  	\end{cases} \\
-	c_{\theta_i}(t) &=
-  	\begin{cases} 
-  		\hfill 1 \hfill & \text{ if $\theta_i (t) > \theta_{i_{max}}$ or $\theta_i (t) < \theta_{i_{min}}$ } \\
-    	\hfill 0 \hfill & \text{ otherwise }
-  	\end{cases}
-\end{align}
-
-What's this $z$ function you ask? Well it's the height of the hip at time $t$ given the spline triplet at time $t$ and the forward kinematics of the rest of the robot.
-
-% The sequence of $\alpha$'s and $\theta$'s is then passed through these functions and summed.
-These cost functions are integrated to find the cost of the spline triplet.
-
-\begin{equation}
-	C_s = C_v \int_0^T c_{\dot \alpha}(t) + c_{\alpha}(t) + c_{z_{hip}}(t) + \sum_3^4 c_{\theta_i}(t) \, dt
-\end{equation}
-
-In practice of course this was approximated using a sum.
-$C_v$ is some constant so that even a small violation for a short time would incur a high cost.
-
-% % Check to see if alpha ever backtracks (has a positive velocity).
-% COST_ALPHA = 1e5;
-% cAlpha = COST_ALPHA*sum(diff(x1_) > 0);
-
-% % Ensure that the height of the hips don't hit the floor.
-% HIP_HEIGHT_THRESH = 40; % in mm
-% COST_HIP_HEIGHT = 1e5;
-% cHeight = COST_HIP_HEIGHT*sum(hip_height < HIP_HEIGHT_THRESH);
-
-% % Enforce joint limits.
-% COST_JOINT_LIMIT = 1e5;
-% alphaViolations = sum(x1_ < alpha_min) + sum(x1_ > alpha_max);
-% theta3Violations = sum(x2_ < theta3_min) + sum(x2_ > theta3_max);
-% theta4Violations = sum(x3_ < theta4_min) + sum(x3_ > theta4_max);
-% cLimits = COST_JOINT_LIMIT*(alphaViolations + theta3Violations + theta4Violations);
-
-% % Sum all of the costs.
-% c = cTorque + cAlpha + cHeight + cLimits;
-
-... which we weighted according to which joints were stronger.
 We threw this into a basic genetic algorithm which tweaked the 12 parameters (4 for each configuration spline)
 and iterated on this X many times. 
 
-New.
-
-
+We then took this configuration spline triplet and played it on the Nao during the closed chain phase of the crawling gait.
