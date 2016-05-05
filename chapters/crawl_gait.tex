@@ -318,8 +318,9 @@ In the previous section, the Projected Profile crawl gait was parameterized on a
 $[ \theta_3, \theta_4, \alpha ]$ .
 To achieve a crawling gait, $\theta_3$ and $\theta_4$ can be set to be constant and $\alpha$ linearly incremented
 from an initial angle to a final angle as a function of time. While this configuration successfully gaits the robot,
-it is heuristic. To improve the approach, the selection of this triplet as a function of time is considered as an
-optimization problem. While many different quantities such as gait speed or the levelness of the back 
+it is heuristic. To improve the approach, the selection of a triplet of cubic splines 
+$[\theta_3(t), \theta_4(t), \alpha(t)]$ is considered as an optimization problem. 
+While many different quantities such as gait speed or the levelness of the back 
 (for transportation of payloads) could be considered as optimization metrics, in this thesis the energy usage was 
 minimized via joint torque measurements.
 The aim was to increase the amount of time the crawling gait could be performed and reduce the stress on the robot's joints.
@@ -393,11 +394,8 @@ after a period of one second.
 
 \subsection{Cost Functions}
 
-% So, in order to do an optimization, you have to have costs. We defined some cost functions.
-% The obvious cost function is like what we talked about, which is minimizing joint torques.
-% We did it like this:
-To find the optimal parameters for the angle triplet splines, a cost $c_s$ has to be attributed
-to that spline triplet, which is a function of the spline parameters.
+To find the optimal parameters for the angle triplet splines $[\theta_3(t), \theta_4(t), \alpha(t)]$, 
+a cost $c_s$ has to be attributable to a given spline triplet as a function of the spline parameters.
 The cost function contains terms regarding the joint torques given by the pseudo-static model, as
 the primary goal of the optimization procedure is to reduce the overall usage of torque
 (and therefore energy) of the gait. Additionally, a number of indicator functions
@@ -446,7 +444,8 @@ the robot is touching the crawling surface.
 The next indicator function exists to deter a problem observed with the gaits being produced. 
 Experimentally, it was seen that the optimizer would produce splines in which the parameter
 $\alpha$ would, for a large part of the gait, either stay nearly stationary or increase for some time, before
-decreasing by a large amount. To review, $\alpha$ is initialized at approximately $-30^\circ$ and terminates at about $-90^\circ$.
+decreasing by a large amount.
+To review, $\alpha$ is initialized at approximately $-30^\circ$ and terminates at about $-90^\circ$.
 This appeared as the robot lunging forward at the end of the gait.
 This can most readily intepreted as the robot incurring a large cost for a small time, which is perhaps
 a local optima. An indicator function \ref{eq:fn_ind_dalpha} was added to penalize splines in which 
@@ -479,19 +478,27 @@ to be performed.
 
 \subsection{Optimization Procedure}
 
-Here something is said about the genetic algorithm and so on...
+The optimization procedure used to optimize the spline triplet $[\theta_3(t), \theta_4(t), \alpha(t)]$
+was a basic genetic algorithm implemented using the genetic algorithm functions available in the MATLAB 
+Global Optimization Toolbox. 
 
-This was copied from the above to be tweaked and so the above can focus on the cost function stuff:
+Briefly, genetic algorithm optimization works by first creating a ``population'' of
+possible solutions, in this case the parameters for the spline triplet. Then the ``fitness'' of each solution
+is determined, here by evaluating the cost function for the solution. Finally, the solutions that are more fit
+are ``selected'' to for the ``parent'' set. These parents are then ``bred'' to form a new set of ``child'' solutions
+which will then be evaluated again. After some number of ``generations'', the most fit solution is selected
+as the optimal solution.
 
-As a requirement of the gait, the initial and final poses for the closed chain phase needed to be common to the
-open chain phase of the gait. 
+Genetic algorithms are well suited for problems like this as more classical optimization techniques
+would require the cost function to be analytical, which the joint torque table is not.
+As a result, because there is so much freedom in the cost function, different functions can be tried
+and evaluated to find a suitable result.
+Lastly, because the gait design problem presented in this thesis, was not required to run in real time on the
+Nao, using such a computationally heavy optimization technique did not impact gait performance.
+One pitfall to this technique is there is no guarantee that the global optima will be found for
+a given cost function and therefore local optima are still possible to be returned.
 
-Now that we have things set up and we have our model/function/table thing we can try to optimize the gait.
-The method of optimization we used was a genetic algorithm on cubic splines. We knew where the parameters have to start
-and end so we set the cubics terminations there. We told it to do the gait in 1 second because we knew that would work
-as the crawl with the constants works.
-
-We threw this into a basic genetic algorithm which tweaked the 12 parameters (4 for each configuration spline)
-and iterated on this X many times. 
-
-We then took this configuration spline triplet and played it on the Nao during the closed chain phase of the crawling gait.
+Using the cost function presented in Section \ref{subsec:Cost Functions}, the genetic algorithm was used
+to find the 12 triplet parameters (4 parameters for each cubic spline). The algorithm ran for 67 generations
+and produced a triplet spline whose cost was approximately six times smaller than the nominal strategy
+of holding $\theta_3$ and $\theta_4$ constant while linearly increasing $\alpha$.
