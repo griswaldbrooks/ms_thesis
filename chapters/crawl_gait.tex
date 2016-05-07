@@ -240,13 +240,15 @@ The primary intuition about this procedure is that the closed chain is like a pa
 the mass of the robot. Any robot (humanoid or not) that can be set into this configuration can use this 
 framework in order to gait the robot.
 
-\subsection{Application onto Nao}
+\subsection{Nao Kinematics}
 Once the projected profile time sequence of angles has been computed, it needs to be applied to the Nao.
 Figure \ref{fig:nao_pp_view1} illustrates the sagittal view of the robot in the closed chain configuration.
 When Nao is set to this configuration, the ankle pitch, knee pitch, hip pitch, and shoulder pitch joints 
 of the robot directly correspond to $\theta_2$ through $\theta_5$. $\theta_1$ corresponds to the angle
 subtended by the robot's foot and the ground. Unlike the first five joint angles, angle $\alpha$ does not have a
-direct correspondence and must be derived from the projection of the arm onto the sagittal plane $n_p$ . 
+direct correspondence and the arm joint angles for shoulder roll $\theta_{sr}$, elbow yaw $\theta_{ey}$, 
+and elbow roll $\theta_{er}$ must be derived as a relationship between the angle $\alpha$ and additional
+arm positioning constraints.
 
 \begin{figure}
 	\includegraphics[width=\textwidth]{horz_profile_with_notation2.png}
@@ -257,13 +259,23 @@ direct correspondence and must be derived from the projection of the arm onto th
   	\label{fig:nao_pp_view1}
 \end{figure}
 
-[More to come on this part. Continue reading.]
-This is the part where we talk about the arm kinematics.
-Unlike the feet, etc, the arms are not inline with the rest of the body.
-We want to be able to position the arms a certain width apart to give a wider base and allow the elbows to
-rotate the projection of the forearm more before the actual forearm hits the humerus.
+\begin{figure}
+	\includegraphics[width=\textwidth]{hardware_rarmjoint_3.3.png}
+  	\caption{Sagittal view the Nao in the closed chain crawling configuration. 
+  				The locations of the joints used in the projected profile calculation are shown as blue dots. 
+  				$n_p$ represents the sagittal plane of the robot.
+  			}
+  	\label{fig:nao_pp_view1}
+\end{figure}
 
-The shoulder roll is computable as a function of the desired width, shoulder width, and the length of the humerus.
+% [More to come on this part. Continue reading.]
+% This is the part where we talk about the arm kinematics.
+% Unlike the feet, etc, the arms are not inline with the rest of the body.
+% We want to be able to position the arms a certain width apart to give a wider base and allow the elbows to
+% rotate the projection of the forearm more before the actual forearm hits the humerus.
+
+% The shoulder roll is computable as a function of the desired width, shoulder width, and the length of the humerus.
+The shoulder roll $\theta_{sr}$ is computable as a function of 
 
 The elbow roll is a function of the humerus vector and the desired forearm direction vector.
 The elbow yaw is a function of the humerus vector, the desired forearm direction vector, and the axis of rotation
@@ -392,7 +404,7 @@ after a period of one second.
 	\label{tab:angle_set_params1}
 \end{table}
 
-\subsection{Cost Functions}
+\subsection{Cost Functions} \label{subsec:cost_functions}
 
 To find the optimal parameters for the angle triplet splines $[\theta_3(t), \theta_4(t), \alpha(t)]$, 
 a cost $c_s$ has to be attributable to a given spline triplet as a function of the spline parameters.
@@ -498,7 +510,7 @@ Nao, using such a computationally heavy optimization technique did not impact ga
 One pitfall to this technique is there is no guarantee that the global optima will be found for
 a given cost function and therefore local optima are still possible to be returned.
 
-Using the cost function presented in Section \ref{subsec:Cost Functions}, the genetic algorithm was used
+Using the cost function presented in Section \ref{subsec:cost_functions}, the genetic algorithm was used
 to find the 12 triplet parameters (4 parameters for each cubic spline). The algorithm ran for 67 generations
 and produced a triplet spline whose cost was approximately six times smaller than the nominal strategy
 of holding $\theta_3$ and $\theta_4$ constant while linearly increasing $\alpha$.
