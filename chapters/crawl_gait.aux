@@ -41,29 +41,36 @@
 \newlabel{eq:theta1_eq4}{{(4.19)}{29}}
 \newlabel{eq:theta1_eq5}{{(4.20)}{29}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.2.3}Nao Kinematics}{29}}
-\@writefile{lof}{\contentsline {figure}{\numberline {17}{\ignorespaces Sagittal view the Nao in the closed chain crawling configuration. The locations of the joints used in the projected profile calculation are shown as blue dots. $n_p$ represents the sagittal plane of the robot. \relax }}{30}}
+\@writefile{lof}{\contentsline {figure}{\numberline {17}{\ignorespaces Sagittal view the Nao in the closed chain crawling configuration. The locations of the joints used in the projected profile calculation are shown as blue dots. $n_p$ represents the sagittal plane of the robot. $v_h$ is the humerus vector and $v_f$ is the forearm vector. \relax }}{30}}
 \newlabel{fig:nao_pp_view1}{{17}{30}}
-\@writefile{lof}{\contentsline {figure}{\numberline {18}{\ignorespaces Sagittal view the Nao in the closed chain crawling configuration. The locations of the joints used in the projected profile calculation are shown as blue dots. $n_p$ represents the sagittal plane of the robot. \relax }}{31}}
-\newlabel{fig:nao_pp_view1}{{18}{31}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.3}Optimization}{32}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.1}Pseudo-static Model}{32}}
-\@writefile{lof}{\contentsline {figure}{\numberline {19}{\ignorespaces  A sample screen capture of the V-REP simulation of the Nao robot in the closed chain configuration. The robot is set to different poses and then the joint torques are read after a short settle time. \relax }}{33}}
-\newlabel{fig:nao_vrep1}{{19}{33}}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Table of initial and final joint angles for each angle in the configuration triplet used to generate the set of angles used to configure the simulated Nao robot. The resultant set had 9,975 configurations with an angular resolution of $2.5^\circ $.\relax }}{34}}
-\newlabel{tab:angle_set_params1}{{1}{34}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.2}Cost Functions}{34}}
-\newlabel{subsec:cost_functions}{{4.3.2}{34}}
-\newlabel{eq:cost_joint}{{(4.23)}{34}}
-\newlabel{eq:fn_ind_theta}{{(4.24)}{35}}
-\newlabel{eq:fn_ind_alpha}{{(4.25)}{35}}
-\newlabel{eq:fn_ind_z}{{(4.26)}{35}}
-\newlabel{eq:fn_ind_dalpha}{{(4.27)}{35}}
-\newlabel{eq:cost_ind}{{(4.28)}{36}}
-\newlabel{eq:cost_spline}{{(4.29)}{36}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.3}Optimization Procedure}{36}}
+\@writefile{lof}{\contentsline {figure}{\numberline {18}{\ignorespaces Diagram showing the arm joints of the Nao Humanoid Platform. The ``R'' preceeding each of the joint names indicates that these are the joints of the right arm. The left arm configuration is a mirror of the right arm configuration. Cite Aldebaran Nao documentation. \relax }}{31}}
+\newlabel{fig:nao_rarm_hardware1}{{18}{31}}
+\newlabel{eq:shoulder_roll1}{{(4.21)}{31}}
+\@writefile{lof}{\contentsline {figure}{\numberline {19}{\ignorespaces Diagram showing Nao arm positioning. $l_h$ denotes the length of the humerus, $d_s$ denotes shoulder-to-shoulder distance, $d_f$ denotes forearm-to-forearm distance. $d$ is the distance in the y axis that the elbow is from the saggital plane. \relax }}{32}}
+\newlabel{fig:nao_arm_pose1}{{19}{32}}
+\newlabel{eq:elbow_fk1}{{(4.22)}{32}}
+\newlabel{eq:elbow_yaw_axis1}{{(4.23)}{32}}
+\@writefile{lof}{\contentsline {figure}{\numberline {20}{\ignorespaces Diagram illustrating the vector $v_{ey}$. The left pane shows the vector in the z-x plane and its z and x components as functions of $\mathaccentV {tilde}07El_h$ and $\alpha $. $\alpha $ is defined as being the angle subtended by the humerus in the z-x plane and the ground plane, but as the ground plane is parallel to the x-axis in this derivation $\alpha $ can be used to describe $v_{ey}$. The right pane shows the vector in the z-y plane and its y component as $d$. \relax }}{33}}
+\newlabel{fig:arm_vectors1}{{20}{33}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.3}Optimization}{33}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.1}Pseudo-static Model}{34}}
+\@writefile{lof}{\contentsline {figure}{\numberline {21}{\ignorespaces  A sample screen capture of the V-REP simulation of the Nao robot in the closed chain configuration. The robot is set to different poses and then the joint torques are read after a short settle time. \relax }}{35}}
+\newlabel{fig:nao_vrep1}{{21}{35}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Table of initial and final joint angles for each angle in the configuration triplet used to generate the set of angles used to configure the simulated Nao robot. The resultant set had 9,975 configurations with an angular resolution of $2.5^\circ $.\relax }}{35}}
+\newlabel{tab:angle_set_params1}{{1}{35}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.2}Cost Functions}{35}}
+\newlabel{subsec:cost_functions}{{4.3.2}{35}}
+\newlabel{eq:cost_joint}{{(4.29)}{36}}
+\newlabel{eq:fn_ind_theta}{{(4.30)}{36}}
+\newlabel{eq:fn_ind_alpha}{{(4.31)}{36}}
+\newlabel{eq:fn_ind_z}{{(4.32)}{36}}
+\newlabel{eq:fn_ind_dalpha}{{(4.33)}{37}}
+\newlabel{eq:cost_ind}{{(4.34)}{37}}
+\newlabel{eq:cost_spline}{{(4.35)}{37}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.3}Optimization Procedure}{37}}
 \@setckpt{./chapters/crawl_gait}{
-\setcounter{page}{38}
-\setcounter{equation}{29}
+\setcounter{page}{39}
+\setcounter{equation}{35}
 \setcounter{enumi}{3}
 \setcounter{enumii}{0}
 \setcounter{enumiii}{0}
@@ -78,7 +85,7 @@
 \setcounter{subsubsection}{0}
 \setcounter{paragraph}{0}
 \setcounter{subparagraph}{0}
-\setcounter{figure}{19}
+\setcounter{figure}{21}
 \setcounter{table}{1}
 \setcounter{parentequation}{0}
 \setcounter{ContinuedFloat}{0}

@@ -246,82 +246,169 @@ Figure \ref{fig:nao_pp_view1} illustrates the sagittal view of the robot in the 
 When Nao is set to this configuration, the ankle pitch, knee pitch, hip pitch, and shoulder pitch joints 
 of the robot directly correspond to $\theta_2$ through $\theta_5$. $\theta_1$ corresponds to the angle
 subtended by the robot's foot and the ground. Unlike the first five joint angles, angle $\alpha$ does not have a
-direct correspondence and the arm joint angles for shoulder roll $\theta_{sr}$, elbow yaw $\theta_{ey}$, 
-and elbow roll $\theta_{er}$ must be derived as a relationship between the angle $\alpha$ and additional
+direct correspondence. The arm joint angles must be derived as a relationship between the angle $\alpha$ and additional
 arm positioning constraints.
 
 \begin{figure}
 	\includegraphics[width=\textwidth]{horz_profile_with_notation2.png}
   	\caption{Sagittal view the Nao in the closed chain crawling configuration. 
-  				The locations of the joints used in the projected profile calculation are shown as blue dots. 
-  				$n_p$ represents the sagittal plane of the robot.
-  			}
+  					 The locations of the joints used in the projected profile calculation are shown as blue dots. 
+  					 $n_p$ represents the sagittal plane of the robot.
+  					 $v_h$ is the humerus vector and $v_f$ is the forearm vector.
+  					}
   	\label{fig:nao_pp_view1}
 \end{figure}
 
 \begin{figure}
-	\includegraphics[width=\textwidth]{hardware_rarmjoint_3.3.png}
-  	\caption{Sagittal view the Nao in the closed chain crawling configuration. 
-  				The locations of the joints used in the projected profile calculation are shown as blue dots. 
-  				$n_p$ represents the sagittal plane of the robot.
-  			}
-  	\label{fig:nao_pp_view1}
+	\includegraphics[width=0.75\textwidth]{hardware_rarmjoint.png}
+  	\caption{Diagram showing the arm joints of the Nao Humanoid Platform.
+  					 The ``R'' preceeding each of the joint names indicates that these
+  					 are the joints of the right arm. The left arm configuration is a mirror
+  					 of the right arm configuration. Cite Aldebaran Nao documentation.
+  				  }
+  	\label{fig:nao_rarm_hardware1}
+\end{figure}
+
+The coordinate frame that all of the calculations will be done with respect to, will be embedded in the
+saggital plane $n_p$ of the Nao. The x-axis is embedded in the saggital plane and in the direction of travel, parallel to the crawling surface. The z-axis is also embedded in the saggital place, perpendicular to the x-axis
+and pointing upwards.
+The y-axis is perpendicular to the saggital plane. Nominally, the axis of the shoulder pitch is coincident
+with the y-axis. The origin of the coordinate system will be at the shoulder pitch joint.
+
+As shown in Figure \ref{fig:nao_rarm_hardware1}, the arm of the Nao has 5 degrees of freedom.
+The kinematic chain of the arm joints proceeds in the following order: shoulder pitch, shoulder
+roll, elbow yaw, elbow roll, wrist yaw. The angles for these joints will be denoted as $\theta_{sp}$,
+$\theta_{sr}$, $\theta_{ey}$, $\theta_{er}$, and $\theta_{wy}$ respectively. Due to the projected profile
+method being a saggital projection of the Nao's kinematic configuration, and the shoulder pitch joint
+being orthogonal to the saggital plane, $\theta_{sp} = \theta_5$ as stated previously. The wrist
+joint plays no role in the positioning of the arm in this context (as the hand orientation is considered
+not to be relevant), therefore, $\theta_{wy}$ is not a function of the projected profile angle set.
+The remaining joint angles $\theta_{sr}$, $\theta_{ey}$, and $\theta_{er}$ 
+need to be solved for using the projected profile angle $\alpha$ and the following arm positioning 
+constraints.
+
+% We want to be able to position the arms a certain width apart to give a wider base and allow the elbows to
+% rotate the projection of the forearm more before the actual forearm hits the humerus.
+While the arms could be positioned such that $\theta_{sr}$ and $\theta_{ey}$ are set to a constant
+and $\theta_{er}$ corresponds to $\alpha$, this configuration limits the lateral stability of the
+gait. To increase the lateral stability, the arms are positioned so the forearm-to-forearm distance $d_f$
+is greater than the shoulder-to-shoulder distance $d_s$. This increases the width of the support polygon 
+that the center of mass can be projected onto. A diagram of these distances can be seen in 
+Figure \ref{fig:nao_arm_pose1}.
+
+\begin{figure}
+	\includegraphics[width=\textwidth]{nao_arm_shoulder_positioning1.png}
+  	\caption{Diagram showing Nao arm positioning. 
+  					 $l_h$ denotes the length of the humerus,
+  					 $d_s$ denotes shoulder-to-shoulder distance,
+  					 $d_f$ denotes forearm-to-forearm distance.
+  					 $d$ is the distance in the y axis that the elbow is from the saggital plane.
+  				  }
+  	\label{fig:nao_arm_pose1}
 \end{figure}
 
 % [More to come on this part. Continue reading.]
 % This is the part where we talk about the arm kinematics.
 % Unlike the feet, etc, the arms are not inline with the rest of the body.
-% We want to be able to position the arms a certain width apart to give a wider base and allow the elbows to
-% rotate the projection of the forearm more before the actual forearm hits the humerus.
 
 % The shoulder roll is computable as a function of the desired width, shoulder width, and the length of the humerus.
-The shoulder roll $\theta_{sr}$ is computable as a function of 
-
-The elbow roll is a function of the humerus vector and the desired forearm direction vector.
-The elbow yaw is a function of the humerus vector, the desired forearm direction vector, and the axis of rotation
-the the elbow roll revolves around.
-
-With these three angles, the arm can be positioned.
-
-To explain how to compute these, we have to define a whole bunch of vectors and scalars.
-First the scalars.
-Desired forearm-to-forearm spacing is denoted $d_f$.
-The shoulder-to-shoulder spacing is denoted $d_s$
-Then, as can be seen in one of the diagrams, we can define a quantity
-$d = \frac{d_f - d_s}{2}$ as the y-component of the elbow, where the origin is placed at the shoulder joint,
-the z-axis pointing up, x-axis facing forward.
-$l_h$ is the length of the humerus.
-$\tilde l_h = \sqrt{l_h^2 - d^2}$ is the length of the humerus, projected onto the z-x plane.
-
-Now the vectors.
-The first vector is the desired forearm orientation $u_f = [1, 0, 0]^T$. We want the forearm to lie on the ground
-and pointing forward. On the ground to maximize surface contact so the robot is well supported and forward so the
-ground contact is parallel to the direction of travel.
-The next vector is the unit vector representing the direction that the humerus is pointing.
-This vector represents the rotation axis for the elbow yaw joint on the Nao.
-$v_{ey} = [\tilde l_h \cos(\alpha), d, \tilde l_h \sin(\alpha)]^T / l_h$.
-As can be seen by Figure \ref{fig:nao_arm_vectors1} $[\tilde l_h \cos(\alpha), d, \tilde l_h \sin(\alpha)]^T$ represents
-the humerus with the shoulder at the origin, which is then normalized by the length of the humerus $l_h$.
-The next vector is the unit vector representing the rotation axis for the elbow roll joint on the Nao.
-When the elbow yaw is zero, the rotation axis for the elbow roll is $v_{er} = [-\sin(\alpha), 0, \cos(\alpha)]^T$.
-This vector $v_{er}$ is perpendicular to $v_{ey}$.
-
-The goal here is to put the forearm to be $u_f$. When elbow yaw and elbow roll are zero, the orientation of the
-forearm is coincident with the vector $v_{ey}$. We will denote the forearm vector as $v_f$ which is initialized to
-$v_f = v_{ey}$.
-In order to move $v_f$ to $u_f$ we have to rotate $v_f$ around $v_{ey}$ by an amount $\theta_{ey}$ and then about
-$v_{er}$ by an amount $\theta_{er}$.
+% The shoulder roll $\theta_{sr}$ is computable as a function of 
+As the shoulder roll only proceeds the shoulder pitch, its value $\theta_{sr}$ can be computed as a function
+of $d_s$, $d_f$ and the length of the humerus $l_h$. A scalar $d = \frac{d_f - d_s}{2}$ is
+the distance in the y-axis that the elbow extends from the origin.
+From the geometry of the arm positioning, it can be seen that $\theta_{sr}$ can be computed as:
 
 \begin{equation}
-	u_f = R_{v_{er}, \theta_{er}} R_{v_{ey}, \theta_{ey}} v_f
+	\theta_{sr} = sin^{-1} \left( \frac{d}{l_h} \right ) \label{eq:shoulder_roll1}
 \end{equation}
 
-To find $\theta_{ey}$, we must first compute $v_f \times u_f$ to find the desired vector $u_{er}$ that
-$v_{er}$ must be rotated to. Then, $\theta_{ey} = \arccos(v_{er} \cdot u_{er})$.
-Then, $\theta_{er} = \arccos(v_{ey} \cdot u_f)$.
+% The elbow roll is a function of the humerus vector and the desired forearm direction vector.
+% The elbow yaw is a function of the humerus vector, the desired forearm direction vector, and the axis of rotation
+% the the elbow roll revolves around.
 
-These four angles complete the arm kinematics and compute the joints angles given the projected profile angle $\alpha$
-and the desired forearm-to-forearm spacing.
+Intuitively, the elbow yaw and elbow roll are a function of the vector $u_f$, which represents the desired 
+orientation of the forearm, the vector $v_f$, which is the orientation of the forearm when 
+$\theta_{ey}$ and $\theta_{er}$ are zero, and the two vectors representing the axes of joint 
+rotation about the two elbow joints,
+denoted $v_{ey}$ and $v_{er}$. $v_f$ is first rotated about $v_{ey}$ by amount $\theta_{ey}$, then about
+$v_{er}$ by amount $\theta_{er}$. This should bring $v_f$ to be conincident with $u_f$.
+This can be expressed by equation \ref{eq:elbow_fk1}.
+
+\begin{equation}
+	u_f = R_{v_{er}, \theta_{er}} R_{v_{ey}, \theta_{ey}} v_f \label{eq:elbow_fk1}
+\end{equation}
+
+When the joint angles are zero, $v_f = v_{ey}$.
+% The first vector is the desired forearm orientation $u_f = [1, 0, 0]^T$. We want the forearm to lie on the ground
+% and pointing forward.
+The desired orientation of the forearm is to be along the direction of travel to maximize the static friction
+in that direction. $u_f$ is therefore coincident with the x-axis $u_f = [1, 0, 0]^T$.
+
+% The next vector is the unit vector representing the direction that the humerus is pointing.
+% $v_{ey} = [\tilde l_h \cos(\alpha), d, \tilde l_h \sin(\alpha)]^T / l_h$.
+% As can be seen by Figure \ref{fig:nao_arm_vectors1} $[\tilde l_h \cos(\alpha), d, \tilde l_h \sin(\alpha)]^T$ 
+% represents
+% the humerus with the shoulder at the origin, which is then normalized by the length of the humerus $l_h$.
+
+As $v_{ey}$ is coincident with the humerus, it can be found by computing the normalized humerus vector.
+An illustration of this vector can be seen in Figure \ref{fig:arm_vectors1}. The elbow yaw axis is then defined
+by equation \ref{eq:elbow_yaw_axis1}.
+\begin{equation}
+	v_{ey} = [\tilde l_h \cos(\alpha), d, \tilde l_h \sin(\alpha)]^T / l_h \label{eq:elbow_yaw_axis1}
+\end{equation}
+
+$\tilde l_h = \sqrt{l_h^2 - d^2}$ is the length of the humerus, projected onto the z-x plane.
+
+\begin{figure}
+	\includegraphics[width=\textwidth]{nao_arm_vector_z_x_y1.png}
+  	\caption{Diagram illustrating the vector $v_{ey}$. The left pane shows the vector in
+  					 the z-x plane and its z and x components as functions of $\tilde l_h$ and $\alpha$.
+  					 $\alpha$ is defined as being the angle subtended by the humerus in the z-x plane and the
+  					 ground plane, but as the ground plane is parallel to the x-axis in this derivation
+  					 $\alpha$ can be used to describe $v_{ey}$.
+  					 The right pane shows the vector in the z-y plane and its y component as $d$.
+  				  }
+  	\label{fig:arm_vectors1}
+\end{figure}
+
+% The next vector is the unit vector representing the rotation axis for the elbow roll joint on the Nao.
+% When the elbow yaw is zero, the rotation axis for the elbow roll is $v_{er} = [-\sin(\alpha), 0, \cos(\alpha)]^T$.
+% This vector $v_{er}$ is perpendicular to $v_{ey}$.
+By the kinematics of Nao's arm, $v_{er}$ will always lie on the plane perpendicular to the vector $v_{ey}$.
+As $\theta_{ey}$ can be offset to make $v_{er}$ any vector on that plane, $v_{er}$ is chosen to be:
+
+\begin{equation}
+	v_{er} = [-\sin(\alpha), 0, \cos(\alpha)]^T
+\end{equation}
+
+which is perpendicular to $v_{ey}$ by construction.
+
+% The goal here is to put the forearm to be $u_f$. When elbow yaw and elbow roll are zero, the orientation of the
+% forearm is coincident with the vector $v_{ey}$. We will denote the forearm vector as $v_f$ which is initialized to
+% $v_f = v_{ey}$.
+% In order to move $v_f$ to $u_f$ we have to rotate $v_f$ around $v_{ey}$ by an amount $\theta_{ey}$ and then about
+% $v_{er}$ by an amount $\theta_{er}$.
+
+% To find $\theta_{ey}$, we must first compute $v_f \times u_f$ to find the desired vector $u_{er}$ that
+% $v_{er}$ must be rotated to. Then, $\theta_{ey} = \arccos(v_{er} \cdot u_{er})$.
+To find $\theta_{ey}$,  it is necessary to find the vector $u_{er}$ to which $v_{er}$ must be rotated, to allow
+$v_f$ to be brought to $u_f$. $u_{er}$ can be found by taking the cross product of $v_f$ and $u_f$.
+Then, $\theta_{ey}$ is the inverse cosine of the dot product of $v_{er}$ and $u_{er}$ as they are all unit vectors.
+\begin{align}
+	u_{er} &= v_f \times u_f \\
+	\theta_{ey} &= \cos^{-1}(v_{er} \cdot u_{er})
+\end{align}
+
+% Then, $\theta_{er} = \arccos(v_{ey} \cdot u_f)$.
+Finally, $\theta_{er}$ is the angle between the forearm vector $v_f$ and the desired forearm vector $u_f$.
+This can again be found using the inverse cosine and dot product.
+
+\begin{equation}
+	\theta_{er} = \cos^{-1}(v_{f} \cdot u_{f})
+\end{equation}
+
+% These four angles complete the arm kinematics and compute the joints angles given the projected profile angle $\alpha$
+% and the desired forearm-to-forearm spacing.
 
 %%% Pseudo-static modelling %%%
 \section{Optimization}
