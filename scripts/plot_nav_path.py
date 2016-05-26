@@ -46,12 +46,34 @@ def main():
     poly_points = np.loadtxt(args.poly_points, delimiter=',')
     sample_points = np.loadtxt(args.sample_set, delimiter=',')
 
+    start = np.array([])
+    goal = np.array([])
+
+    # Narrow Area Path Endpoints
+    # start = np.array([64.0, 61.0])
+    # goal = np.array([570.0, 65.0])
+
+    # Open Area Path Endpoints
+    # start = np.array([35.0, 54.0])
+    # goal = np.array([578.0, 243.0])
+
+    # Square Area Path Endpoints
+    # start = np.array([67.0, 72.0])
+    # goal = np.array([622.0, 74.0])
+
     # Scale data.
     poly_points /= 58.0  # Pixels per foot.
     sample_points /= 58.0
 
     poly_points *= 0.305  # Meters per foot.
     sample_points *= 0.305
+
+    if start.size is not 0:
+        # Scale data.
+        start /= 58.0  # Pixels per foot.
+        goal /= 58.0
+        start *= 0.305  # Meters per foot.
+        goal *= 0.305
 
     # Plot result
     plt.plot(poly_points[:, 0], poly_points[:, 1], '-', color='g',
@@ -60,10 +82,15 @@ def main():
     plt.plot(sample_points[:, 0], sample_points[:, 1], 'o', markerfacecolor='b',
              markeredgecolor='k', markersize=2, label='Samples Extracted From Video')
 
-    plt.legend(loc='upper right', shadow=True, fontsize='large')
+    if start.size is not 0:
+        plt.plot(start[0], start[1], 's', color='r', markeredgecolor='k', markersize=10, label='Start Location')
+        plt.plot(goal[0], goal[1], '*', color='y', markeredgecolor='k', markersize=10, label='Goal Location')
+
+    plt.legend(loc='upper right', shadow=True, fontsize='large', numpoints=1)
 
     plt.gca().invert_yaxis()
     plt.axis('equal')
+    plt.margins(0.1)
     plt.xlabel('Distance (meters)')
     plt.ylabel('Distance (meters)')
     plt.grid(True)
