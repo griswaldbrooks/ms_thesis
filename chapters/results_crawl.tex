@@ -23,6 +23,11 @@ PUT A PROJECTED PROFILE PICTURE HERE FOR THE INTRO.
 
 THESE ARE ALL DONE WITH THE TRIVIAL TRIPLET PARAMETERS.
 
+Explain the gait and it's parameters.
+
+Explain the different experimental setups.
+
+Explain that the point of this setup is to show that the crawl gait is very low profile.
 \begin{figure}
   \vspace*{0.02in}
   \centerline{
@@ -35,6 +40,9 @@ THESE ARE ALL DONE WITH THE TRIVIAL TRIPLET PARAMETERS.
   \label{fig:nao_crawl1}
   \vspace*{-0.07in}
 \end{figure}
+
+Explain that this experiment is a demonstration of the gait being used to perform a task,
+getting through a crawl space.
 
 \begin{figure}
   \centerline{
@@ -84,6 +92,8 @@ THESE ARE ALL DONE WITH THE TRIVIAL TRIPLET PARAMETERS.
   \vspace*{-0.05in}
 \end{figure}
 
+Here is a plot of the joint angles of the gait, showing its periodicity.
+
 \begin{figure}
   \centerline{
     \includegraphics[width=0.5\textwidth]{crawl/joint_angles/LeftArmJointAngles.png}
@@ -98,6 +108,8 @@ THESE ARE ALL DONE WITH THE TRIVIAL TRIPLET PARAMETERS.
   \vspace*{-0.1in}
 \end{figure}
 
+This is a full plot of the entire sequence, from walking, to crawling, to walking.
+
 \begin{figure}
   \centerline{
     \includegraphics[width=0.5\textwidth]{crawl/joint_angles_long_sequence/LeftArmJointAngles_longSequence.png}
@@ -109,6 +121,9 @@ THESE ARE ALL DONE WITH THE TRIVIAL TRIPLET PARAMETERS.
   \label{fig:nao_joint_angles_long_seq}
   \vspace*{-0.2in}
 \end{figure}
+
+This plot shows the current draws of the arm and leg joints.
+There are some distinct patterns, but is hard to relate torques directly.
 
 \begin{figure}
   \centerline{
@@ -127,6 +142,15 @@ THROW IN A V-REP PICTURE OR 4.
 
 WHAT WERE THE TRIPLET PARAMETERS?
 
+Insert plot of the optimization process.
+
+PUT IN HOW MANY ITERATIONS IT TOOK TO FINISH.
+PUT IN HOW MANY ITERATIONS IT TOOK TO KINDA CONVERGE.
+THROW IN THE OTHER RELEVANT STATISTICS LIKE NUMBER OF CHILDREN ETC.
+
+These plots show the theoretical optimization costs of the nominal and optimized
+triplet parameters. 
+
 \begin{figure}
   \vspace*{-0.12in}
   \centerline{
@@ -138,3 +162,18 @@ WHAT WERE THE TRIPLET PARAMETERS?
   \vspace*{-0.17in}
   \label{fig:optimal}
 \end{figure}
+
+Ok, so now, how does it do with these new optimizations?
+We use the V-REP here instead of the currents from the robot because they are easier to interpret.
+
+Insert pictures of the Projected Profile optimized gait.
+
+Insert pictures of the V-REP gaits overlaid onto the
+optimized gait.
+
+Insert pictures of the torque graphs for the nominal and optimized gaits.
+
+PUT IN THE OPTIMIZATION COSTS (Check out the torque only ones and the torque plus indication
+function costs to see what kind of influence those functions had on the optimization.)
+
+

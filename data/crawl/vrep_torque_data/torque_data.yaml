@@ -1,0 +1,29 @@
+nominal_files:
+  folder: nominal
+  files:
+    - vrepn_Torquesm_1.txt
+    - vrepn_Torquesm_2.txt
+    - vrepn_Torquesm_3.txt
+    - vrepn_Torquesm_4.txt
+    - vrepn_Torquesm_5.txt
+    - vrepn_Torquesm_6.txt
+    - vrepn_Torquesm_7.txt
+    - vrepn_Torquesm_8.txt
+    - vrepn_Torquesm_9.txt
+    - vrepn_Torquesm_10.txt
+  durations: [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0]
+
+optimal_files:
+  folder: optimal
+  files:
+    - vrepn_Torquesm_1.txt
+    - vrepn_Torquesm_2.txt
+    - vrepn_Torquesm_3.txt
+    - vrepn_Torquesm_4.txt
+    - vrepn_Torquesm_5.txt
+    - vrepn_Torquesm_6.txt
+    - vrepn_Torquesm_7.txt
+    - vrepn_Torquesm_8.txt
+    - vrepn_Torquesm_9.txt
+    - vrepn_Torquesm_10.txt
+  durations: [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0]
