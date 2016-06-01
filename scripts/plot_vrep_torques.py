@@ -28,9 +28,17 @@
 import argparse
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib import cm
+# from matplotlib import cm
+from matplotlib import colors
 from os import path
 import yaml
+
+
+def truncate_colormap(cmap, minval=0.0, maxval=1.0, n=100):
+    new_cmap = colors.LinearSegmentedColormap.from_list(
+        'trunc({n},{a:.2f},{b:.2f})'.format(n=cmap.name, a=minval, b=maxval),
+        cmap(np.linspace(minval, maxval, n)))
+    return new_cmap
 
 
 def main():
@@ -60,63 +68,88 @@ def main():
     nom_durations = np.array(torque_doc['nominal_files']['durations'])
     opt_durations = np.array(torque_doc['optimal_files']['durations'])
 
-    # Plot torques.
-    # f, nom_axes = plt.subplots(4, 2, sharex=True, sharey=True)
-    # nom_axes = [axis for axis_set in nom_axes for axis in axis_set]
-    # for nom_torque, duration, nom_axis in zip(nom_torques, nom_durations, nom_axes):
-    #     # Generate times.
-    #     t = np.linspace(0.0, 1.0, len(nom_torque))
-    #     # Add curve to plot.
-    #     nom_axis.plot(t, nom_torque[:, 0], color='r')
-    #     nom_axis.plot(t, nom_torque[:, 1], color='g')
-    #     nom_axis.plot(t, nom_torque[:, 2], color='b')
-    #     nom_axis.plot(t, nom_torque[:, 3], color='m')
-    #     nom_axis.set_title(str(duration))
-    #     nom_axis.margins(0.1)
+    # Plot torques on a per duration basis.
+    for nom_torque, nom_duration in zip(nom_torques, nom_durations):
+        nom_fig, nom_axis = plt.subplots()
 
-    # f, opt_axes = plt.subplots(4, 2, sharex=True, sharey=True)
-    # opt_axes = [axis for axis_set in opt_axes for axis in axis_set]
-    # for torque, duration, axis in zip(opt_torques, opt_durations, opt_axes):
-    #     # Generate times.
-    #     t = np.linspace(0.0, 1.0, len(torque))
-    #     # Add curve to plot.
-    #     axis.plot(t, torque[:, 0], color='r')
-    #     axis.plot(t, torque[:, 1], color='g')
-    #     axis.plot(t, torque[:, 2], color='b')
-    #     axis.plot(t, torque[:, 3], color='m')
-    #     axis.set_title(str(duration))
-    #     axis.margins(0.1)
+        # Generate times.
+        t = np.linspace(0.0, nom_duration, len(nom_torque))
+
+        # Add curve to plot.
+        nom_axis.plot(t, nom_torque[:, 0], color='r', linewidth=2, label='Joint ' + r'$\theta_2$')
+        nom_axis.plot(t, nom_torque[:, 1], color='g', linewidth=2, label='Joint ' + r'$\theta_3$')
+        nom_axis.plot(t, nom_torque[:, 2], color='b', linewidth=2, label='Joint ' + r'$\theta_4$')
+        nom_axis.plot(t, nom_torque[:, 3], color='m', linewidth=2, label='Joint ' + r'$\theta_5$')
+        nom_axis.set_title('Nominal Gait: ' + str(nom_duration) + ' second duration')
+        nom_axis.margins(0.1)
+        nom_axis.set_ylabel('Torque (N/m)')
+        nom_axis.set_xlabel('Time (seconds)')
+        nom_axis.grid(True)
+        plt.legend(loc='upper right', shadow=True, fontsize='large', numpoints=1)
+        nom_fig.savefig('nom_torques_duration_' + str(nom_duration) + '_1.png', dpi=300, format='png')
+
+    for opt_torque, opt_duration in zip(opt_torques, opt_durations):
+        opt_fig, opt_axis = plt.subplots()
+
+        # Generate times.
+        t = np.linspace(0.0, opt_duration, len(opt_torque))
+
+        # Add curve to plot.
+        opt_axis.plot(t, opt_torque[:, 0], color='r', linewidth=2, label='Joint ' + r'$\theta_2$')
+        opt_axis.plot(t, opt_torque[:, 1], color='g', linewidth=2, label='Joint ' + r'$\theta_3$')
+        opt_axis.plot(t, opt_torque[:, 2], color='b', linewidth=2, label='Joint ' + r'$\theta_4$')
+        opt_axis.plot(t, opt_torque[:, 3], color='m', linewidth=2, label='Joint ' + r'$\theta_5$')
+        opt_axis.set_title('Optimal Gait: ' + str(opt_duration) + ' second duration')
+        opt_axis.margins(0.1)
+        opt_axis.set_ylabel('Torque (N/m)')
+        opt_axis.set_xlabel('Time (seconds)')
+        opt_axis.grid(True)
+        plt.legend(loc='upper right', shadow=True, fontsize='large', numpoints=1)
+        opt_fig.savefig('opt_torques_duration_' + str(opt_duration) + '_1.png', dpi=300, format='png')
 
     # Plot torques on a per joint basis.
-    # f, jt_axes = plt.subplots(2, 2, sharex=True, sharey=True)
-    # jt_axes = [axis for axis_set in jt_axes for axis in axis_set]
-    # for jt_axis, joint_ndx in zip(jt_axes, range(0, 4)):
     for joint_ndx in range(0, 4):
-        f, jt_axis = plt.subplots()
+        # Generate colormap for figures.
+        nom_cm = truncate_colormap(plt.get_cmap('Reds'), 0.5, 1.0)
+        opt_cm = truncate_colormap(plt.get_cmap('Blues'), 0.5, 1.0)
+        # Get fresh plots.
+        jt_fig, jt_axis = plt.subplots()
+
         # Iterate through torque sets and pull off appropriate joint.
         for opt_tor, nom_tor, dur in zip(opt_torques, nom_torques, nom_durations):
 
             # Generate times.
-            t = np.linspace(0.0, 1.0, len(nom_tor))
+            t = np.linspace(0.0, 100.0, len(nom_tor))
+            # Get color value.
+            dur_range = [min(nom_durations), max(nom_durations)]
+            color_range = [0.0, 1.0]
+            color_value = np.interp(dur, dur_range, color_range)
             # Add curve to plot.
-            jt_axis.plot(t, nom_tor[:, joint_ndx], c=cm.Reds(dur/10.0), linewidth=2, linestyle='-')
-            jt_axis.plot(t, opt_tor[:, joint_ndx], c=cm.Blues(dur/10.0), linewidth=2, linestyle='--')
+            jt_axis.plot(t, nom_tor[:, joint_ndx], c=nom_cm(color_value),
+                         linewidth=2, linestyle='-', label='Nominal')
+            jt_axis.plot(t, opt_tor[:, joint_ndx], c=opt_cm(color_value),
+                         linewidth=2, linestyle='--', label='Optimal')
 
-        jt_axis.set_title(str(joint_ndx))
+        # Set plot parameters for whole figure.
+        jt_axis.set_title('Joint ' + r'$\theta_' + str(joint_ndx + 2) + '$')
         jt_axis.margins(0.1)
+        jt_axis.set_ylabel('Torque (N/m)')
+        jt_axis.set_xlabel('Percentage of Gait Cycle (%)')
+        jt_axis.grid(True)
 
-    # f, opt_axes = plt.subplots(4, 2, sharex=True, sharey=True)
-    # opt_axes = [axis for axis_set in opt_axes for axis in axis_set]
-    # for torque, duration, axis in zip(opt_torques, opt_durations, opt_axes):
-    #     # Generate times.
-    #     t = np.linspace(0.0, 1.0, len(torque))
-    #     # Add curve to plot.
-    #     axis.plot(t, torque[:, 0], color='r')
-    #     axis.plot(t, torque[:, 1], color='g')
-    #     axis.plot(t, torque[:, 2], color='b')
-    #     axis.plot(t, torque[:, 3], color='m')
-    #     axis.set_title(str(duration))
-    #     axis.margins(0.1)
+        # Set colorbars for nominal and optimal gaits.
+        sm = plt.cm.ScalarMappable(cmap=nom_cm, norm=plt.Normalize(vmin=1, vmax=10))
+        sm._A = []
+        jt_colorbar = jt_fig.colorbar(sm, shrink=0.9, pad=0.0)
+        jt_colorbar.set_label('Duration of Nominal Gait (Seconds)')
+
+        sm = plt.cm.ScalarMappable(cmap=opt_cm, norm=plt.Normalize(vmin=1, vmax=10))
+        sm._A = []
+        jt_colorbar = jt_fig.colorbar(sm, shrink=0.9, pad=0.02)
+        jt_colorbar.set_label('Duration of Optimized Gait (Seconds)')
+
+        # Save figure.
+        jt_fig.savefig('joint' + str(joint_ndx + 2) + '_torques' + '.png', dpi=300, format='png')
 
     # Compute costs and improvements.
     nom_costs = []
@@ -124,50 +157,44 @@ def main():
 
     for torque in nom_torques:
         sq_tor = np.square(torque)
-        weight = np.array([1, 1, 1, 5])
+        # weight = np.array([1, 1, 1, 5])
+        weight = np.array([1, 1, 1, 1])
         cost = np.sum(np.sum(weight*sq_tor))
         nom_costs.append(cost)
 
     for torque in opt_torques:
         sq_tor = np.square(torque)
-        weight = np.array([1, 1, 1, 5])
+        # weight = np.array([1, 1, 1, 5])
+        weight = np.array([1, 1, 1, 1])
         cost = np.sum(np.sum(weight*sq_tor))
         opt_costs.append(cost)
 
     # Plot costs.
-    f, ax = plt.subplots()
+    fig, ax = plt.subplots()
     times = np.linspace(min(nom_durations), max(nom_durations), len(nom_durations))
-    ax.plot(times, nom_costs, color='g')
-    ax.plot(times, opt_costs, color='r', linewidth=4)
-    ax.set_title('Gait Costs')
+    ax.plot(times, nom_costs, '-', color='g', linewidth=3, label='Nominal')
+    ax.plot(times, opt_costs, '--', color='r', linewidth=3, label='Optimal')
+    ax.set_title('Gait Cost vs Duration')
     ax.margins(0.1)
     ax.set_xlabel('Gait Duration (seconds)')
-    ax.set_ylabel('Cost')
+    ax.set_ylabel('Cost (' + r'$\frac{N^2}{m^2}$' + ')')
+    ax.grid(True)
+    plt.legend(loc='upper right', shadow=True, fontsize='large', numpoints=1)
+    fig.savefig('gait_cost_duration1.png', dpi=300, format='png')
+    np.savetxt('gait_costs_nominal1.txt', np.transpose(nom_costs), delimiter=',')
+    np.savetxt('gait_costs_optimal1.txt', np.transpose(opt_costs), delimiter=',')
 
     # Plot improvements.
-    f, ax = plt.subplots()
+    fig, ax = plt.subplots()
     times = np.linspace(min(nom_durations), max(nom_durations), len(nom_durations))
-    ax.plot(times, np.asarray(opt_costs)/np.asarray(nom_costs), color='b')
-    ax.set_title('Reduction of Cost')
+    ax.plot(times, np.asarray(opt_costs)/np.asarray(nom_costs), color='b', linewidth=3)
+    ax.set_title('Cost Improvements vs. Gait Duration')
     ax.margins(0.1)
     ax.set_xlabel('Gait Duration (seconds)')
-    ax.set_ylabel('Percent of Original Cost')
+    ax.set_ylabel('Percentage of Original Cost (%)')
+    ax.grid(True)
+    fig.savefig('cost_imp_duration1.png', dpi=300, format='png')
 
-    # plt.legend(loc='upper right', shadow=True, fontsize='large', numpoints=1)
-
-    # plt.axis('equal')
-    # plt.margins(0.1)
-    # plt.xlabel('Time (seconds)')
-    # plt.ylabel('Torque (N/m)')
-    # plt.grid(True)
-    # if args.figure_title is not None:
-    #     plt.title(args.figure_title)
-    # else:
-    #     plt.title('Navigation Path')
-    # if args.output_filename is not None:
-    #     plt.savefig(args.output_filename + '.png', dpi=300, format='png')
-    # else:
-    #     plt.savefig('nav_figure.png', dpi=300, format='png')
     plt.show()
 
 if __name__ == '__main__':
