@@ -5,8 +5,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Crawl Gait Results} \label{ch:results_crawl_gait}
 
-% The structure of this chapter needs revision.
-
 % What do we have to talk about here?
 % Well, I suppose the point of this chapter is to present how well the algorithm worked.
 % What is there to present?
@@ -17,18 +15,216 @@
 % How high?
 % What was the torque usage?
 
-\section{Intro/Experimental Setup}
-Crap I have to say about crawling.
+To test the efficacy of the Projected Profile crawling gait, a gait sequence was generated
+using MATLAB and simulated using the V-REP simulator by Coppelia Robotics.
+The crawling sequence was generated using the nominal crawling parameters. 
+The Nao humanoid platform was then programmed using the NaoQI API in C++ to use this sequence 
+to execute a crawling action. The robot was initialized to its crawling pose and placed on the 
+ground where it crawled under a short ledge. During this experiment, the joint angles and joint
+currents were recorded for later analysis using the NaoQI API.
+To demonstrate a context under which the gait 
+would be used, the Nao was then programmed to walk to a fiducial marker, position itself into
+the crawling position, crawl under a short ledge, and then return to a sitting position.
+NaoQI provides functions for the Nao to walk, position itself to a set of poses from any initial
+pose, and track a ``red ball''. The fiducial marker was a red circle on a piece of paper.
+The robot crawled under the ledge by executing a finite number of crawling sequences, before
+moving to a sitting position. A video of this experiment was recorded for later analysis.
 
-THESE ARE ALL DONE WITH THE TRIVIAL TRIPLET PARAMETERS.
+Following this, the optimized crawling parameters were used to generate a new gait sequence in
+MATLAB. The optimized and nominal gait sequences were tested using the V-REP simulator and the simulated
+joint torques were recorded. The V-REP simulator provides a MATLAB API to record these torques.
+While the optimized gait sequence was formulated using the pseduo-static assumption,
+the gait was tested at different speeds to compare the increase in efficiency against the nominal
+gait for varying degrees of dynamic loading.
 
-Explain the gait and it's parameters.
+Details about the crawling environments, simulation, and crawling parameters can be found in
+Section \ref{sec:crawl_exp_setup}. Data collected about the nominal crawling experiment is
+presented in Section \ref{sec:nom_crawl_data} and the optimized crawling experiment in 
+Section \ref{sec:opt_crawl_data}.
 
-Explain the different experimental setups.
+\FloatBarrier
+\section{Experimental Setup} \label{sec:crawl_exp_setup}
+The crawl gaits were testing on the Nao humanoid using the V-REP simulator in MATLAB,
+and by having actual robot crawl under a small ledge using the NaoQI API in C++.
+The nominal parameters were tested both in simulation and on the actual robot, while
+the optimal parameters were only tested in simulation. MATLAB has tools to use genetic
+algorithms to optimize systems, which were used here to generate the optimal parameter
+splines.
 
-Explain that the point of this setup is to show that the crawl gait is very low profile.
+\subsection{Mobile Platform}
+The Nao humanoid was used to test the Projected Profile algorithm.
+Details about the Nao are discussed in Chapter \ref{ch:platform}, but it makes
+a convenient platform to test crawling algorithms as NaoQI provides an extensive
+API to control a range of parameters from individual joint angles to 
+full body positioning. Importantly, the kinematic configuration of the robot is amenable 
+to the crawling paradigm and its relatively small size allows environments to be
+easily constructed for testing.
 
-\section{Nominal Crawl Gait Data}
+\subsection{Crawling Environments}
+% Explain the different experimental setups.
+Prior to any testing on the actual robot, the V-REP Simulator by Coppelia Robotics was used
+to verify that the algorithms functioned correctly and exhibited the desired behaviors.
+The V-REP simulator is a good choice for this application for a variety of reasons.
+It uses mature and well known Open Dynamics Engine (ODE) as its physics engine, supports multiple
+operating systems such as Windows and Linux, and provides an API for use with many
+languages such as C++, Python, and MATLAB. What's more, it provides a model of the Nao
+humanoid that can be easily commanded.
+Figure \ref{fig:vrep_nao_nom_gait_single_frame1} shows an example of the Nao in V-REP
+set at the initial crawling position.
+The V-REP API also simulates various sensors, and allows the torque at each of the Nao's
+joints to be accessed. As mentioned in Chaper \ref{ch:crawl_gait}, this data was used
+to generate the gait-parameter-triplet-to-joint-torque mapping for the genetic optimizer.
+The simulated joint torques were also accessed while running the optimized crawling
+gait at different speeds to compare its improvement over the nominal gait.
+Results from those experiments are presented in Section \ref{subsec:opt_joint_torque_data}.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{crawl/vrep/nominal/1.png}
+  \caption{This figure shows the Nao humanoid V-REP simulation. 
+           The robot is positioned at the initial configuration of the close chain phase
+           of the crawl gait.}
+  \label{fig:vrep_nao_nom_gait_single_frame1}
+\end{figure}
+
+While traversing rough terrain or over small obstacles is one application of a crawl gait,
+these experiments were instead designed to show that the robot could access areas with
+demanding height constraints. For this, a small table was used whose sides were blocked
+with panels down to about 8 inches off of the ground. 
+Figure \ref{fig:short_ledge_nao_nom_gait_single_frame1} shows the Nao crawling under this table,
+with its head almost touching the bottom of the panel. This represents the practical height
+constraint that the Nao can satisfy with this gait.
+
+\begin{figure}
+  \centering
+  \includegraphics[height=0.35\textheight]{crawl/short_ledge1.png}
+  \caption{This figure shows the Nao as it crawls under the table with the low panels.
+           The head of the robot can be seen to be nearly touching the panel,
+           representing the lowest practical traversable height constraint.}
+  \label{fig:short_ledge_nao_nom_gait_single_frame1}
+\end{figure}
+% Explain that the point of this setup is to show that the crawl gait is very low profile.
+
+\subsection{Gait Parameters} \label{subsec:gait_params}
+% Explain the gait and it's parameters.
+% Nominal Parameters
+As discussed in Chapter \ref{subsec:crawl_closed_chain}, the closed chain phase of the 
+Projected Profile crawl gait can be parameterized on the three angles $[\theta_3, \theta_4, \alpha]$.
+These three variables are referred to as the gait parameters, or alternatively as the angle triplet.
+The nominal angle triplet can be seen in Table \ref{tab:nominal_parameters}. They involve holding
+$\theta_3$ and $\theta_4$ constant, while varying $\alpha$ linearly as a function of time.
+
+\begin{table}
+  \centering
+  \begin{tabularx}{0.5\textwidth}{|l||X|}
+    \hline
+    \textbf{Gait Parameter} & \textbf{Value}                \\  \hline\hline
+    $\theta_3$              &   $16.5^\circ$                \\ 
+    $\theta_4$              &   $27.5^\circ$                \\  
+    $\alpha$                &   $-30^\circ$ to $-90^\circ$  \\  \hline
+  \end{tabularx} 
+  
+  \caption{Table of gait parameters for the nominal crawl gait. $\theta_3$ and $\theta_4$
+           are held constant, while $\alpha$ is linearly decreased in proportion to time.}
+  \label{tab:nominal_parameters}
+\end{table}
+
+Results using these nominal gait parameters can be seen in Section \ref{sec:nom_crawl_data}.
+
+% Optimal Parameters
+% PUT IN HOW MANY ITERATIONS IT TOOK TO FINISH.
+% It took like 50 to 80 generations.
+% PUT IN HOW MANY ITERATIONS IT TOOK TO KINDA CONVERGE.
+% After 10 generations though it was already really close. 
+
+In order to optimize the gait using these parameters, the procedure outlined in Chapter 
+\ref{sec:crawl_optimization} was used, modeling the gait parameters as cubic splines.
+The Genetic Algorithm in MATLAB's Global Optimization Toolbox was used in conjunction
+with the V-REP torque table detailed in Chapter \ref{subsec:crawl_pseudo_static_model}
+to generate the optimal spline parameters. 
+As the genetic algorithm cannot guarantee finding the global optima for any arbitrary function,
+the optimization was executed several times and the best spline parameters were used
+in the experiment. Each optimization used 50 to 80 generations to converge on results,
+but as can be seen in Figure \ref{fig:ga_generations}, after about 10 generations the
+optimization was very near the minima.
+
+\begin{figure}
+  \centering
+  \includegraphics[height=0.35\textheight]{crawl/cost/genetic_alg_scores.png}
+  \caption{This figures shows one of the gait parameter optimization trials.
+           As the genetic optimization procedure uses multiple childen, the 
+           plot shows the average score for the children and the score of the best
+           child as the generations progress.}
+  \label{fig:ga_generations}
+\end{figure}
+
+%%% TABULATE THIS
+% specified initial and final values of (\alpha, \theta_3, \theta_4)
+% x_init = [-30*pi/180 ; 0.28798  ;   0.47997];
+
+% best x value found after a few runs of the genetic algorithm
+% x_best = [-0.2134    1.1570   -1.9898    0.2365    0.0893   -0.3267    1.8796   -0.1365   -1.7434];
+
+% optimized trajectory
+% \alpha =   x1_ = x_best(1)*t.^3 + x_best(2)*t.^2 + x_best(3)*t + x_init(1);
+% \theta_3 = x2_ = x_best(4)*t.^3 + x_best(5)*t.^2 + x_best(6)*t + x_init(2);
+% \theta_4 = x3_ = x_best(7)*t.^3 + x_best(8)*t.^2 + x_best(9)*t + x_init(3);
+%%%
+
+Table \ref{tab:optimal_parameters} shows the spine parameters resulting from the
+optimization procedure. 
+Each gait parameter is now a cubic polynomial which is a function of time $[\theta_3 (t), \theta_4 (t), \alpha (t)]$.
+The coefficients from the table are used as $c_3 t^3 + c_2 t^2 + c_1 t + c_0$.
+The $c_0$ coefficients are simply the angles corresponding to the starting pose for the closed chain phase
+of the gait. The splines are also constrained to end at the final pose for the closed chain phase, which
+correspond to the angle triplet of $[0.28798, 0.47997, -1.5710]$ for $[\theta_3, \theta_4, \alpha]$.
+The initial and final angle triplets are in radians.
+
+\begin{table}
+  \centering
+  \begin{tabularx}{0.75\textwidth}{|l|l|l|l|X|}
+    \hline
+    \textbf{Gait Parameter} & \textbf{$c_3$} & \textbf{$c_2$} & \textbf{$c_1$} & \textbf{$c_0$} \\  \hline\hline
+    $\theta_3$              &   0.2365       &  0.0893        & -0.3267        &  0.28798       \\ 
+    $\theta_4$              &   1.8796       & -0.1365        & -1.7434        &  0.47997       \\  
+    $\alpha$                &  -0.2134       &  1.1570        & -1.9898        &  0.52360       \\  \hline
+  \end{tabularx} 
+  
+  \caption{Table of gait parameter coefficients for the optimal crawl gait. 
+           The $c_i$ coefficients are used in the cubic spline 
+           $c_3 t^3 + c_2 t^2 + c_1 t + c_0$ to vary the gait parameters as a function of time.
+           The $c_0$ coefficients are simply the initial starting angles for each parameter.}
+  \label{tab:optimal_parameters}
+\end{table}
+
+Figure \ref{fig:optimal_gait_parameters} shows the splines graphically, with the nominal gait parameters
+overlaid for comparison. While the optimized parameter trajectory for $\alpha$ is similar to its nominal
+trajectory, the trajectories for $\theta_3$ and $\theta_4$ dip significantly, with $\theta_4$ having the
+most drastic deviation from the nominal.
+
+\begin{figure}
+  \centerline{
+    \includegraphics[width=0.75\textwidth]{crawl/cost/ga_cost2_plot1_edit1.png}
+  }
+  \caption{This figure shows the optimal gait parameter trajectories overlaid onto the nominal
+           trajectories. The blue lines represent the nominal trajectories while the green
+           lines show the optimal.}
+  \label{fig:optimal_gait_parameters}
+\end{figure}
+
+
+
+
+\FloatBarrier
+\section{Nominal Crawl Gait Data} \label{sec:nom_crawl_data}
+
+As reviewed in Section \ref{subsec:gait_params}, ...
+This experiment was done using nominal parameters.
+This is basic thing to do.
+
+\subsection{Simulations}
+Here's the MATLAB Projected Profile gait. You can see it moves the mass forward.
+You can see the theta 3 and 4 are held static.
 
 \begin{figure}
   \centerline{
@@ -47,6 +243,10 @@ Explain that the point of this setup is to show that the crawl gait is very low 
   \label{fig:pp_nom_gait1}
 \end{figure}
 
+Here's the V-REP gait. You can see it moves the mass forward.
+The arms are down the whole time.
+You can see the knee and hip are held static.
+
 \begin{figure}
   \centerline{
     \includegraphics[width=0.5\textwidth]{crawl/vrep/nominal/1.png}
@@ -63,6 +263,11 @@ Explain that the point of this setup is to show that the crawl gait is very low 
   \label{fig:vrep_nao_nom_gait1}
 \end{figure}
 
+\subsection{Height Constrained Table}
+
+Here's the Nao doing the crawl under a little ledge.
+You can see it's really low profile.
+
 \begin{figure}
   \centerline{
     \includegraphics[width=0.25\textwidth]{crawl/under_table/14s.png}
@@ -75,7 +280,7 @@ Explain that the point of this setup is to show that the crawl gait is very low 
 \end{figure}
 
 Explain that this experiment is a demonstration of the gait being used to perform a task,
-getting through a crawl space.
+walking somewhere, getting through a crawl space, and coming out the other side.
 
 \begin{figure}
   \centerline{
@@ -118,6 +323,7 @@ getting through a crawl space.
   \label{fig:nao_crawl4}
 \end{figure}
 
+\subsection{Joint Data}
 Here is a plot of the joint angles of the gait, showing its periodicity.
 
 \begin{figure}
@@ -156,30 +362,23 @@ There are some distinct patterns, but is hard to relate torques directly.
   \label{fig:nao_currents}
 \end{figure}
 
-\section{Optimized Crawl Gait Data}
-
-THROW IN A V-REP PICTURE OR 4.
 
 
-WHAT WERE THE TRIPLET PARAMETERS?
 
-Insert plot of the optimization process.
+\FloatBarrier
+\section{Optimized Crawl Gait Data} \label{sec:opt_crawl_data}
 
-PUT IN HOW MANY ITERATIONS IT TOOK TO FINISH.
-PUT IN HOW MANY ITERATIONS IT TOOK TO KINDA CONVERGE.
-THROW IN THE OTHER RELEVANT STATISTICS LIKE NUMBER OF CHILDREN ETC.
+This time, we optimized the gait. Here's what happened.
 
+\subsection{Optimization Cost}
 These plots show the theoretical optimization costs of the nominal and optimized
 triplet parameters. 
 
-\begin{figure}
-  \centerline{
-    \includegraphics[width=0.75\textwidth]{crawl/cost/ga_cost2_plot1_edit1.png}
-  }
-  \caption{Optimization of crawling motion. Blue lines: nominal time trajectories of the angle triplet 
-           $(\alpha,\theta_3,\theta_4)$; Green lines: optimized time trajectories. }
-  \label{fig:optimal}
-\end{figure}
+
+
+\subsection{Simulations}
+
+Here's the MATLAB simulation. The theta 3 and 4 are doing different things.
 
 \begin{figure}
   \centerline{
@@ -198,6 +397,9 @@ triplet parameters.
   \label{fig:pp_opt_gait1}
 \end{figure}
 
+Here's the V-REP simulation. The knees and hips are doing different things.
+The arms are down the whole time.
+
 \begin{figure}
   \centerline{
     \includegraphics[width=0.5\textwidth]{crawl/vrep/optimized/1.png}
@@ -214,15 +416,14 @@ triplet parameters.
   \label{fig:vrep_nao_opt_gait1}
 \end{figure}
 
+\subsection{Joint Torque Data} \label{subsec:opt_joint_torque_data}
+
 Ok, so now, how does it do with these new optimizations?
 We use the V-REP here instead of the currents from the robot because they are easier to interpret.
 
-Insert pictures of the Projected Profile optimized gait.
-
-Insert pictures of the V-REP gaits overlaid onto the
-optimized gait.
-
-Insert pictures of the torque graphs for the nominal and optimized gaits.
+Here's the nominal and optimal joint data overlaid for each joint.
+It ranges, but you can kinda see the optimal ones look kinda like a compressed version of the
+nominal ones.
 
 \begin{figure}
   \centerline{
@@ -234,6 +435,10 @@ Insert pictures of the torque graphs for the nominal and optimized gaits.
   \caption{BLAH BLAH Simulated joint torques for the different times. Nominal and optimized.}
   \label{fig:vrep_joint_torques_by_joint1}
 \end{figure}
+
+Here's the nominal and optimal joint data, side by side, on a duration basis.
+You can kinda see the compressions. You can also see that the short ones look similar,
+but the longer ones don't.
 
 \begin{figure}
   \centerline{
@@ -252,17 +457,17 @@ Insert pictures of the torque graphs for the nominal and optimized gaits.
   \label{fig:vrep_joint_torques_by_duration1}
 \end{figure}
 
+Actually summing up the costs you can see there's a difference between the two and the optimal
+one is always lower cost.
+Percentagewise, the 7 second gait had the biggest difference, but I'd say that anything after
+7 seconds has probably converges and takes the most advantage of the optimization.
+These costs are for straight sum of torques. They're not weighted.
+
 \begin{figure}
   \includegraphics[width=0.5\textwidth]{crawl/cost/gait_cost_duration1.png}
   \includegraphics[width=0.5\textwidth]{crawl/cost/cost_imp_duration1.png}
   \caption{BLAH BLAH Things about gait cost comparisons.}
   \label{fig:cost_duration1}
 \end{figure}
-
-
-
-
-PUT IN THE OPTIMIZATION COSTS (Check out the torque only ones and the torque plus indication
-function costs to see what kind of influence those functions had on the optimization.)
 
 

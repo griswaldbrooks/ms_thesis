@@ -169,7 +169,7 @@ $\theta_1$ must be chosen such that no part of the robot tries to intersect with
 In practice, the two argument arc-tangent function $atan2$ is used instead of $\tan^{-1}$ .
 
 %%% Projected profile %%%
-\subsection{Closed Chain Kinematics}
+\subsection{Closed Chain Kinematics} \label{subsec:crawl_closed_chain}
 
 The closed chain configuration models the toes and elbows of the robot as being fixed to the ground.
 As with all closed chain kinematics, describing the forward kinematics requires solving an inverse
@@ -207,7 +207,8 @@ Using equation \ref{eq:fk_eq3}, equations \ref{eq:fk_eq1} and \ref{eq:fk_eq2} ca
 
 If $\theta_3$, $\theta_4$, and $\alpha$ are prescribed angles, then equations \ref{eq:sum_cos1} and \ref{eq:sum_sin1} are two equations 
 in the two unknowns $\theta_1$ and $\theta_2$. 
-$\theta_3$ and $\theta_4$ can be constant or time-varying as the resultant configuration is a function of these two ``free" variables.
+$\theta_3$ and $\theta_4$ can be constant or time-varying as the resultant configuration is a function of 
+these two ``free'' variables.
 Taking the square of each of the equations \ref{eq:sum_cos1} and \ref{eq:sum_sin1}, 
 an equation in the single variable $\theta_2$ is obtained as:
 \begin{align}
@@ -411,7 +412,7 @@ This can again be found using the inverse cosine and dot product.
 % and the desired forearm-to-forearm spacing.
 
 %%% Pseudo-static modelling %%%
-\section{Optimization}
+\section{Optimization} \label{sec:crawl_optimization}
 
 In the previous section, the Projected Profile crawl gait was parameterized on angle triplet 
 $[ \theta_3, \theta_4, \alpha ]$ .
@@ -424,7 +425,7 @@ While many different quantities such as gait speed or the levelness of the back
 minimized via joint torque measurements.
 The aim was to increase the amount of time the crawling gait could be performed and reduce the stress on the robot's joints.
 
-\subsection{Pseudo-static Model}
+\subsection{Pseudo-static Model} \label{subsec:crawl_pseudo_static_model}
 
 In order to optimize the gait with respect to the joint torques of the robot, a dynamic model of the robot is required.
 As the Projected Profile crawl gait is conceived as a statically stable gait and performed at slow speeds,
@@ -598,6 +599,7 @@ One pitfall to this technique is there is no guarantee that the global optima wi
 a given cost function and therefore local optima are still possible to be returned.
 
 Using the cost function presented in Section \ref{subsec:cost_functions}, the genetic algorithm was used
-to find the 12 triplet parameters (4 parameters for each cubic spline). The algorithm ran for 67 generations
-and produced a triplet spline whose cost was approximately six times smaller than the nominal strategy
-of holding $\theta_3$ and $\theta_4$ constant while linearly increasing $\alpha$.
+to find the 12 triplet parameters (4 parameters for each cubic spline). %The algorithm ran for 67 generations
+% and produced a triplet spline whose cost was approximately six times smaller than the nominal strategy
+% of holding $\theta_3$ and $\theta_4$ constant while linearly increasing $\alpha$.
+Details on the results of this optimization can be found in Chapter \ref{subsec:gait_params}.
