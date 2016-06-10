@@ -60,7 +60,7 @@ full body positioning. Importantly, the kinematic configuration of the robot is 
 to the crawling paradigm and its relatively small size allows environments to be
 easily constructed for testing.
 
-\subsection{Crawling Environments}
+\subsection{Crawling Environments} \label{subsec:crawl_environments}
 % Explain the different experimental setups.
 Prior to any testing on the actual robot, the V-REP Simulator by Coppelia Robotics was used
 to verify that the algorithms functioned correctly and exhibited the desired behaviors.
@@ -90,7 +90,7 @@ Results from those experiments are presented in Section \ref{subsec:opt_joint_to
 While traversing rough terrain or over small obstacles is one application of a crawl gait,
 these experiments were instead designed to show that the robot could access areas with
 demanding height constraints. For this, a small table was used whose sides were blocked
-with panels down to about 8 inches off of the ground. 
+with panels down to about $200 mm$ off of the ground. 
 Figure \ref{fig:short_ledge_nao_nom_gait_single_frame1} shows the Nao crawling under this table,
 with its head almost touching the bottom of the panel. This represents the practical height
 constraint that the Nao can satisfy with this gait.
@@ -218,13 +218,36 @@ most drastic deviation from the nominal.
 \FloatBarrier
 \section{Nominal Crawl Gait Data} \label{sec:nom_crawl_data}
 
-As reviewed in Section \ref{subsec:gait_params}, ...
-This experiment was done using nominal parameters.
-This is basic thing to do.
+% As reviewed in Section \ref{subsec:gait_params}, ...
+% This experiment was done using nominal parameters.
+% This is basic thing to do.
+To test the Projected Profile gait using the nominal parameters reviewed in 
+Section \ref{subsec:gait_params}, the gait sequence was first generated in
+MATLAB and then simulated in V-REP. Following this the gait was tested on the
+Nao by setting it to crawl under a vertically constrained table in two different
+experiments. In the first, the robot was set to the initial crawling pose and
+placed on the floor in front of the table. The robot then executed the crawling gait.
+In the second experiment the robot was programmed to recognise a fiducial marker,
+represented by a red circle mounted to the table, and walk to it. 
+The robot then moved to a prone posture and crawled under the table. This procedure
+is more throughly examined in Section \ref{sec:crawl_exp_setup}. Joint angle and joint
+current data was collected during the table experiments and is presented in this section.
+These table experiments demonstate the efficacy of the gait to locomote the robot
+and the low profile nature of the gait to allow access to vertically constrained spaces.
 
 \subsection{Simulations}
-Here's the MATLAB Projected Profile gait. You can see it moves the mass forward.
-You can see the theta 3 and 4 are held static.
+% Here's the MATLAB Projected Profile gait. You can see it moves the mass forward.
+% You can see the theta 3 and 4 are held static.
+Figure \ref{fig:pp_nom_gait1} shows samples of the closed chain phase of the Projected
+Profile gait using the nominal parameters. It shows a simplified kinematic model
+representing a projection of the robot onto the saggital plane. The frames show the
+model starting in the inital pose, and by linearly increasing the $\alpha$ gait
+parameter and holding the $\theta_3$ and $\theta_4$ parameters constant, the model
+shifts forward until $\alpha$ has reached its terminal value. This places the model
+at the final closed chain pose. It can be seen the highest point of this gait occurs
+at about $z = 100 mm$. This model of course does not include the limb thicknesses nor
+the head of the Nao, as it only models joint centers. This model was created using MATLAB
+and is used to view the results of the gait sequence generation.
 
 \begin{figure}
   \centerline{
@@ -239,13 +262,27 @@ You can see the theta 3 and 4 are held static.
     \includegraphics[width=0.5\textwidth]{crawl/pp/nominal/angle78_1.png}
     \includegraphics[width=0.5\textwidth]{crawl/pp/nominal/angle90_1.png}
   }
-  \caption{BLAH BLAH Projected Profile Nao with nominal gait.}
+  \caption{This figure shows a simplified kinematic model of the Nao as it executes
+           the Projected Profile gait using nominal parameters. The model starts with
+           $\alpha = -30^\circ$ and terminates when $\alpha = -90^\circ$.}
   \label{fig:pp_nom_gait1}
 \end{figure}
 
-Here's the V-REP gait. You can see it moves the mass forward.
-The arms are down the whole time.
-You can see the knee and hip are held static.
+% Here's the V-REP gait. You can see it moves the mass forward.
+% The arms are down the whole time.
+% You can see the knee and hip are held static.
+
+Once the gait sequence is generated, it is tested using the V-REP simulation of the
+Nao humanoid. Figure \ref{fig:vrep_nao_nom_gait1} shows the simulated Nao executing
+the closed chain phase of the nominal crawl gait. As with the simplified kinematic
+model, the $\alpha$ gait parameter is linearly increased from $-30^\circ$ to $-90^\circ$,
+which moves the robot forward. As detailed in Chapter \ref{subsec:nao_kinematics}, the
+gait parameters and other constraints are used to position the arms of the robot, as unlike
+leg, hip, and shoulder pitch joint which have angles which directly correspond to
+joint angles in the simplified kinematic model, the shoulder roll and elbow joints
+do not. The head in this simulation can be seen to be the highest part of the robot
+throughout the majority of the gait, increasing the minimum value of the allowable
+vertical constraint.
 
 \begin{figure}
   \centerline{
@@ -265,22 +302,77 @@ You can see the knee and hip are held static.
 
 \subsection{Height Constrained Table}
 
-Here's the Nao doing the crawl under a little ledge.
-You can see it's really low profile.
+% Here's the Nao doing the crawl under a little ledge.
+% You can see it's really low profile.
+
+Following simulation, the Projected Profile crawl gait using the nominal parameters
+was tested on the Nao. Figure \ref{fig:nao_table_exp1_crawl1} shows the initial test of the
+robot crawling under the vertically constrained table. The Nao is set to the initial
+crawling pose on the floor outside of the table. The robot then executes the crawl
+gait for several sequences until the robot is under the table.
+For this experiment, the robot executed 9 sequences in 27 seconds. The robot travelled
+about 1 body lengths or $610 mm$, equating to a velocity of about $22.6 \frac{mm}{s}$.
+
+% \begin{figure}
+%   \centerline{
+%     \includegraphics[width=0.25\textwidth]{crawl/under_table/14s.png}
+%     \includegraphics[width=0.25\textwidth]{crawl/under_table/18s.png}
+%     \includegraphics[width=0.25\textwidth]{crawl/under_table/19s.png}
+%     \includegraphics[width=0.25\textwidth]{crawl/under_table/20s.png}
+%   }
+%   \caption{Low-profile crawling gait for accessing vertically constrained spaces such as under a table.}
+%   \label{fig:nao_crawl1}
+% \end{figure}
 
 \begin{figure}
   \centerline{
-    \includegraphics[width=0.25\textwidth]{crawl/under_table/14s.png}
-    \includegraphics[width=0.25\textwidth]{crawl/under_table/18s.png}
-    \includegraphics[width=0.25\textwidth]{crawl/under_table/19s.png}
-    \includegraphics[width=0.25\textwidth]{crawl/under_table/20s.png}
+    \includegraphics[width=0.33\textwidth]{crawl/under_table/profile_sequence/01.png}
+    \includegraphics[width=0.33\textwidth]{crawl/under_table/profile_sequence/02.png}
+    \includegraphics[width=0.33\textwidth]{crawl/under_table/profile_sequence/03.png}
   }
-  \caption{Low-profile crawling gait for accessing vertically constrained spaces such as under a table.}
-  \label{fig:nao_crawl1}
+  \vspace*{0.05in}
+  \centerline{
+    \includegraphics[width=0.33\textwidth]{crawl/under_table/profile_sequence/04.png}
+    \includegraphics[width=0.33\textwidth]{crawl/under_table/profile_sequence/05.png}
+    \includegraphics[width=0.33\textwidth]{crawl/under_table/profile_sequence/06.png}
+  }
+    \vspace*{0.05in}
+  \centerline{
+    \includegraphics[width=0.33\textwidth]{crawl/under_table/profile_sequence/07.png}
+    \includegraphics[width=0.33\textwidth]{crawl/under_table/profile_sequence/08.png}
+    \includegraphics[width=0.33\textwidth]{crawl/under_table/profile_sequence/09.png}
+  }
+    \vspace*{0.05in}
+  \centerline{
+    \includegraphics[width=0.33\textwidth]{crawl/under_table/profile_sequence/10.png}
+    \includegraphics[width=0.33\textwidth]{crawl/under_table/profile_sequence/11.png}
+    \includegraphics[width=0.33\textwidth]{crawl/under_table/profile_sequence/12.png}
+  }
+    \vspace*{0.05in}
+  \centerline{
+    \includegraphics[width=0.33\textwidth]{crawl/under_table/profile_sequence/13.png}
+    \includegraphics[width=0.33\textwidth]{crawl/under_table/profile_sequence/14.png}
+    \includegraphics[width=0.33\textwidth]{crawl/under_table/profile_sequence/15.png}
+  }
+    \vspace*{0.05in}
+  \centerline{
+    \includegraphics[width=0.33\textwidth]{crawl/under_table/profile_sequence/16.png}
+    \includegraphics[width=0.33\textwidth]{crawl/under_table/profile_sequence/17.png}
+    \includegraphics[width=0.33\textwidth]{crawl/under_table/profile_sequence/18.png}
+  }
+  \caption{This figure shows the Nao crawling under the vertically constrained table.}
+  \label{fig:nao_table_exp1_crawl1}
 \end{figure}
 
-Explain that this experiment is a demonstration of the gait being used to perform a task,
-walking somewhere, getting through a crawl space, and coming out the other side.
+% Explain that this experiment is a demonstration of the gait being used to perform a task,
+% walking somewhere, getting through a crawl space, and coming out the other side.
+Figure \ref{fig:nao_table_exp2_crawl1} and \ref{fig:nao_table_exp2_crawl2} show the second
+experiment performed with the vertically constrained table. The robot has detected and walked to
+the red marker affixed to the table. It then transitions to a prone posture and begins the crawling
+sequence. After having crawled to the other side, the robot transitions to a sitting posture.
+The ability to transition from posture to posture are provided through the NaoQI API.
+For this experiment, the robot executed 25 sequences in 58 seconds. The robot travelled
+about 2.75 body lengths or $1,676.4 mm$, equating to a velocity of about $28.9 \frac{mm}{s}$.
 
 \begin{figure}
   \centerline{
@@ -290,6 +382,7 @@ walking somewhere, getting through a crawl space, and coming out the other side.
     \includegraphics[width=0.2\textwidth]{crawl/walk_to/to/30s_2.png}
     \includegraphics[width=0.2\textwidth]{crawl/walk_to/to/34s.png}
   }
+  \vspace*{0.05in}
   \centerline{
     \includegraphics[width=0.2\textwidth]{crawl/walk_to/to/37s.png}
     \includegraphics[width=0.2\textwidth]{crawl/walk_to/to/40s.png}
@@ -301,7 +394,7 @@ walking somewhere, getting through a crawl space, and coming out the other side.
            A red dot is used as a marker for the direction in which the robot is commanded to move.
            When the robot approaches below a specified distance threshold from the obstacle,
            the crouch-down and crawl gait sequence is initiated.}
-  \label{fig:nao_crawl3}
+  \label{fig:nao_table_exp2_crawl1}
 \end{figure}
 
 \begin{figure}
@@ -312,6 +405,7 @@ walking somewhere, getting through a crawl space, and coming out the other side.
     \includegraphics[width=0.2\textwidth]{crawl/walk_to/from/17s.png}
     \includegraphics[width=0.2\textwidth]{crawl/walk_to/from/18s.png}
   }
+  \vspace*{0.05in}
   \centerline{
     \includegraphics[width=0.2\textwidth]{crawl/walk_to/from/24s.png}
     \includegraphics[width=0.2\textwidth]{crawl/walk_to/from/30s.png}
@@ -320,7 +414,7 @@ walking somewhere, getting through a crawl space, and coming out the other side.
     \includegraphics[width=0.2\textwidth]{crawl/walk_to/from/37s.png}
   }
   \caption{BLAH BLAH Crawling under an obstacle and transitioning back to stand posture.}
-  \label{fig:nao_crawl4}
+  \label{fig:nao_table_exp2_crawl2}
 \end{figure}
 
 \subsection{Joint Data}
