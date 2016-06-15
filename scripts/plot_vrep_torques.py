@@ -81,12 +81,16 @@ def main():
         nom_axis.plot(t, nom_torque[:, 2], color='b', linewidth=2, label='Joint ' + r'$\theta_4$')
         nom_axis.plot(t, nom_torque[:, 3], color='m', linewidth=2, label='Joint ' + r'$\theta_5$')
         nom_axis.set_title('Nominal Gait: ' + str(nom_duration) + ' second duration')
-        nom_axis.margins(0.1)
-        nom_axis.set_ylabel('Torque (N/m)')
-        nom_axis.set_xlabel('Time (seconds)')
-        nom_axis.grid(True)
-        plt.legend(loc='upper right', shadow=True, fontsize='large', numpoints=1)
-        nom_fig.savefig('nom_torques_duration_' + str(nom_duration) + '_1.png', dpi=300, format='png')
+
+    nom_axis.set_title('Nominal Gait: Overlay')
+    nom_axis.margins(0.1)
+    nom_axis.set_ylabel('Torque (N/m)')
+    nom_axis.set_xlabel('Time (seconds)')
+    nom_axis.grid(True)
+
+    plt.legend(loc='upper right', shadow=True, fontsize='large', numpoints=1)
+
+    nom_fig.savefig('nom_torques_duration_' + str(nom_duration) + '_1.png', dpi=300, format='png')
 
     for opt_torque, opt_duration in zip(opt_torques, opt_durations):
         opt_fig, opt_axis = plt.subplots()
@@ -107,16 +111,207 @@ def main():
         plt.legend(loc='upper right', shadow=True, fontsize='large', numpoints=1)
         opt_fig.savefig('opt_torques_duration_' + str(opt_duration) + '_1.png', dpi=300, format='png')
 
-    # Plot torques on a per joint basis.
+    # Plot torque transient on a per joint basis.
     for joint_ndx in range(0, 4):
         # Generate colormap for figures.
         nom_cm = truncate_colormap(plt.get_cmap('Reds'), 0.5, 1.0)
+        # Get fresh plots.
+        jt_fig, jt_axis = plt.subplots()
+
+        # Iterate through nominal torque sets and pull off appropriate joint.
+        for nom_tor, dur in zip(nom_torques, nom_durations):
+
+            # Generate times.
+            t = np.linspace(0.0, dur, len(nom_tor))
+            # Get color value.
+            dur_range = [min(nom_durations), max(nom_durations)]
+            color_range = [0.0, 1.0]
+            color_value = np.interp(dur, dur_range, color_range)
+            # Add curve to plot.
+            jt_axis.plot(t, nom_tor[:, joint_ndx], c=nom_cm(color_value),
+                         linewidth=2, linestyle='-', label='Nominal')
+
+        # Set plot parameters for whole figure.
+        jt_axis.set_title('Joint ' + r'$\theta_' + str(joint_ndx + 2) + '$')
+        jt_axis.margins(0.1)
+        jt_axis.set_ylabel('Torque (N/m)')
+        jt_axis.set_xlabel('Time (seconds)')
+        jt_axis.grid(True)
+        jt_axis.set_xlim([0, 1.0])
+        jt_axis.axvline(x=0.25, linestyle='--', linewidth=3, color='k')
+
+        # Set colorbars for nominal gaits.
+        sm = plt.cm.ScalarMappable(cmap=nom_cm, norm=plt.Normalize(vmin=1, vmax=10))
+        sm._A = []
+        jt_colorbar = jt_fig.colorbar(sm, shrink=0.9, pad=0.02)
+        jt_colorbar.set_label('Duration of Nominal Gait (Seconds)')
+
+        # Save figure.
+        jt_fig.savefig('nom_joint' + str(joint_ndx + 2) + '_trans_torques' + '.png', dpi=300, format='png')
+
+    # Plot torque transient on a per joint basis.
+    for joint_ndx in range(0, 4):
+        # Generate colormap for figures.
         opt_cm = truncate_colormap(plt.get_cmap('Blues'), 0.5, 1.0)
         # Get fresh plots.
         jt_fig, jt_axis = plt.subplots()
 
-        # Iterate through torque sets and pull off appropriate joint.
-        for opt_tor, nom_tor, dur in zip(opt_torques, nom_torques, nom_durations):
+        # Iterate through optimal torque sets and pull off appropriate joint.
+        for opt_tor, dur in zip(opt_torques, opt_durations):
+
+            # Generate times.
+            t = np.linspace(0.0, dur, len(opt_tor))
+            # Get color value.
+            dur_range = [min(opt_durations), max(opt_durations)]
+            color_range = [0.0, 1.0]
+            color_value = np.interp(dur, dur_range, color_range)
+            # Add curve to plot.
+            jt_axis.plot(t, opt_tor[:, joint_ndx], c=opt_cm(color_value),
+                         linewidth=2, linestyle='-', label='Optimal')
+
+        # Set plot parameters for whole figure.
+        jt_axis.set_title('Joint ' + r'$\theta_' + str(joint_ndx + 2) + '$')
+        jt_axis.margins(0.1)
+        jt_axis.set_ylabel('Torque (N/m)')
+        jt_axis.set_xlabel('Time (seconds)')
+        jt_axis.grid(True)
+        jt_axis.set_xlim([0, 1.0])
+        jt_axis.axvline(x=0.175, linestyle='--', linewidth=3, color='k')
+
+        # Set colorbars for optimal gaits.
+        sm = plt.cm.ScalarMappable(cmap=opt_cm, norm=plt.Normalize(vmin=1, vmax=10))
+        sm._A = []
+        jt_colorbar = jt_fig.colorbar(sm, shrink=0.9, pad=0.02)
+        jt_colorbar.set_label('Duration of Optimal Gait (Seconds)')
+
+        # Save figure.
+        jt_fig.savefig('opt_joint' + str(joint_ndx + 2) + '_trans_torques' + '.png', dpi=300, format='png')
+
+    # Plot torque time on a per joint basis.
+    for joint_ndx in range(0, 4):
+        # Generate colormap for figures.
+        nom_cm = truncate_colormap(plt.get_cmap('Reds'), 0.5, 1.0)
+        # Get fresh plots.
+        jt_fig, jt_axis = plt.subplots()
+
+        # Iterate through nominal torque sets and pull off appropriate joint.
+        for nom_tor, dur in zip(nom_torques, nom_durations):
+
+            # Generate times.
+            t = np.linspace(0.0, dur, len(nom_tor))
+            # Get color value.
+            dur_range = [min(nom_durations), max(nom_durations)]
+            color_range = [0.0, 1.0]
+            color_value = np.interp(dur, dur_range, color_range)
+            # Add curve to plot.
+            jt_axis.plot(t, nom_tor[:, joint_ndx], c=nom_cm(color_value),
+                         linewidth=2, linestyle='-', label='Nominal')
+
+        # Set plot parameters for whole figure.
+        jt_axis.set_title('Joint ' + r'$\theta_' + str(joint_ndx + 2) + '$')
+        jt_axis.margins(0.1)
+        jt_axis.set_ylabel('Torque (N/m)')
+        jt_axis.set_xlabel('Time (seconds)')
+        jt_axis.grid(True)
+
+        # Set colorbars for nominal gaits.
+        sm = plt.cm.ScalarMappable(cmap=nom_cm, norm=plt.Normalize(vmin=1, vmax=10))
+        sm._A = []
+        jt_colorbar = jt_fig.colorbar(sm, shrink=0.9, pad=0.02)
+        jt_colorbar.set_label('Duration of Nominal Gait (Seconds)')
+
+        # Save figure.
+        jt_fig.savefig('nom_joint' + str(joint_ndx + 2) + '_time_torques' + '.png', dpi=300, format='png')
+
+    # Plot torque time on a per joint basis.
+    for joint_ndx in range(0, 4):
+        # Generate colormap for figures.
+        opt_cm = truncate_colormap(plt.get_cmap('Blues'), 0.5, 1.0)
+        # Get fresh plots.
+        jt_fig, jt_axis = plt.subplots()
+
+        # Iterate through optimal torque sets and pull off appropriate joint.
+        for opt_tor, dur in zip(opt_torques, opt_durations):
+
+            # Generate times.
+            t = np.linspace(0.0, dur, len(opt_tor))
+            # Get color value.
+            dur_range = [min(opt_durations), max(opt_durations)]
+            color_range = [0.0, 1.0]
+            color_value = np.interp(dur, dur_range, color_range)
+            # Add curve to plot.
+            jt_axis.plot(t, opt_tor[:, joint_ndx], c=opt_cm(color_value),
+                         linewidth=2, linestyle='-', label='Optimal')
+
+        # Set plot parameters for whole figure.
+        jt_axis.set_title('Joint ' + r'$\theta_' + str(joint_ndx + 2) + '$')
+        jt_axis.margins(0.1)
+        jt_axis.set_ylabel('Torque (N/m)')
+        jt_axis.set_xlabel('Time (seconds)')
+        jt_axis.grid(True)
+
+        # Set colorbars for optimal gaits.
+        sm = plt.cm.ScalarMappable(cmap=opt_cm, norm=plt.Normalize(vmin=1, vmax=10))
+        sm._A = []
+        jt_colorbar = jt_fig.colorbar(sm, shrink=0.9, pad=0.02)
+        jt_colorbar.set_label('Duration of Optimal Gait (Seconds)')
+
+        # Save figure.
+        jt_fig.savefig('opt_joint' + str(joint_ndx + 2) + '_time_torques' + '.png', dpi=300, format='png')
+
+    # Plot torques on a per joint basis.
+    # for joint_ndx in range(0, 4):
+    #     # Generate colormap for figures.
+    #     nom_cm = truncate_colormap(plt.get_cmap('Reds'), 0.5, 1.0)
+    #     opt_cm = truncate_colormap(plt.get_cmap('Blues'), 0.5, 1.0)
+    #     # Get fresh plots.
+    #     jt_fig, jt_axis = plt.subplots()
+
+    #     # Iterate through torque sets and pull off appropriate joint.
+    #     for opt_tor, nom_tor, dur in zip(opt_torques, nom_torques, nom_durations):
+
+    #         # Generate times.
+    #         t = np.linspace(0.0, 100.0, len(nom_tor))
+    #         # Get color value.
+    #         dur_range = [min(nom_durations), max(nom_durations)]
+    #         color_range = [0.0, 1.0]
+    #         color_value = np.interp(dur, dur_range, color_range)
+    #         # Add curve to plot.
+    #         jt_axis.plot(t, nom_tor[:, joint_ndx], c=nom_cm(color_value),
+    #                      linewidth=2, linestyle='-', label='Nominal')
+    #         jt_axis.plot(t, opt_tor[:, joint_ndx], c=opt_cm(color_value),
+    #                      linewidth=2, linestyle='--', label='Optimal')
+
+    #     # Set plot parameters for whole figure.
+    #     jt_axis.set_title('Joint ' + r'$\theta_' + str(joint_ndx + 2) + '$')
+    #     jt_axis.margins(0.1)
+    #     jt_axis.set_ylabel('Torque (N/m)')
+    #     jt_axis.set_xlabel('Percentage of Gait Cycle (%)')
+    #     jt_axis.grid(True)
+
+    #     # Set colorbars for nominal and optimal gaits.
+    #     sm = plt.cm.ScalarMappable(cmap=nom_cm, norm=plt.Normalize(vmin=1, vmax=10))
+    #     sm._A = []
+    #     jt_colorbar = jt_fig.colorbar(sm, shrink=0.9, pad=0.0)
+    #     jt_colorbar.set_label('Duration of Nominal Gait (Seconds)')
+
+    #     sm = plt.cm.ScalarMappable(cmap=opt_cm, norm=plt.Normalize(vmin=1, vmax=10))
+    #     sm._A = []
+    #     jt_colorbar = jt_fig.colorbar(sm, shrink=0.9, pad=0.02)
+    #     jt_colorbar.set_label('Duration of Optimized Gait (Seconds)')
+
+    #     # Save figure.
+    #     jt_fig.savefig('joint' + str(joint_ndx + 2) + '_torques' + '.png', dpi=300, format='png')
+
+    # Plot torques on a per joint basis.
+    for joint_ndx in range(0, 4):
+        # Generate colormap for figures.
+        nom_cm = truncate_colormap(plt.get_cmap('Reds'), 0.5, 1.0)
+        # Get fresh plots.
+        jt_fig, jt_axis = plt.subplots()
+
+        # Iterate through nominal torque sets and pull off appropriate joint.
+        for nom_tor, dur in zip(nom_torques, nom_durations):
 
             # Generate times.
             t = np.linspace(0.0, 100.0, len(nom_tor))
@@ -127,8 +322,6 @@ def main():
             # Add curve to plot.
             jt_axis.plot(t, nom_tor[:, joint_ndx], c=nom_cm(color_value),
                          linewidth=2, linestyle='-', label='Nominal')
-            jt_axis.plot(t, opt_tor[:, joint_ndx], c=opt_cm(color_value),
-                         linewidth=2, linestyle='--', label='Optimal')
 
         # Set plot parameters for whole figure.
         jt_axis.set_title('Joint ' + r'$\theta_' + str(joint_ndx + 2) + '$')
@@ -140,33 +333,81 @@ def main():
         # Set colorbars for nominal and optimal gaits.
         sm = plt.cm.ScalarMappable(cmap=nom_cm, norm=plt.Normalize(vmin=1, vmax=10))
         sm._A = []
-        jt_colorbar = jt_fig.colorbar(sm, shrink=0.9, pad=0.0)
+        jt_colorbar = jt_fig.colorbar(sm, shrink=0.9, pad=0.02)
         jt_colorbar.set_label('Duration of Nominal Gait (Seconds)')
 
+        # Save figure.
+        jt_fig.savefig('nom_joint' + str(joint_ndx + 2) + '_torques' + '.png', dpi=300, format='png')
+
+    for joint_ndx in range(0, 4):
+        # Generate colormap for figures.
+        opt_cm = truncate_colormap(plt.get_cmap('Blues'), 0.5, 1.0)
+        # Get fresh plots.
+        jt_fig, jt_axis = plt.subplots()
+
+        # Iterate through optimal torque sets and pull off appropriate joint.
+        for opt_tor, dur in zip(opt_torques, opt_durations):
+
+            # Generate times.
+            t = np.linspace(0.0, 100.0, len(opt_tor))
+            # Get color value.
+            dur_range = [min(opt_durations), max(opt_durations)]
+            color_range = [0.0, 1.0]
+            color_value = np.interp(dur, dur_range, color_range)
+            # Add curve to plot.
+            jt_axis.plot(t, opt_tor[:, joint_ndx], c=opt_cm(color_value),
+                         linewidth=2, linestyle='-', label='Optimal')
+
+        # Set plot parameters for whole figure.
+        jt_axis.set_title('Joint ' + r'$\theta_' + str(joint_ndx + 2) + '$')
+        jt_axis.margins(0.1)
+        jt_axis.set_ylabel('Torque (N/m)')
+        jt_axis.set_xlabel('Percentage of Gait Cycle (%)')
+        jt_axis.grid(True)
+
+        # Set colorbars for nominal and optimal gaits.
         sm = plt.cm.ScalarMappable(cmap=opt_cm, norm=plt.Normalize(vmin=1, vmax=10))
         sm._A = []
         jt_colorbar = jt_fig.colorbar(sm, shrink=0.9, pad=0.02)
         jt_colorbar.set_label('Duration of Optimized Gait (Seconds)')
 
         # Save figure.
-        jt_fig.savefig('joint' + str(joint_ndx + 2) + '_torques' + '.png', dpi=300, format='png')
+        jt_fig.savefig('opt_joint' + str(joint_ndx + 2) + '_torques' + '.png', dpi=300, format='png')
 
     # Compute costs and improvements.
     nom_costs = []
     opt_costs = []
 
-    for torque in nom_torques:
+    # for torque in nom_torques:
+    #     sq_tor = np.square(torque)
+    #     # weight = np.array([1, 1, 1, 5])
+    #     weight = np.array([1, 1, 1, 1])
+    #     cost = np.sum(np.sum(weight*sq_tor))
+    #     nom_costs.append(cost)
+
+    # for torque in opt_torques:
+    #     sq_tor = np.square(torque)
+    #     # weight = np.array([1, 1, 1, 5])
+    #     weight = np.array([1, 1, 1, 1])
+    #     cost = np.sum(np.sum(weight*sq_tor))
+    #     opt_costs.append(cost)
+
+    for torque, dur in zip(nom_torques, nom_durations):
         sq_tor = np.square(torque)
-        # weight = np.array([1, 1, 1, 5])
-        weight = np.array([1, 1, 1, 1])
-        cost = np.sum(np.sum(weight*sq_tor))
+
+        cost = 0
+        for curve in sq_tor.T:
+            cost += np.trapz(curve, dx=dur/len(curve))
+
         nom_costs.append(cost)
 
-    for torque in opt_torques:
+    for torque, dur in zip(opt_torques, opt_durations):
         sq_tor = np.square(torque)
-        # weight = np.array([1, 1, 1, 5])
-        weight = np.array([1, 1, 1, 1])
-        cost = np.sum(np.sum(weight*sq_tor))
+
+        cost = 0
+        for curve in sq_tor.T:
+            cost += np.trapz(curve, dx=dur/len(curve))
+
         opt_costs.append(cost)
 
     # Plot costs.
