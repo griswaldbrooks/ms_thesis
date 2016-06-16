@@ -18,14 +18,15 @@
 To test the efficacy of the Projected Profile crawling gait, a gait sequence was generated
 using MATLAB and simulated using the V-REP simulator by Coppelia Robotics.
 The crawling sequence was generated using the nominal crawling parameters. 
-The Nao humanoid platform was then programmed using the NaoQI API in C++ to use this sequence 
+The Nao humanoid platform was then programmed using the NaoQI API in C++ to use the generated sequence 
 to execute a crawling action. The robot was initialized to its crawling pose and placed on the 
-ground where it crawled under a vertically constrained table. During this experiment, the joint angles and joint motor 
+ground where it proceeded to crawl under a vertically constrained table. 
+During this experiment, the joint angles and joint motor 
 currents were recorded for later analysis.
 To demonstrate a context under which the gait 
-would be used, the Nao was then programmed to walk to a fiducial marker, position itself into
+would be used, the Nao was programmed to walk to a fiducial marker, position itself into
 the crawling position, crawl under the vertically constrained table, and then return to a sitting position.
-NaoQI provides functions for the Nao to walk, position itself to a set of poses from any initial
+NaoQI provides functions for the Nao to walk, position itself into a set of poses from any initial
 pose, and track a ``red ball''. The fiducial marker was a red circle on a piece of paper.
 The robot crawled under the table by executing a finite number of crawling sequences, before
 moving to a sitting position. A video of this experiment was recorded for later analysis.
@@ -39,13 +40,13 @@ gait for varying degrees of dynamic loading.
 
 Details about the crawling environments, simulation, and crawling parameters can be found in
 Section \ref{sec:crawl_exp_setup}. Data collected about the nominal crawling experiment is
-presented in Section \ref{sec:nom_crawl_data} and the optimized crawling experiment in 
+presented in Section \ref{sec:nom_crawl_data}, and the optimized crawling experiment in 
 Section \ref{sec:opt_crawl_data}.
 
 \FloatBarrier
 \section{Experimental Setup} \label{sec:crawl_exp_setup}
 The crawl gaits were tested on the Nao humanoid in the V-REP simulator using MATLAB,
-and by having actual robot crawl under a vertically constrained table using the NaoQI API in C++.
+and by having the actual robot crawl under a vertically constrained table using the NaoQI API in C++.
 The nominal parameters were tested both in simulation and on the actual robot, while
 the optimal parameters were only tested in simulation. MATLAB has tools to use genetic
 algorithms to optimize systems, which were used here to generate the optimal parameter
@@ -87,32 +88,34 @@ Results from those experiments are presented in Section \ref{subsec:opt_joint_to
   \label{fig:vrep_nao_nom_gait_single_frame1}
 \end{figure}
 
-While traversing rough terrain or over small obstacles is one application of a crawl gait,
-these experiments were instead designed to show that the robot could access areas with
-demanding height constraints. For this, a small table was used whose sides were blocked
-with panels down to about $200 mm$ off of the ground. 
-Figure \ref{fig:short_ledge_nao_nom_gait_single_frame1} shows the Nao crawling under this table,
-with its head almost touching the bottom of the panel. This represents the practical height
-constraint that the Nao can satisfy with this gait.
-
 \begin{figure}
   \centering
   \includegraphics[height=0.35\textheight]{crawl/short_ledge1.png}
   \caption{This figure shows the Nao as it crawls under the table with the low panels.
-           The head of the robot can be seen to be nearly touching the panel,
+           The head of the robot nearly touches the panel,
            representing the lowest practical traversable height constraint.}
   \label{fig:short_ledge_nao_nom_gait_single_frame1}
 \end{figure}
+
+While traversing rough terrain or over small obstacles is one application of a crawl gait,
+these experiments were instead designed to show that the robot could access areas with
+demanding height constraints. For this, a small table was used whose sides were blocked
+with panels down to a minimum of about 200 $mm$ off of the ground. 
+Figure \ref{fig:short_ledge_nao_nom_gait_single_frame1} shows the Nao crawling under this table,
+with its head almost touching the bottom of the panel. This represents the practical height
+constraint that the Nao can satisfy with this gait.
+
 % Explain that the point of this setup is to show that the crawl gait is very low profile.
 
+\FloatBarrier
 \subsection{Gait Parameters} \label{subsec:gait_params}
 % Explain the gait and it's parameters.
 % Nominal Parameters
 As discussed in Chapter \ref{subsec:crawl_closed_chain}, the closed chain phase of the 
-Projected Profile crawl gait can be parameterized on the three angles $[\theta_3, \theta_4, \alpha]$.
+Projected Profile crawl gait can be parameterized on three angles, $[\theta_3, \theta_4, \alpha]$.
 These three variables are referred to as the gait parameters, or alternatively as the angle triplet.
-The nominal angle triplet can be seen in Table \ref{tab:nominal_parameters}. They involve holding
-$\theta_3$ and $\theta_4$ constant, while varying $\alpha$ linearly as a function of time.
+The nominal angle triplet can be seen in Table \ref{tab:nominal_parameters}. It holds the 
+$\theta_3$ and $\theta_4$ joints constant, while increasing the angle $\alpha$ linearly as a function of time.
 
 \begin{table}
   \centering
@@ -144,15 +147,16 @@ with the V-REP torque table detailed in Chapter \ref{subsec:crawl_pseudo_static_
 to generate the optimal spline parameters. 
 As the genetic algorithm cannot guarantee finding the global optima for any arbitrary function,
 the optimization was executed several times and the best spline parameters were used
-in the experiment. Each optimization used 50 to 80 generations to converge on results,
+for the experiment. Each optimization used 50 to 80 generations to converge on results,
 but as can be seen in Figure \ref{fig:ga_generations}, after about 10 generations the
-optimization was very near the minima.
+optimization had already reached minima and was simply exploring nearby states for possible
+improvements.
 
 \begin{figure}
   \centering
   \includegraphics[height=0.35\textheight]{crawl/cost/genetic_alg_scores.png}
   \caption{This figure shows one of the gait parameter optimization trials.
-           As the genetic optimization procedure uses multiple children, the 
+           As the genetic optimization procedure uses multiple children as detailed in Chapter \ref{subsec:crawl_opt_procedure}, the 
            plot shows the average score for the children and the score of the best
            child as the generations progress.}
   \label{fig:ga_generations}
@@ -173,11 +177,14 @@ optimization was very near the minima.
 
 Table \ref{tab:optimal_parameters} shows the spine parameters resulting from the
 optimization procedure. 
-Each gait parameter is now a cubic polynomial which is a function of time $[\theta_3 (t), \theta_4 (t), \alpha (t)]$.
-The coefficients from the table are used as $c_3 t^3 + c_2 t^2 + c_1 t + c_0$.
-The $c_0$ coefficients are simply the angles corresponding to the starting pose for the closed chain phase
-of the gait. The splines are also constrained to end at the final pose for the closed chain phase, which
-correspond to the angle triplet of $[0.28798, 0.47997, -1.5710]$ for $[\theta_3, \theta_4, \alpha]$.
+Each gait parameter is now a cubic polynomial which is a function of time 
+$[\theta_3 (t), \theta_4 (t), \alpha (t)]$.
+The coefficients from the table are used in the cubic spline $c_3 t^3 + c_2 t^2 + c_1 t + c_0$.
+The gait parameter splines are constrained by the starting and ending angles for each parameter.
+When $t = 0$, the splines must produce the starting angles for the triplet, 
+$[\theta_3 (0), \theta_4 (0), \alpha (0)] = [0.28798, 0.47997, 0.52360]$.
+At the final time $t = t_f$, the splines must produce 
+$[\theta_3 (t_f), \theta_4 (t_f), \alpha (t_f)] = [0.28798, 0.47997, -1.5710]$. 
 The initial and final angle triplets are in radians.
 
 \begin{table}
@@ -243,9 +250,9 @@ Profile gait using the nominal parameters. It shows a simplified kinematic model
 representing a projection of the robot onto the saggital plane. The frames show the
 model starting in the initial pose, and by linearly increasing the $\alpha$ gait
 parameter and holding the $\theta_3$ and $\theta_4$ parameters constant, the model
-shifts forward until $\alpha$ has reached its terminal value. This places the model
+shifts forward until $\alpha$ has reached its terminal value of $-90^\circ$. This places the model
 at the final closed chain pose. It can be seen that the highest point of this gait occurs
-at about $z =$ 100 $mm$. This model of course does not include the limb thicknesses nor
+when the ankle joint is at about $z =$ 100 $mm$. This model of course does not include the limb thicknesses nor
 the head of the Nao, as it only models joint centers. This model was created using MATLAB
 and is used to view the results of the gait sequence generation.
 
@@ -277,7 +284,7 @@ Nao humanoid. Figure \ref{fig:vrep_nao_nom_gait1} shows the simulated Nao execut
 the closed chain phase of the nominal crawl gait. As with the simplified kinematic
 model, the $\alpha$ gait parameter is linearly increased from $-30^\circ$ to $-90^\circ$,
 which moves the robot forward. As detailed in Chapter \ref{subsec:nao_kinematics}, the
-gait parameters and other constraints are used to position the arms of the robot, as unlike
+gait parameters and other constraints are used to position the arms of the robot. Unlike
 the ankle pitch, hip pitch, and shoulder pitch joints which have angles that directly correspond to
 joint angles in the simplified kinematic model, the shoulder roll, elbow yaw, and elbow roll joints
 do not. The head in this simulation can be seen to be the highest part of the robot
@@ -312,7 +319,7 @@ robot crawling under the vertically constrained table. The Nao is set to the ini
 crawling pose on the floor outside of the table. The robot then executes the crawl
 gait for several sequences until the robot is under the table.
 For this experiment, the robot executed 9 sequences in 27 seconds. The robot traveled
-about 1 body length or 610 $mm$, equating to a velocity of about 22.6 $\frac{mm}{s}$.
+about 1 body length or 610 $mm$, equating to a velocity of 22.6 $\frac{mm}{s}$.
 
 % \begin{figure}
 %   \centerline{
@@ -373,7 +380,7 @@ the red marker affixed to the table. It then transitions to a prone posture and 
 sequence. After having crawled to the other side, the robot transitions to a sitting posture.
 The ability to transition from posture to posture is provided through the NaoQI API.
 For this experiment, the robot executed 25 sequences in 58 seconds. The robot traveled
-about 2.75 body lengths or 1,676.4 $mm$, equating to a velocity of about 28.9 $\frac{mm}{s}$.
+about 2.75 body lengths or 1,676.4 $mm$, equating to a velocity of 28.9 $\frac{mm}{s}$.
 
 \begin{figure}
   \centerline{
@@ -428,11 +435,16 @@ Figure \ref{fig:nao_joint_angles1} plots the joint angles for the arms and legs 
 robot during the execution of multiple gait cycles. As expected, the plots show a clear
 periodicity to the gait.
 As the gait is laterally symmetric, the joint angles for the left and right side of the robot
-are the similar, with the exception of the arm joints below the shoulder pitch.
-Due to the robot frame and joint frame definitions from the NaoQI API, the shoulder roll,
-elbow yaw, and elbow roll have a mirror symmetry rather than being identical.
-Figure \ref{fig:nao_arm_joints_reflect1} details the joint frame definitions.
-In addition, the hip yaw pitch, hip roll, and ankle roll are not symmetric here as they
+are similar, with the exception of the arm joints below the shoulder pitch.
+The joint angle curves for the the shoulder roll, elbow yaw, and elbow roll 
+shown in Figure \ref{fig:nao_joint_angles1} have a mirror symmetry rather than being identical.
+This is due to the robot frame and joint frame definitions from the NaoQI API.
+Figure \ref{fig:nao_arm_joints_reflect1} shows that the joint frame definitions
+are such that increasing the shoulder roll angle of each arm rotates each arm to the left.
+The elbow yaw and roll joints have a similar behavior. Therefore, to command the arm to
+the required positions, the right arm shoulder roll, elbow yaw, and elbow roll angles
+are the opposite of the left arm versions.
+In addition, the hip-yaw pitch, hip roll, and ankle roll are not symmetric here as they
 were set to small constants that do not actively participate in the Projected Profile gait.
 
 \begin{figure}
@@ -505,7 +517,7 @@ Therefore, the joint current plots are of limited use.
 To test the Projected Profile gait using the optimal parameters reviewed in 
 Section \ref{subsec:gait_params}, the gait sequence was generated in
 MATLAB and simulated in V-REP. The closed chain phase of the gait was the
-only portion that was optimized, so that phase of the gait was simulated and
+only portion that was optimized, so this phase of the gait was simulated and
 analyzed. As reviewed in Section \ref{subsec:crawl_environments}, the V-REP simulator
 provides joint torque simulation and sensing, which can be recorded to evaluate
 the increase in gait efficiency using these parameters.
@@ -515,7 +527,7 @@ the increase in gait efficiency using these parameters.
 % Here's the MATLAB simulation. The theta 3 and 4 are doing different things.
 Figure \ref{fig:pp_opt_gait1} shows samples of the simplified kinematic model,
 as it executes the closed chain phase of the optimized Projected Profile gait.
-As with the nominal crawl gait, the angle $\alpha$ transits from $-30^\circ$ to $-90^\circ$,
+As with the nominal crawl gait, the angle $\alpha$ transitions from $-30^\circ$ to $-90^\circ$,
 though not linearly, as reviewed in Section \ref{subsec:gait_params}.
 While it is difficult to see the difference in the optimized $\alpha$ trajectory from the
 nominal version, the trajectory of $\theta_3$ and $\theta_4$ are quite different
@@ -596,7 +608,7 @@ Figures \ref{fig:vrep_nom_joint_torques_by_duration1} and \ref{fig:vrep_opt_join
 show joint torque plots from the nominal and optimal gaits, respectively.
 Each panel shows the torques for each of the four joints, over the prescribed gait duration.
 Only a subset of the experiments are shown as the differences between panels diminishes
-as the duration increases. This is likely due to a shift from the the dominant component 
+as the duration increases. This is likely due to a shift from the dominant component 
 of the system being the transient torques to the pseudo-statics.
 
 \begin{figure}
@@ -613,8 +625,7 @@ of the system being the transient torques to the pseudo-statics.
     \includegraphics[width=0.5\textwidth]{crawl/torques/nom_torques_duration_10.0_1.png}
   }
   \caption{This figure shows the nominal joint torque curves for six durations.
-           As the durations are increased, the graphs can be seen to be increasingly
-           similar.}
+           As the duration increased, the graphs show less variation.}
   \label{fig:vrep_nom_joint_torques_by_duration1}
 \end{figure}
 
@@ -632,16 +643,15 @@ of the system being the transient torques to the pseudo-statics.
     \includegraphics[width=0.5\textwidth]{crawl/torques/opt_torques_duration_10.0_1.png}
   }
   \caption{This figure shows the optimal joint torque curves for six durations.
-           As the durations are increased, the graphs can be seen to be increasingly
-           similar.}
+           As the duration increased, the graphs show less variation.}
   \label{fig:vrep_opt_joint_torques_by_duration1}
 \end{figure}
 
 Figures \ref{fig:vrep_nom_joint_torques_by_joint_over_time1} and 
-\ref{fig:vrep_opt_joint_torques_by_joint_over_time1} overlay the torques onto each other
+\ref{fig:vrep_opt_joint_torques_by_joint_over_time1} show the torque curves for each joint as a function of time.
+The panels overlay the torques onto each other
 which shows their similarity during the initial portion of the gait, before fanning out
 in the later portion.
-The panels show the torque curves for each joint as a function of time.
 This similarity is demonstrated more clearly in Figures \ref{fig:vrep_nom_joint_transient_torques_by_joint1}
 and \ref{fig:vrep_opt_joint_transient_torques_by_joint1}, which highlight the transients.
 For the nominal gait, the joint torque curves for each joint from about $t = 0.0$ seconds to $t = 0.25$ seconds
@@ -654,8 +664,8 @@ forces in this region. For the shorter duration gaits, this means the transients
 20\% of the gait cycle. But as the gait cycle duration is increased, the transients
 contribute to a diminishing percentage of the gait cycle, which appears as the left most
 portion of the panels in Figures \ref{fig:vrep_nom_joint_torques_by_duration1} and 
-\ref{fig:vrep_opt_joint_torques_by_duration1} being compressed to the left. 
-The differences between the 7 second gait and the 10 second gait for example,
+\ref{fig:vrep_opt_joint_torques_by_duration1} being compressed. 
+The differences between the 7 and 10 second gaits for example,
 are less pronounced than between the 1 and 3 second gaits.
 
 \begin{figure}
@@ -669,7 +679,9 @@ are less pronounced than between the 1 and 3 second gaits.
   }
   \caption{This figure shows the nominal joint torque curves as a function of time.
            Each panel shows the curves for one joint. The curves can be seen to be similar
-           up to a certain time, at which point they diverge.}
+           up to a certain time, at which point they diverge. 
+           Figure \ref{fig:vrep_nom_joint_transient_torques_by_joint1} shows a magnified
+           view of the similar portions of the curves.}
   \label{fig:vrep_nom_joint_torques_by_joint_over_time1}
 \end{figure}
 
@@ -684,7 +696,9 @@ are less pronounced than between the 1 and 3 second gaits.
   }
   \caption{This figure shows the optimal joint torque curves as a function of time.
            Each panel shows the curves for one joint. The curves can be seen to be similar
-           up to a certain time, at which point they diverge.}
+           up to a certain time, at which point they diverge.
+           Figure \ref{fig:vrep_opt_joint_transient_torques_by_joint1} shows a magnified
+           view of the similar portions of the curves.}
   \label{fig:vrep_opt_joint_torques_by_joint_over_time1}
 \end{figure}
 
@@ -723,8 +737,8 @@ are less pronounced than between the 1 and 3 second gaits.
 This similarity is more clearly demonstrated in Figures \ref{fig:vrep_nom_joint_torques_by_joint_over_cycle1}
 and \ref{fig:vrep_opt_joint_torques_by_joint_over_cycle1}. These panels plot joint torques
 for each joint as a function of gait cycle percentage, rather than time. Within each of the
-panels, the joint torques from the percentage from 20\% to 100\% can be seen to be
-similar. This gait-duration-invariant-with-respect-to-cycle-percentage portion suggests that
+panels, the joint torques from 20\% to 100\% can be seen to be similar between durations. 
+This gait-duration-invariant-with-respect-to-cycle-percentage portion suggests that
 the pseudo-statics are the dominant forces in this region. This is because joint torques
 are now only a function of position and not the time it takes to get to that position.
 
@@ -787,8 +801,8 @@ they spend less time there and therefore accrue a lower torque cost.
     \includegraphics[width=0.5\textwidth]{crawl/torques/opt_torques_duration_10.0_1.png}
   }
   \caption{This figure compares the joint torque curves of the nominal and optimal
-           gaits for three gait durations. The optimal curves appear to be extending
-           the affine portion to the left, reducing the transient response.}
+           gaits for three gait durations. The optimal curves extend the affine portion to the left, 
+           reducing the transient response.}
   \label{fig:vrep_comparison_joint_torques_by_duration1}
 \end{figure}
 
@@ -809,18 +823,18 @@ The figure shows the integral of the costs with the weight vector $w = [1, 1, 1,
 in order to show the simple torque cost to the robot. 
 The absolute and percentage difference in costs for the short durations is small,
 though the optimal gait always outperforms the nominal gait.
-As the durations increase, the optimal gait uses up to 21.5\% less than the
+As the duration increases, the optimal gait costs up to 21.5\% less than the
 nominal gait. Therefore, while the optimal gait does not always outperform the
 nominal gait by a significant amount, it is always preferable to the nominal gait.
 
 \begin{figure}
   \includegraphics[width=0.5\textwidth]{crawl/cost/gait_cost_duration1.png}
   \includegraphics[width=0.5\textwidth]{crawl/cost/cost_imp_duration1.png}
-  \caption{This figure shows the cost comparisons between the optimal and
+  \caption{This figure shows cost comparisons between the optimal and
            nominal gaits as a function of gait duration. The left panel shows
            this in terms of absolute cost and the right panel shows this in 
-           terms of percentage. The right panel percentage is the ratio of the optimal
-           gait cost to the nominal gait cost for each duration $\frac{C_o}{C_n}$.}
+           terms of percentage. The right panel percentage is the ratio $\frac{C_o}{C_n}$
+           for each duration, where $C_o$ is the optimal gait cost, and $C_n$ is the nominal gait cost.}
   \label{fig:cost_duration1}
 \end{figure}
 
