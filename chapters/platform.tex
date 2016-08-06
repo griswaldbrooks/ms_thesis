@@ -45,10 +45,69 @@ This doesn't mess with the navigation algorithm, but to increase the speed this 
 either by changing the rig or... using the arms to counterbalance the new inertial forces as
 part of the walking gait.
 
+\begin{figure}
+  \centering
+  \includegraphics[height=0.4\textheight]{nao_coronal1.jpg}
+  \caption{Nao at CRRL.}
+  \label{fig:crrl_nao_coronal1}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{White_Background/apex_cropped.png}
+  \caption{Nao in crawling pose.}
+  \label{fig:crrl_nao_apex1}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{nao_diagrams/nao_h25_pres.png}
+  \caption{Nao features.}
+  \label{fig:nao_features1}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[height=0.4\textheight]{nao_diagrams/hardware_motortype_h25V5.png}
+  \caption{Nao joints.}
+  \label{fig:nao_joints1}
+\end{figure}
+
+\begin{figure}
+  \centerline{
+    \includegraphics[width=0.45\textwidth]{nao_diagrams/hardware_lengthfront_3.3.png}
+    \includegraphics[width=0.55\textwidth]{nao_diagrams/hardware_lengthup_3.3.png}
+  }
+  \caption{Nao link lengths.}
+  \label{fig:nao_link_lengths1}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[height=0.75\textheight]{nao_diagrams/frame_definition_combo.png}
+  \caption{Nao frames.}
+  \label{fig:nao_frames1}
+\end{figure}
+
+\begin{figure}
+  \centerline{
+    \includegraphics[width=0.5\textwidth]{nao_diagrams/rollPitchYaw.png}
+  }
+  \caption{Definition of roll pitch and yaw.}
+  \label{fig:nao_rpy_def1}
+\end{figure}
+
 \section{Hardware Overview}
 Ok so, three pieces of hardware here, the Nao, the Lidar, and the mount.
 Technically, all you need is the Nao since it is a mobile base with distance sensors but the sonars
 don't do that great so we added the Lidar, and since there's no where to screw it down we designed a mount.
+
+\begin{figure}
+  \centering
+  \includegraphics[height=0.4\textheight]{red_cube1.png}
+  \caption{Figure showing red cube the Nao tracked.}
+  \label{fig:nao_arm_joints_reflect1}
+\end{figure}
 
 \subsection{Nao Hardware}
 Nao is a humanoid by Aldebaran Robotics. 25 DoF, arms, legs, head, hands feet. Sonars, joint sensors, cameras,
@@ -57,12 +116,46 @@ CPU type and speed, RAM, storage space, USB, Ethernet, WiFi.
 Motor torques. (Important for Chapter \ref{ch:crawl_gait})
 [Diagram of Nao. More than one to show different things]
 
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{nao_diagrams/hardware_larmjoint_3.3.png}
+  \caption{Figure showing left arm}
+  \label{fig:nao_arm_joints_left1}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{nao_diagrams/hardware_rarmjoint_3.3.png}
+  \caption{Figure showing right arm}
+  \label{fig:nao_arm_joints_right1}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{nao_diagrams/hardware_llegjoint.png}
+  \caption{Figure showing left leg}
+  \label{fig:nao_leg_joints_left1}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{nao_diagrams/hardware_rlegjoint.png}
+  \caption{Figure showing right leg}
+  \label{fig:nao_leg_joints_right1}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{nao_diagrams/hardware_pelvisjoint.png}
+  \caption{Figure showing hip yaw-pitch}
+  \label{fig:nao_hip_yawpitch1}
+\end{figure}
+
+
 Need diagram showing arm symmetry for crawl results. 
 \begin{figure}
-  \centerline{
-    \includegraphics[width=0.2\textwidth]{crawl/walk_to/from/37s.png}
-    \includegraphics[width=0.2\textwidth]{crawl/walk_to/from/37s.png}
-  }
+  \centering
+  \includegraphics[width=\textwidth]{hardware_r_and_l_armjoint.png}
   \caption{Figure showing arm joints and how they are a reflection.}
   \label{fig:nao_arm_joints_reflect1}
 \end{figure}
@@ -70,21 +163,52 @@ Need diagram showing arm symmetry for crawl results.
 Need diagram showing different postures for crawl results. 
 \begin{figure}
   \centerline{
-    \includegraphics[width=0.2\textwidth]{crawl/walk_to/from/37s.png}
-    \includegraphics[width=0.2\textwidth]{crawl/walk_to/from/37s.png}
+    \includegraphics[width=0.33\textwidth]{posture/posture_stand.png}
+    \includegraphics[width=0.33\textwidth]{posture/posture_standinit.png}
+    \includegraphics[width=0.33\textwidth]{posture/posture_standzero.png}
   }
+  \vspace*{0.05in}
+  \centerline{
+    \includegraphics[width=0.33\textwidth]{posture/posture_crouch.png}
+    \includegraphics[width=0.33\textwidth]{posture/posture_sit.png}
+    \includegraphics[width=0.33\textwidth]{posture/posture_sitrelax.png}
+  }
+  \vspace*{0.05in}
+  \centerline{
+    \includegraphics[width=0.5\textwidth]{posture/posture_lyingbelly.png}
+    \includegraphics[width=0.5\textwidth]{posture/posture_lyingback.png}
+    }
   \caption{Figure showing postures.}
   \label{fig:nao_postures1}
 \end{figure}
 
 \subsection{Lidar Hardware}
 Hokuyo is a Lidar. What's a Lidar? How does it work and what does it give you? 
-{Diagrams explaining things}
+{Diagrams explaining things like pictures of lidar outputs}
 
 Number of beams, angular resolution of beams, range of beams, resolution and accuracy.
 Weight, power consumption, USB, update rate (sensor bandwidth).
 Indoor only, not rated for outdoors.
 [Diagram of Hokuyo.]
+
+\begin{figure}
+  \centering
+  \includegraphics[height=0.4\textheight]{hokuyo/urg_04lx_ug01_top.jpg}
+  \caption{Figure showing Lidar.}
+  \label{fig:lidar_top1}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[height=0.4\textheight]{hokuyo/urg_04lx_ug01_ed.png}
+  \caption{Figure showing Lidar.}
+  \label{fig:lidar_diagram1}
+\end{figure}
+
+[Image showing angular and distance range of lidar.]
+[Image showing sample lidar output.]
+
+
 
 \subsection{Lidar Mount}
 Design reqs: needed to rigidly attach to Nao for data transformation purposes, needed to see forward,
@@ -94,6 +218,96 @@ needed to be able to use the sonars (just in case).
 Mounting it to the head seemed like it was going to be tough, so a vest was designed.
 Straps and foam seemed like they'd hold well enough. In fact they hold so well I can lift Nao up by the mount.
 [Show Solidworks design.]
+\begin{figure}
+  \centering
+  \includegraphics[height=0.4\textheight]{backpack/Assem_Nao_Dimetric1.jpg}
+  \caption{Figure showing assembled Nao Lidar.}
+  \label{fig:nao_lidar_mount_nao_dimetric1}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[height=0.4\textheight]{backpack/Assem_Nao_Three_View1.png}
+  \caption{Figure showing assembled Nao Lidar.}
+  \label{fig:nao_lidar_mount_nao_three_view1}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[height=0.4\textheight]{backpack/Assem_FrontOnly_Dimetric1.jpg}
+  \caption{Figure showing assembled Nao Lidar.}
+  \label{fig:nao_lidar_mount_dimetric1}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{backpack/Assem_FrontOnly_Three_View1.png}
+  \caption{Figure showing assembled Nao Lidar.}
+  \label{fig:nao_lidar_mount_three_view1}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[height=0.4\textheight]{backpack/Back_Plate_Dimetric1.jpg}
+  \caption{Figure showing assembled Nao Lidar.}
+  \label{fig:nao_lidar_mount_backplate_dimetric1}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{backpack/Back_Plate_Three_View1.png}
+  \caption{Figure showing assembled Nao Lidar.}
+  \label{fig:nao_lidar_mount_backplate_three_view1}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[height=0.4\textheight]{backpack/Base_Plate_Trimetric1.jpg}
+  \caption{Figure showing assembled Nao Lidar.}
+  \label{fig:nao_lidar_mount_baseplate_trimetric1}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{backpack/Base_Plate_Three_View1.png}
+  \caption{Figure showing assembled Nao Lidar.}
+  \label{fig:nao_lidar_mount_baseplate_three_view1}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[height=0.4\textheight]{backpack/Front_Plate_Trimetric1.jpg}
+  \caption{Figure showing assembled Nao Lidar.}
+  \label{fig:nao_lidar_mount_frontplate_trimetric1}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{backpack/Front_Plate_Three_View1.png}
+  \caption{Figure showing assembled Nao Lidar.}
+  \label{fig:nao_lidar_mount_frontplate_three_view1}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[height=0.4\textheight]{backpack/Support_Left_Trimetric1.jpg}
+  \caption{Figure showing assembled Nao Lidar.}
+  \label{fig:nao_lidar_mount_supportleft_trimetric1}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[height=0.4\textheight]{backpack/Support_Left_Three_View1.jpg}
+  \caption{Figure showing assembled Nao Lidar.}
+  \label{fig:nao_lidar_mount_supportleft_three_view1}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[height=0.4\textheight]{nao_with_mount2.jpg}
+  \caption{Figure showing Nao with Lidar mounted to chest.}
+  \label{fig:nao_lidar_mount1}
+\end{figure}
 
 \section{Software Framework}
 So Nao comes with a much of good stuff. The API allows us to program in C++ or python and run locally or
@@ -115,42 +329,3 @@ Everything is done with proxies.
 \subsection{User Operation}
 How do you start Nao, start Lidar? Log in to robot? Start program. Load program.
 Start algorithms, stop them.
-			
-% \begin{table}[h!]
-% 	\centering
-% 	\begin{tabularx}{\textwidth}{|C{0.1}|C{0.4}||C{0.25}|C{0.25}|} 
-% 		\hline
-% 		\textbf{Net} 	&	\textbf{Device} 		&	\textbf{$V_{op}, V$}	&	\textbf{$I_{nom}, A$}	\\	\hline\hline
-% 		1				&	AutoPilot (RM48, TM4C) 	& 	12.0					&	0.40	 				\\	\hline
-% 		1				&	XBEE Radio 				&	3.3						&	0.25					\\ 	\hline
-% 		1				&	ODROID-XU 				&	5.0						&	2.0						\\ 	\hline
-% 		1				&	Logitech-9000			&	5.0						&	0.1						\\ 	\hline
-% 		1				&	Hokuyo-URG				&	5.0						&	0.5 					\\	\hline
-% 		2				&	AX12a Servos (x16)		&	12.0 					&	9.6	($~$0.6 ea.)		\\	\hline
-% 	\end{tabularx} 
-% 	\begin{tabularx}{\textwidth}{|C{0.5}|C{0.5}|} 
-% 		\hline
-% 		\textbf{Total Power Consumption} 		& 	137.8250 W \\\hline
-% 		\textbf{Worst-Case Power Consumption}  	& 	$\approx$200.000 W \\\hline
-% 	\end{tabularx} 
-% 	\caption{Power consumption summary by device (for single-camera configuration).}
-% 	\label{tab::power_summary}
-% \end{table}
-
-
-% \begin{table}[h!]
-% 	\centering
-% 	\begin{tabularx}{\textwidth}{|C{0.1}|C{0.4}||C{0.25}|C{0.25}|}
-% 		\hline
-% 		\textbf{Net} 		&	\textbf{Battery Pack}	&	\textbf{$V_{out}, V$}			&	\textbf{Rating, $A.hr$}	\\	\hline\hline
-% 		1				&	3S LiPo Pack (x1)		& 	12.0						&	2.0	 					\\	\hline
-% 		2				&	3S LiPo Pack (x3)		&	12.0						&	6.0						\\ 	\hline
-% 	\end{tabularx}
-% 	\begin{tabularx}{\textwidth}{|C{0.5}|C{0.5}|} 
-% 		\hline
-% 		\textbf{Average Runtime}  		& 	$\approx$41 minutes \\\hline
-% 		\textbf{Worst-Case Runtime}  	& 	$\approx$28 minutes \\\hline
-% 	\end{tabularx} 
-% 	\caption{Battery power supply and estimated runtime summary.}
-% 	\label{tab::runtime_summary}
-% \end{table}
