@@ -14,27 +14,29 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Platform} \label{ch:platform}
 
-For this thesis we used the Nao as the mobile platform. Aldebaran makes him. He's a cool little robot and he allows us to explore both
-things we wanted to look at which were navigation and gaiting. He's mobile, small, ``cost-effective"
+For this thesis we used the Nao as the mobile platform. Aldebaran makes him.
+He's a cool little robot and he allows us to explore both things we wanted to 
+look at which were navigation and gaiting. He's mobile, small, ``cost-effective"
 and has a good API that we can use to do lower-level control of things when we want to, 
 and abstract ourselves from it when we don't want to.
 The small size means he's easy to work with.
 
 There's definitely some more opening paragraph to be written here about the Nao.
-Probably say something about why he's useful to investigate crawling. No one's going to send
-Nao into a disaster zone or anything but he's not to far off from robots that you would send in
-and we don't have to spend all the money or build a new lab to work with him. You can do lot's of
-simulations, but in the end you still have to test on a real robot.
+Probably say something about why he's useful to investigate crawling.
+No one's going to send Nao into a disaster zone or anything but he's not too
+far off from robots that you would send in and we don't have to spend all the 
+money or build a new lab to work with him. You can do lot's of simulations, 
+but in the end you still have to test on a real robot.
 
 While the Nao is cool and all, the sonar sensors just don't cut it for what we want to do.
-Lucky, Nao comes with a USB port and uses x86 and linux so it's relatively straightforward to
-add new things to him.
-Therefore, we added a better distance sensor. Specifically we added the Hokuyo URG-04LX-UG01.
-It's a good Lidar because it has a respectable range, good angular resolution, ``cost-effective",
-and is kinda lightweight.
-Using this sensor we could do mapping if we wanted to which means this system is extensible to the
-broader challeges of the overall navigation problem such as SLAM. Using the Lidar we'll be
-able to get enough information to do the job we need to.
+Lucky, Nao comes with a USB port and uses x86 and linux so it's relatively
+straightforward to add new things to him. Therefore, we added a better distance sensor.
+Specifically we added the Hokuyo URG-04LX-UG01.
+It's a good Lidar because it has a respectable range, good angular resolution,
+``cost-effective", and is kinda lightweight. Using this sensor we could do mapping 
+if we wanted to which means this system is extensible to the broader challeges 
+of the overall navigation problem such as SLAM. Using the Lidar we'll be able to 
+get enough information to do the job we need to.
 
 While it's easy to plug a USB cable into Nao's head, you still have to stick the Lidar somewhere.
 Nao doesn't have mount points that make it easy to add new hardware.
@@ -186,6 +188,14 @@ Need diagram showing different postures for crawl results.
 Hokuyo is a Lidar. What's a Lidar? How does it work and what does it give you? 
 {Diagrams explaining things like pictures of lidar outputs}
 
+\begin{figure}
+    \centering
+    \includegraphics[height=0.4\textheight]{laser_scan_msg2.yaml_1.png}
+    \caption{Figure showing lidar scan, 5 meters like the URG.
+             Robot is facing a hallway, to it's left is a doorway.}
+    \label{fig:lidar_scan1}
+\end{figure}
+
 Number of beams, angular resolution of beams, range of beams, resolution and accuracy.
 Weight, power consumption, USB, update rate (sensor bandwidth).
 Indoor only, not rated for outdoors.
@@ -310,7 +320,7 @@ Straps and foam seemed like they'd hold well enough. In fact they hold so well I
 \end{figure}
 
 \section{Software Framework}
-So Nao comes with a much of good stuff. The API allows us to program in C++ or python and run locally or
+So Nao comes with a bunch of good stuff. The API allows us to program in C++ or python and run locally or
 remote. We can also test things quickly using Choreographe. Because it's linux we can also easily
 run other non-aldebaran programs in python or using g++ complier.
 The lidar runs on a python server, allowing the ground station and the Nao to easily see/use the data since
@@ -325,7 +335,6 @@ The API is really a lot. You can command things on the joint level, nav level, p
 set velocities or positions, get orientation, distances, and joint angles or currents.
 Everything is done with proxies.
 
-% \subsection{Custom Library Framework}
 \subsection{User Operation}
 How do you start Nao, start Lidar? Log in to robot? Start program. Load program.
 Start algorithms, stop them.
