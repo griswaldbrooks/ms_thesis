@@ -106,7 +106,7 @@ don't do that great so we added the Lidar, and since there's no where to screw i
 \centering
 \includegraphics[height=0.4\textheight]{red_cube1.png}
 \caption{Figure showing red cube the Nao tracked.}
-\label{fig:nao_arm_joints_reflect1}
+\label{fig:red_cube1}
 \end{figure}
 
 \subsection{Nao Hardware}
@@ -192,20 +192,37 @@ Hokuyo is a Lidar. What's a Lidar? How does it work and what does it give you?
 \label{fig:lidar_scan1}
 \end{figure}
 
-Number of beams, angular resolution of beams, range of beams, resolution and accuracy.
-683 beams, 0.36 degree angular resolution, rated for 4 meter range
-1 mm linear resolution
-Accuracy:
-    20 mm to 1000 mm $\pm 30 mm$
-    20 mm to 4000 mm $\pm 3\%$
-240 degree view angle
-
-Weight, power consumption, USB, update rate (sensor bandwidth).
 Indoor only, not rated for outdoors.
 
-Here is where you get the information about the Lidar. This needs to be put into
-references.\
-\url{http://www.hokuyo-aut.jp/02sensor/07scanner/download/pdf/URG-04LX_UG01_spec_en.pdf}
+USB 2.0
+
+
+\begin{table}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+%\centering
+\begin{tabularx}{\textwidth}{|R||R|R|R|R|R|}
+\hline
+\textbf{Param}   &	\textbf{Condition} & \textbf{Min} & \textbf{Typ} & \textbf{Max} & \textbf{Units} \\	\hline\hline
+View Angle 	         &                     &              & 240              &              & degrees        \\	\hline
+Angular Resolution 	 & .                   & .            & 0.36             &  .           & degrees        \\	\hline
+Range 	             &                     & 20           &                  & 4000         & mm             \\	\hline 
+Linear Resolution    &  .                  & .            & 1                & .            & mm             \\	\hline 
+Accuracy             & Distance 20 mm to 1000 mm &        & $\pm$ 30         &   .          & mm             \\	\hline 
+%        	         & Distance 20 mm to 4000 mm &        & $\pm$ 3          &              & \%             \\	\hline 
+%Update Rate	  & cond & min & 100 & max & ms/scan \\	\hline \hline
+%Weight 	  & cond & min & 160 & max & g \\	\hline 
+%Width 	  & cond & min & 240 & max & degrees \\	\hline 
+%Length 	  & cond & min & 240 & max & degrees \\	\hline 
+%Height	  & cond & min & 240 & max & degrees \\	\hline \hline
+%Voltage Rating	  & cond & 4.75 & 5.0 & 5.25 & V \\	\hline 
+%Current Consumption	  & cond & min & 500 & 800 & mA \\	\hline 
+\end{tabularx} 
+\caption{Things}
+\label{tab:lidar_params1}
+\end{table}
+
+
+Here is where you get the information about the Lidar \cite{urg_specs}.
 
 \begin{figure}
 \centering
@@ -317,29 +334,3 @@ Straps and foam seemed like they'd hold well enough. In fact they hold so well I
 \label{fig:nao_lidar_mount_supportleft_three_view1}
 \end{figure}
 
-\begin{figure}
-\centering
-\includegraphics[height=0.4\textheight]{nao_with_mount2.jpg}
-\caption{Figure showing Nao with Lidar mounted to chest.}
-\label{fig:nao_lidar_mount1}
-\end{figure}
-
-\section{Software Framework}
-So Nao comes with a bunch of good stuff. The API allows us to program in C++ or python and run locally or
-remote. We can also test things quickly using Choreographe. Because it's linux we can also easily
-run other non-aldebaran programs in python or using g++ complier.
-The lidar runs on a python server, allowing the ground station and the Nao to easily see/use the data since
-everything is over WiFi and the sockets don't care. How does this work?
-How to log into Nao. Choreographe, remote run, and ssh for local run.
-
-\subsection{NaoQi API and qibuild}
-qibuild is what allows us to use the libraries remotely or locally without thinking. It's based on CMake
-so you can add new libraries in just as you would with CMake on Linux.
-
-The API is really a lot. You can command things on the joint level, nav level, pose level,
-set velocities or positions, get orientation, distances, and joint angles or currents.
-Everything is done with proxies.
-
-\subsection{User Operation}
-How do you start Nao, start Lidar? Log in to robot? Start program. Load program.
-Start algorithms, stop them.

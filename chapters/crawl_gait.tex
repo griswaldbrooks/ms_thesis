@@ -12,7 +12,7 @@ of the environment that are inaccessible via walking alone. A low-profile latera
 modeling the robot as a closed-chain manipulator with pseudo-static dynamics. This gait was parameterized on 
 three joint variables and optimized using a cubic splines approach via a genetic algorithm.
 
-As was described in Chapter \ref{ch:navigation}, the gaiting modality directly affects the navigation strategy.
+As was described in Chapter~\ref{ch:navigation}, the gaiting modality directly affects the navigation strategy.
 By selecting the appropriate gaiting strategy, the robot can modify its movement to achieve a commanded goal.
 This modified movement also modifies which environmental objects present as obstacles.
 Expanding the library of gaits legged robots have access to allows robots to be increasingly more capable
@@ -38,11 +38,11 @@ A primary limitation to the gaits that can be produced by the Nao is the limited
 in contrast to the large number of DoF present in humans. While the Nao has 25 DoF, the human body has 244 \cite{zatsiorskybiomechanics}.
 The human arm and leg each have 7 DoF while the Nao's arms and legs each have 5. 
 Nao's hips have one more degree of freedom, called Hip Yaw-Pitch, which turn the legs together at an angle. 
-Figure \ref{fig:nao_hips_legs1} illustrates this degree of freedom more clearly. 
+Figure~\ref{fig:nao_hips_legs1} illustrates this degree of freedom more clearly. 
 The rest of the DoF of the Nao are in the hands and neck. 
 Notably, Nao has no back joint. This prevents the gait designer from prescribing a twisting motion for use in the crawl gait.
 These limits in motion preclude the execution of any gaits that require lateral twisting or sagittal arching.
-Examples of this are shown in Figure \ref{fig:crawl_back1} .
+Examples of this are shown in Figure~\ref{fig:crawl_back1}.
 
 \begin{figure}
 	\vspace*{-0.07in}
@@ -68,7 +68,7 @@ Examples of this are shown in Figure \ref{fig:crawl_back1} .
 \section{Projected Profile Humanoid Crawl Gait}
 
 The crawling gait presented in this thesis is based on viewing the humanoid form as a set of manipulators on the
-sagittal plane. Figure \ref{fig:nao_sideview1} illustrates this concept.
+sagittal plane. Figure~\ref{fig:nao_sideview1} illustrates this concept.
 When the robot is laying in the prone position, it necessarily makes contact with the ground. If we then view the robot
 from the side (looking at the sagittal plane) we can model it as a planar kinematic chain. If the chest and knees
 are making contact with the ground, then the arms from the shoulder joint to the hand, and the legs from the knees to the
@@ -91,7 +91,7 @@ We will call this ``compression".
 This can be viewed as the robot having pulled itself forward. These motions can then be combined
 to produce a full gait.
 
-Using the Nao robot as an example, Figure \ref{fig:nao_phases1} shows the full gaiting sequence.
+Using the Nao robot as an example, Figure~\ref{fig:nao_phases1} shows the full gaiting sequence.
 The robot initializes itself in the open chain configuration. From this, it can position
 its end effectors (the toes and elbows) into the first common configuration ``extension". Next, the robot is in the closed chain 
 configuration in which it can transport its center of mass forward until it reaches the ``compression" configuration. Finally the robot
@@ -118,7 +118,7 @@ is again in the open chain configuration and the cycle can start again.
 
 The gait is laterally symmetric. 
 If we actuate the joints at an appropriate rate, dynamic effects from the robot's motion do not become a significant factor.
-As detailed in Chapter \ref{ch:results}, this gait can be performed on the Nao at a speed of 1 ft every 6 to 8 seconds. 
+As detailed in Chapter~\ref{ch:results}, this gait can be performed on the Nao at a speed of 1 ft every 6 to 8 seconds. 
 The wide surface area of the forearm provides a high coefficient of friction against slipping and the small surface area of
 the toes can act as a point of high pressure which can dig into soft surfaces such as carpets.
 The gait is statically stable in the sense that the robot's motion can be paused at any point and the robot will maintain that pose.
@@ -130,7 +130,7 @@ is about 8 inches off of the ground. In contrast, during walking, the Nao robot 
 \subsection{Open Chain Kinematics}
 The Projected Profile crawl gait has two kinematic configurations: open chain and closed chain. In the open chain
 configuration, the robot acts as two independent planar manipulators. 
-Each manipulator has two degrees of freedom as can be seen in Figure \ref{fig:open_chain1} .
+Each manipulator has two degrees of freedom as can be seen in Figure\ref{fig:open_chain1}.
 
 \begin{figure}
 	\centering
@@ -166,7 +166,7 @@ The solutions to the inverse kinematics problem can be seen as:
 
 This solution derives from the standard inverse kinematics procedure of inverting the forward kinematics.
 $\theta_1$ must be chosen such that no part of the robot tries to intersect with the floor. 
-In practice, the two argument arc-tangent function $atan2$ is used instead of $\tan^{-1}$ .
+In practice, the two argument arc-tangent function $atan2$ is used instead of $\tan^{-1}$.
 
 %%% Projected profile %%%
 \subsection{Closed Chain Kinematics} \label{subsec:crawl_closed_chain}
@@ -185,12 +185,12 @@ the forward kinematics of the closed chain are:
 where $d_e$ is the prescribed distance of the elbow from the foot and $\alpha$ is the desired angle
 created by the x-axis of the humerus and the ground.
 $\theta_1$ through $\theta_5$ are the angles of the following joints with respect to their previous links when projected onto the sagittal plane:
-toe-to-ground, ankle, knee, hip, shoulder. In Figure \ref{fig:pp_stick1}, the red lines represent the links projected onto the sagittal plane.
+toe-to-ground, ankle, knee, hip, shoulder. In Figure~\ref{fig:pp_stick1}, the red lines represent the links projected onto the sagittal plane.
 These equations are the standard planar manipulation equations, treating the foot as the base link 
 with the elbow as the end effector.
-Equation \ref{eq:fk_eq1} constrains the end effector to be a set distance from the foot and 
-equation \ref{eq:fk_eq2} constrains the end effector to be on the ground.
-Using equation \ref{eq:fk_eq3}, equations \ref{eq:fk_eq1} and \ref{eq:fk_eq2} can be rewritten as:
+Equation~\ref{eq:fk_eq1} constrains the end effector to be a set distance from the foot and 
+equation~\ref{eq:fk_eq2} constrains the end effector to be on the ground.
+Using equation~\ref{eq:fk_eq3}, equations~\ref{eq:fk_eq1}~and~\ref{eq:fk_eq2} can be rewritten as:
 
 \begin{align}
 \sum_{i=1}^4 l_i \cos(\sum_{j=1}^i \theta_j) &= d_e - l_5 \cos(\alpha) \label{eq:sum_cos1} \\
@@ -205,11 +205,11 @@ Using equation \ref{eq:fk_eq3}, equations \ref{eq:fk_eq1} and \ref{eq:fk_eq2} ca
 	\label{fig:pp_stick1}
 \end{figure}
 
-If $\theta_3$, $\theta_4$, and $\alpha$ are prescribed angles, then equations \ref{eq:sum_cos1} and \ref{eq:sum_sin1} are two equations 
+If $\theta_3$, $\theta_4$, and $\alpha$ are prescribed angles, then equations~\ref{eq:sum_cos1}~and~\ref{eq:sum_sin1} are two equations 
 in the two unknowns $\theta_1$ and $\theta_2$. 
 $\theta_3$ and $\theta_4$ can be constant or time-varying as the resultant configuration is a function of 
 these two ``free'' variables.
-Taking the square of each of the equations \ref{eq:sum_cos1} and \ref{eq:sum_sin1}, 
+Taking the square of each of the equations~\ref{eq:sum_cos1}~and~\ref{eq:sum_sin1}, 
 an equation in the single variable $\theta_2$ is obtained as:
 \begin{align}
 	2l_1 K_1 \cos(\theta_2) + 2l_1K_2 \sin(\theta_2) &= [d_e - l_5 \cos(\alpha)]^2 + [l_5 \sin(\alpha)]^2 - l_1^2 - K_1^2 - K_2^2 \label{eq:theta2_eq1} \\
@@ -217,10 +217,10 @@ an equation in the single variable $\theta_2$ is obtained as:
 	K_2 &= -l_3 \sin(\theta_3) - l_4 \sin(\theta_3 + \theta_4) \label{eq:theta2_eq3}
 \end{align}
 
-The solution to equation \ref{eq:theta2_eq1} is of similar form to that seen in \ref{eq:open_fk_eq2}.
+The solution to equation~\ref{eq:theta2_eq1} is of similar form to that seen in equation~\ref{eq:open_fk_eq2}.
 In general, there will be two solutions for $\theta_2$, but one of them will cause the robot to collide
 with the ground and must be guarded against.
-With $\theta_2$ solved, equations \ref{eq:sum_cos1} and \ref{eq:sum_sin1} can be used to solve for $\theta_1$:
+With $\theta_2$ solved, equations~\ref{eq:sum_cos1}~and~\ref{eq:sum_sin1} can be used to solve for $\theta_1$:
 \begin{align}
 	\theta_1 = tan^{-1} \left( \frac{sin(\theta_1)}{cos(\theta_1)} \right ) \label{eq:theta1_eq1}\\
 	cos(\theta_1) = \frac{K_3 (d_e - l_5 \cos(\alpha)) + l_5 K_4 \sin(\alpha)}{K_3^2 + K_4^2} \label{eq:theta1_eq2}\\
@@ -229,21 +229,21 @@ With $\theta_2$ solved, equations \ref{eq:sum_cos1} and \ref{eq:sum_sin1} can be
 	K_4 = K_2 cos(\theta_2) - K_1 sin(\theta_2) \label{eq:theta1_eq5}
 \end{align}
 
-Lastly, $\theta_5$ is solved using equation \ref{eq:fk_eq3}.
+Lastly, $\theta_5$ is solved using equation~\ref{eq:fk_eq3}.
 
 % Robot is like a parallelogram. Any robot that can make a parallelogram can use this principle.
 With these angles solved, the entire robot is parameterized on three angles $\theta_3, \theta_4, \alpha$.
 If $\theta_3$ and $\theta_4$ are fixed, then starting with the elbow at full extension, bringing the elbow
 to flexion moves the robot forward. This corresponds to $\alpha$ starting with a small negative angle and 
 ending with a large negative angle. 
-For the Nao, $\alpha$ is initialized at approximately $-30^\circ$ and terminates at about $-90^\circ$ .
+For the Nao, $\alpha$ is initialized at approximately $-30^\circ$ and terminates at about $-90^\circ$.
 The primary intuition about this procedure is that the closed chain is like a parallelogram that is used to shift
 the mass of the robot. Any robot (humanoid or not) that can be set into this configuration can use this 
 framework in order to gait the robot.
 
 \subsection{Nao Kinematics} \label{subsec:nao_kinematics}
 Once the projected profile time sequence of angles has been computed, it needs to be applied to the Nao.
-Figure \ref{fig:nao_pp_view1} illustrates the sagittal view of the robot in the closed chain configuration.
+Figure~\ref{fig:nao_pp_view1} illustrates the sagittal view of the robot in the closed chain configuration.
 When Nao is set to this configuration, the ankle pitch, knee pitch, hip pitch, and shoulder pitch joints 
 of the robot directly correspond to $\theta_2$ through $\theta_5$. $\theta_1$ corresponds to the angle
 subtended by the robot's foot and the ground. Unlike the first five joint angles, angle $\alpha$ does not have a
@@ -276,7 +276,7 @@ and pointing upwards.
 The y-axis is perpendicular to the saggital plane. Nominally, the axis of the shoulder pitch is coincident
 with the y-axis. The origin of the coordinate system will be at the shoulder pitch joint.
 
-As shown in Figure \ref{fig:nao_rarm_hardware1}, the arm of the Nao has 5 degrees of freedom.
+As shown in Figure~\ref{fig:nao_rarm_hardware1}, the arm of the Nao has 5 degrees of freedom.
 The kinematic chain of the arm joints proceeds in the following order: shoulder pitch, shoulder
 roll, elbow yaw, elbow roll, wrist yaw. The angles for these joints will be denoted as $\theta_{sp}$,
 $\theta_{sr}$, $\theta_{ey}$, $\theta_{er}$, and $\theta_{wy}$ respectively. Due to the projected profile
@@ -295,7 +295,7 @@ and $\theta_{er}$ corresponds to $\alpha$, this configuration limits the lateral
 gait. To increase the lateral stability, the arms are positioned so the forearm-to-forearm distance $d_f$
 is greater than the shoulder-to-shoulder distance $d_s$. This increases the width of the support polygon 
 that the center of mass can be projected onto. A diagram of these distances can be seen in 
-Figure \ref{fig:nao_arm_pose1}.
+Figure~\ref{fig:nao_arm_pose1}.
 
 \begin{figure}
 	\includegraphics[width=\textwidth]{nao_arm_shoulder_positioning1.png}
@@ -333,7 +333,7 @@ $\theta_{ey}$ and $\theta_{er}$ are zero, and the two vectors representing the a
 rotation about the two elbow joints,
 denoted $v_{ey}$ and $v_{er}$. $v_f$ is first rotated about $v_{ey}$ by amount $\theta_{ey}$, then about
 $v_{er}$ by amount $\theta_{er}$. This should bring $v_f$ to be conincident with $u_f$.
-This can be expressed by equation \ref{eq:elbow_fk1}.
+This can be expressed by equation~\ref{eq:elbow_fk1}.
 
 \begin{equation}
 	u_f = R_{v_{er}, \theta_{er}} R_{v_{ey}, \theta_{ey}} v_f \label{eq:elbow_fk1}
@@ -352,8 +352,8 @@ in that direction. $u_f$ is therefore coincident with the x-axis $u_f = [1, 0, 0
 % the humerus with the shoulder at the origin, which is then normalized by the length of the humerus $l_h$.
 
 As $v_{ey}$ is coincident with the humerus, it can be found by computing the normalized humerus vector.
-An illustration of this vector can be seen in Figure \ref{fig:arm_vectors1}. The elbow yaw axis is then defined
-by equation \ref{eq:elbow_yaw_axis1}.
+An illustration of this vector can be seen in Figure~\ref{fig:arm_vectors1}. The elbow yaw axis is then defined
+by equation~\ref{eq:elbow_yaw_axis1}.
 \begin{equation}
 	v_{ey} = [\tilde l_h \cos(\alpha), d, \tilde l_h \sin(\alpha)]^T / l_h \label{eq:elbow_yaw_axis1}
 \end{equation}
@@ -415,7 +415,7 @@ This can again be found using the inverse cosine and dot product.
 \section{Optimization} \label{sec:crawl_optimization}
 
 In the previous section, the Projected Profile crawl gait was parameterized on angle triplet 
-$[ \theta_3, \theta_4, \alpha ]$ .
+$[ \theta_3, \theta_4, \alpha ]$.
 To achieve a crawling gait, $\theta_3$ and $\theta_4$ can be set to be constant and $\alpha$ linearly incremented
 from an initial angle to a final angle as a function of time. While this configuration successfully gaits the robot,
 it is heuristic. To improve the approach, the selection of a triplet of cubic splines 
@@ -456,21 +456,20 @@ It has an easy to use API that can interface with C++, Python, or MATLAB.
 
 \begin{figure}
 	\includegraphics[width=\textwidth]{nao_vrep1.png}
-  	\caption{ A sample screen capture of the V-REP simulation of the Nao robot in the closed
-  				chain configuration. The robot is set to different poses and then the joint torques
-  				are read after a short settle time.
-  			}
+  	\caption{A sample screen capture of the V-REP simulation of the Nao robot in the closed
+  			 chain configuration. The robot is set to different poses and then the joint torques
+             are read after a short settle time.}
   	\label{fig:nao_vrep1}
 \end{figure}
 
-Figure \ref{fig:nao_vrep1} shows a screen capture of the Nao model in the V-REP simulator. 
+Figure~\ref{fig:nao_vrep1} shows a screen capture of the Nao model in the V-REP simulator. 
 The Nao was configured to be in the closed chain and set to different joints angles. 
 The initial and final values of $\alpha$ were constrained due to the gaiting requirement of the elbow to start at 
 extension and end at flexion. The ranges of $\theta_3$ and $\theta_4$ were defined according to what seemed
 like plausible knee and hip angles for the gait. Using these limits a discrete set of triplets were defined
 at a $2.5^\circ$ resolution for each triplet parameter. These triplets were sent through the kinematics equations to produce the joint
 commands for the simulated Nao robot. 
-Table \ref{tab:angle_set_params1} lists the parameters that describe the triplets tested. In total, 9,975
+Table~\ref{tab:angle_set_params1} lists the parameters that describe the triplets tested. In total, 9,975
 different joint configurations were simulated.
 To allow for the effect of
 any dynamics generated by the change in configuration to settle, the torque values of each of the joints was recorded
@@ -514,26 +513,27 @@ The weight vector is constant and equal to $w = [1, 1, 1, 5]^T$.
 $w_4$ has a higher value in order to reduce the use of Nao's shoulder, as its actuator can produce about 3 to 4 times
 less torque than each of the leg actuators.
 
-The first set of indicator functions introduced deter violation of kinematic constrains, such as joint limits
-in $\theta_3$ and $\theta_4$ \ref{eq:fn_ind_theta}, starting and stopping conditions for $\alpha$ \ref{eq:fn_ind_alpha},
-and to prevent the Nao from being in a kinematic configuration where the hips are making contact with the crawling
-surface \ref{eq:fn_ind_z}.
+The first set of indicator functions introduced deter violation of kinematic constraints.
+Equation~\ref{eq:fn_ind_theta} enforces joint limits in $\theta_3$ and $\theta_4$ while
+equation~\ref{eq:fn_ind_alpha} enforces angular limits for $\alpha$.
+Equation~\ref{eq:fn_ind_z} prevents the Nao from being in a kinematic configuration where the hips are making contact
+with the crawling surface.
 
 \begin{align}
 	c_{\theta_i}(t) &=
   	\begin{cases} 
-  		\hfill 1 \hfill & \text{ if $\theta_i (t) > \theta_{i_{max}}$ or $\theta_i (t) < \theta_{i_{min}}$ } \\
-    	\hfill 0 \hfill & \text{ otherwise }
+  		\hfill 1 \hfill & \text{if $\theta_i (t) > \theta_{i_{max}}$ or $\theta_i (t) < \theta_{i_{min}}$ } \\
+    	\hfill 0 \hfill & \text{otherwise}
   	\end{cases} \label{eq:fn_ind_theta} \\
   c_{\alpha}(t) &=
   	\begin{cases} 
-    	\hfill 1 \hfill & \text{ if $\alpha(t) > \alpha_{max}$ or $\alpha(t) < \alpha_{min}$ } \\
-      \hfill 0 \hfill & \text{ otherwise }
+    	\hfill 1 \hfill & \text{if $\alpha(t) > \alpha_{max}$ or $\alpha(t) < \alpha_{min}$ } \\
+      \hfill 0 \hfill & \text{otherwise}
   	\end{cases} \label{eq:fn_ind_alpha} \\
 	c_{z_{hip}}(t) &=
   	\begin{cases} 
-    	\hfill 1 \hfill & \text{ if $z_{hip}(t) < z_{hip_{thresh}}$ } \\
-      \hfill 0 \hfill & \text{ otherwise }
+    	\hfill 1 \hfill & \text{if $z_{hip}(t) < z_{hip_{thresh}}$ } \\
+      \hfill 0 \hfill & \text{otherwise}
   	\end{cases} \label{eq:fn_ind_z}
 \end{align}
 
@@ -548,14 +548,14 @@ decreasing by a large amount.
 To review, $\alpha$ is initialized at approximately $-30^\circ$ and terminates at about $-90^\circ$.
 This appeared as the robot lunging forward at the end of the gait.
 This can most readily intepreted as the robot incurring a large cost for a small time, which is perhaps
-a local optima. An indicator function \ref{eq:fn_ind_dalpha} was added to penalize splines in which 
+a local optima. The indicator function shown in equation~\ref{eq:fn_ind_dalpha} was added to penalize splines in which 
 $\alpha (t)$ was not monotonically decreasing, which allowed the optimizer to find a more efficient gait.
 
 \begin{equation} 
 	c_{\dot \alpha}(t) =
   	\begin{cases} 
-    	\hfill 1 \hfill & \text{ if $\dot \alpha(t) \ge 0$ } \\
-      \hfill 0 \hfill & \text{ otherwise }
+    \hfill 1 \hfill & \text{if $\dot \alpha(t) \ge 0$ } \\
+    \hfill 0 \hfill & \text{otherwise}
   	\end{cases} \label{eq:fn_ind_dalpha}
 \end{equation}
 
@@ -566,8 +566,8 @@ violate any of these constraints is prohibitively large.
 	c_I(t) = C_v \Big( c_{\dot \alpha}(t) + c_{\alpha}(t) + c_{z_{hip}}(t) + \sum_3^4 c_{\theta_i}(t) \Big) \label{eq:cost_ind}
 \end{equation}
 
-The cost of the spline triplet is then given by integrating the sum of cost functions \ref{eq:cost_joint} and
-\ref{eq:cost_ind}, and can be seen in equation \ref{eq:cost_spline}.
+The cost of the spline triplet is then given by integrating the sum of cost functions given by
+equations~\ref{eq:cost_joint}~and~\ref{eq:cost_ind}, and can be seen in equation~\ref{eq:cost_spline}.
 
 \begin{equation}
 c_s = \int_0^T c_{\tau}(t) + c_I(t) \, dt \label{eq:cost_spline}
@@ -598,8 +598,8 @@ Nao, using such a computationally heavy optimization technique did not impact ga
 One pitfall to this technique is there is no guarantee that the global optima will be found for
 a given cost function and therefore local optima are still possible to be returned.
 
-Using the cost function presented in Section \ref{subsec:cost_functions}, the genetic algorithm was used
+Using the cost function presented in Section~\ref{subsec:cost_functions}, the genetic algorithm was used
 to find the 12 triplet parameters (4 parameters for each cubic spline). %The algorithm ran for 67 generations
 % and produced a triplet spline whose cost was approximately six times smaller than the nominal strategy
 % of holding $\theta_3$ and $\theta_4$ constant while linearly increasing $\alpha$.
-Details on the results of this optimization can be found in Chapter \ref{subsec:gait_params}.
+Details on the results of this optimization can be found in Chapter~\ref{subsec:gait_params}.
