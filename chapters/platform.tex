@@ -198,31 +198,34 @@ USB 2.0
 
 
 \begin{table}
-\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+%\newcolumntype{F}{>{\raggedleft\arraybackslash}X}
 %\centering
-\begin{tabularx}{\textwidth}{|R||R|R|R|R|R|}
+\begin{tabulary}{\textwidth}{|l||l|r|r|r|l|}
 \hline
-\textbf{Param}   &	\textbf{Condition} & \textbf{Min} & \textbf{Typ} & \textbf{Max} & \textbf{Units} \\	\hline\hline
-View Angle 	         &                     &              & 240              &              & degrees        \\	\hline
-Angular Resolution 	 & .                   & .            & 0.36             &  .           & degrees        \\	\hline
-Range 	             &                     & 20           &                  & 4000         & mm             \\	\hline 
-Linear Resolution    &  .                  & .            & 1                & .            & mm             \\	\hline 
-Accuracy             & Distance 20 mm to 1000 mm &        & $\pm$ 30         &   .          & mm             \\	\hline 
-%        	         & Distance 20 mm to 4000 mm &        & $\pm$ 3          &              & \%             \\	\hline 
-%Update Rate	  & cond & min & 100 & max & ms/scan \\	\hline \hline
-%Weight 	  & cond & min & 160 & max & g \\	\hline 
-%Width 	  & cond & min & 240 & max & degrees \\	\hline 
-%Length 	  & cond & min & 240 & max & degrees \\	\hline 
-%Height	  & cond & min & 240 & max & degrees \\	\hline \hline
-%Voltage Rating	  & cond & 4.75 & 5.0 & 5.25 & V \\	\hline 
-%Current Consumption	  & cond & min & 500 & 800 & mA \\	\hline 
-\end{tabularx} 
-\caption{Things}
+\textbf{Properties}& \textbf{Condition}         & \textbf{Min} & \textbf{Typ} & \textbf{Max} & \textbf{Units} \\	\hline\hline
+\textbf{Scanner}   &                            &              &              &              &                \\	\hline
+View Angle 	       &                            &              & 240          &              & degrees        \\	\hline
+Angular Resolution &                            &              & 0.36         &              & degrees        \\	\hline
+Range 	           &                            & 20           &              & 4000         & mm             \\	\hline 
+Linear Resolution  &                            &              & 1            &              & mm             \\	\hline 
+Accuracy           & Distance: 20 mm to 1000 mm &              & $\pm$ 30     &              & mm             \\	\hline 
+        	       & Distance: 20 mm to 4000 mm &              & $\pm$ 3      &              & \%             \\	\hline \hline 
+\textbf{Mechanical}&                            &              &              &              &                \\	\hline
+Update Rate	       &                            &              & 100          &              & ms/scan        \\	\hline 
+Weight             &                            &              & 160          &              & g              \\	\hline 
+Width              &                            &              & 50           &              & mm             \\	\hline 
+Length             &                            &              & 50           &              & mm             \\	\hline 
+Height             &                            &              & 70           &              & mm             \\	\hline \hline
+\textbf{Electrical}&                            &              &              &              &                \\	\hline 
+Voltage Rating     &                            & 4.75         & 5.0          & 5.25         & V              \\	\hline 
+Current Draw       &                            &              & 500          & 800          & mA             \\	\hline 
+\end{tabulary} 
+\caption{This table contains various specifications of the Hokuyo URG-04LX-UG01 Scanning Laser Rangefinder.
+         These values were taken from the datasheet of the Lidar, which can be found here~\cite{urg_specs}.}
 \label{tab:lidar_params1}
 \end{table}
 
 
-Here is where you get the information about the Lidar \cite{urg_specs}.
 
 \begin{figure}
 \centering
@@ -240,7 +243,7 @@ Here is where you get the information about the Lidar \cite{urg_specs}.
 
 [Image showing angular and distance range of lidar.]
 
-
+\clearpage
 
 \subsection{Lidar Mount}
 Design reqs: needed to rigidly attach to Nao for data transformation purposes, needed to see forward,
