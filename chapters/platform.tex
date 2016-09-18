@@ -180,26 +180,74 @@ Need diagram showing different postures for crawl results.
 \label{fig:nao_postures1}
 \end{figure}
 
+
+\clearpage
+
 \subsection{Lidar Hardware}
-Hokuyo is a Lidar. What's a Lidar? How does it work and what does it give you? 
-{Diagrams explaining things like pictures of lidar outputs}
+The sensor used in this thesis to detect environmental obstacles was a Hokuyo
+URG-04LX-UG01, which can be seen in Figure~\ref{fig:lidar_top1}. 
+The URG is a 2D scanning laser rangefinder, more commonly known as
+a Lidar. Lidar is a portmanteau for \textit{Li}ght \textit{D}etection 
+\textit{a}nd \textit{R}anging and operates using principles to Radar and Sonar. 
+2D Lidars provide a number of discrete range measurements along a plane. 
+This effectively gives a ``top-down'' view or a ``blue-print'' style view of
+an environment.
+This, when mounted to a robot, allows the detection of objects in
+the environment so that the robot can avoid or plan a path around them.
+
+\begin{figure}
+\centering
+\includegraphics[height=0.4\textheight]{hokuyo/urg_04lx_ug01_top.jpg}
+\caption{Figure showing photograph of the URG-04LX-UG01 Lidar. It is shown
+         with a USB cable plugged in, which is the method of powering
+         and retrieving data from the Lidar.}
+\label{fig:lidar_top1}
+\end{figure}
+
+2D scanning Lidars such as the URG, sense the environment by emitting a laser
+beam and measuring the time it takes for the emitted photons to return to the sensor.
+This time is used to compute the range to the obstacle that the beam encountered.
+Commonly, photons are not actually timed, but rather the phase difference of the
+emitted light is used to estimate the time.
+Following this measurement the laser is then mechanically rotated to another 
+angular position to take another reading. The process is repeated through the 
+entire scanning angle of the sensor, and the set of range angle pairs is 
+considered ``one scan''. The URG uses a spinning mirror to rotate the beam, while
+other sensors rotate the entire laser assembly.
+An example of the data returned from the URG can be seen in Figure~\ref{fig:lidar_scan1}.
+The URG was placed in a hall with a doorway to its left.
+
 
 \begin{figure}
 \centering
 \includegraphics[height=0.4\textheight]{laser_scan_msg2.yaml_1.png}
-\caption{Figure showing lidar scan, 5 meters like the URG\@.
-         Robot is facing a hallway, to it's left is a doorway.}
+\caption{Figure showing a scan from the URG\@.
+         The sensor is in the center of the figure.
+         The radius of the figure is limited to 5 meters, which is 1 meter 
+         greater than the maxium rated range of the sensor. While the unit will
+         still provide data at this range, its accuracy is unrated.
+         In this scan, the sensor is facing a hall, with a doorway to its left.}
 \label{fig:lidar_scan1}
 \end{figure}
 
-Indoor only, not rated for outdoors.
-
-USB 2.0
-
+The URG is a good choice for these experiments due to its lightweight and small
+dimensions. This allows it to be easily mounted to the Nao Humanoid while
+respecting the payload capacity of the robot. It has a wide scan angle, high
+angular resolution, and a good range for this application. A high angular
+resolution allows the robot to detect narrow obstacles that might obstruct the
+robot's path, yet unlike sonar, provide detailed information about unobstructed
+areas the robot can traverse. While the URG is rated for indoor use only, this
+is sufficient for our application as the Nao is not often used in outdoor 
+situations. Lastly, the sensor can be operated through a single USB port,
+providing power and data to the robot. This means no additional hardware is 
+necessary for the Nao to make use of the sensor, as a USB port is available
+in the back of the robot's head.
+Figure~\ref{fig:lidar_diagram1} shows a mechanical drawing of the sensor, while
+Table~\ref{tab:lidar_params1} lists some of the relevant specifications of the
+URG.
 
 \begin{table}
-%\newcolumntype{F}{>{\raggedleft\arraybackslash}X}
-%\centering
+\centering
 \begin{tabulary}{\textwidth}{|l||l|r|r|r|l|}
 \hline
 \textbf{Properties}& \textbf{Condition}         & \textbf{Min} & \textbf{Typ} & \textbf{Max} & \textbf{Units} \\	\hline\hline
@@ -220,28 +268,21 @@ Height             &                            &              & 70           & 
 Voltage Rating     &                            & 4.75         & 5.0          & 5.25         & V              \\	\hline 
 Current Draw       &                            &              & 500          & 800          & mA             \\	\hline 
 \end{tabulary} 
-\caption{This table contains various specifications of the Hokuyo URG-04LX-UG01 Scanning Laser Rangefinder.
+\caption{This table contains various specifications of the Hokuyo URG-04LX-UG01.
          These values were taken from the datasheet of the Lidar, which can be found here~\cite{urg_specs}.}
 \label{tab:lidar_params1}
 \end{table}
 
-
-
-\begin{figure}
-\centering
-\includegraphics[height=0.4\textheight]{hokuyo/urg_04lx_ug01_top.jpg}
-\caption{Figure showing Lidar.}
-\label{fig:lidar_top1}
-\end{figure}
-
 \begin{figure}
 \centering
 \includegraphics[height=0.4\textheight]{hokuyo/urg_04lx_ug01_ed.png}
-\caption{Figure showing Lidar.}
+\caption{Figure showing the mechanical drawing of the URG-04LX-UG01.}
 \label{fig:lidar_diagram1}
 \end{figure}
 
-[Image showing angular and distance range of lidar.]
+
+
+
 
 \clearpage
 
