@@ -333,9 +333,9 @@ Figure~\ref{fig:nao_lidar_mount_picture1}.
 \label{fig:nao_lidar_mount_nao_three_view1}
 \end{figure}
 
-The front subassembly of the Lidar mount consists of three parts: a front plate
-whose shape follows the form of the Nao and has a tray that projects
-perpendicular from the robot, base plate, side supports.
+The front subassembly of the Lidar mount consists of three parts: a front plate,
+a base plate, and side supports. Figure~\ref{fig:nao_lidar_model_dimetric1}
+shows a CAD model of the assembled front subassembly with the URG installed.
 
 \begin{figure}
 \centering
@@ -353,21 +353,43 @@ perpendicular from the robot, base plate, side supports.
 \label{fig:nao_lidar_mount_three_view1}
 \end{figure}
 
+The front plate has a shape that follows the form of the Nao.
+It is padded with foam that is glued to the plate to conform to the robot more
+closely and minimize the effects of vibration.
+Figure~\ref{fig:nao_lidar_mount_frontplate_trimetric1} shows a CAD model of the
+front plate. It has a tray that projects perpendicular from the robot to hold 
+the base plate. Two mounting holes on the tray secure the base plate to the tray.
+The front plate is secured to the robot via four rectangular holes which receive
+velcro straps that go to the back plate. These straps are tightened to hold the
+Lidar mount to the robot.
+
 \begin{figure}
 \centering
-\includegraphics[height=0.4\textheight]{backpack/Back_Plate_Dimetric1.jpg}
-\caption{Figure showing a CAD model of the back plate of the custom
-         Lidar mount.}
-\label{fig:nao_lidar_mount_backplate_dimetric1}
+\includegraphics[height=0.4\textheight]{backpack/Front_Plate_Trimetric1.jpg}
+\caption{Figure showing a CAD model of the front plate of the custom Lidar
+         mount. The base plate attaches to this plate.}
+\label{fig:nao_lidar_mount_frontplate_trimetric1}
 \end{figure}
 
 \begin{figure}
 \centering
-\includegraphics[width=\textwidth]{backpack/Back_Plate_Three_View1.png}
+\includegraphics[width=\textwidth]{backpack/Front_Plate_Three_View1.png}
 \caption{Figure showing back, front, and side views of the CAD model of the
-         back plate of the custom Lidar mount.}
-\label{fig:nao_lidar_mount_backplate_three_view1}
+         front plate.}
+\label{fig:nao_lidar_mount_frontplate_three_view1}
 \end{figure}
+
+The URG is attached to the base plate, which in turn is attached to the 
+tray of the front plate. The URG is attached to this intermediate part
+rather than directly to the front plate to facilitate the mechanical
+interoperability of different sensors to the front plate without needing
+to produce different front plates for different sensors. Instead, different
+base plates are made for different sensors. For example, the lower cost
+RPLidar \cite{rp_lidar} or the VLP-16 Puck 3D Lidar
+\cite{puck_lidar} are alternative Lidars that could
+be mounted to the Nao for experimentation but have a different mounting 
+configuration than the URG\@. In this way, new base plates can be manufactured
+rather than front plates, allowing for a more modular design.
 
 \begin{figure}
 \centering
@@ -388,19 +410,21 @@ perpendicular from the robot, base plate, side supports.
 
 \begin{figure}
 \centering
-\includegraphics[height=0.4\textheight]{backpack/Front_Plate_Trimetric1.jpg}
-\caption{Figure showing a CAD model of the front plate of the custom Lidar
-         mount. The base plate attaches to this plate.}
-\label{fig:nao_lidar_mount_frontplate_trimetric1}
+\includegraphics[height=0.4\textheight]{backpack/Back_Plate_Dimetric1.jpg}
+\caption{Figure showing a CAD model of the back plate of the custom
+         Lidar mount.}
+\label{fig:nao_lidar_mount_backplate_dimetric1}
 \end{figure}
 
 \begin{figure}
 \centering
-\includegraphics[width=\textwidth]{backpack/Front_Plate_Three_View1.png}
+\includegraphics[width=\textwidth]{backpack/Back_Plate_Three_View1.png}
 \caption{Figure showing back, front, and side views of the CAD model of the
-         front plate.}
-\label{fig:nao_lidar_mount_frontplate_three_view1}
+         back plate of the custom Lidar mount.}
+\label{fig:nao_lidar_mount_backplate_three_view1}
 \end{figure}
+
+
 
 \begin{figure}
 \centering
