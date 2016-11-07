@@ -65,19 +65,51 @@ relevant to Chapters~\ref{ch:results_navigation} and~\ref{ch:results_crawling}.
 
 \subsubsection{Frame Definitions}
 The NAOqi API defines three frames that can be seen in Figure~\ref{fig:nao_frames1}.
-They are \textbf{FRAME_TORSO}, \textbf{FRAME_ROBOT}, and \textbf{FRAME_WORLD}.
-The first two frames, \textbf{FRAME_TORSO} and \textbf{FRAME_ROBOT}, are rigidly
-attached to the robot, while \textbf{FRAME_WORLD} is an inertial frame initialized
+They are FRAME\_TORSO, FRAME\_ROBOT, and FRAME\_WORLD\@.
+The first two frames, FRAME\_TORSO and FRAME\_ROBOT, are rigidly
+attached to the robot, while FRAME\_WORLD is an inertial frame initialized
 when the robot first starts.
 
+\paragraph{FRAME\_TORSO} 
+is a frame rigidly attached to the torso of the Nao. The positive Z-axis points
+up through the head of the robot, while the positive X-axis points forwards.
+It is useful for referencing different parts of the robot such and joint frames
+and manipulation targets relative to the robot.
+The frame origin along the X and Y directions is in the geometric center
+of the torso, while Figure~\ref{fig:nao_link_lengths1} shows its Z location on
+the torso as the point that the neck and hip offsets are referenced with
+respect to.
 
+\paragraph{FRAME\_ROBOT}
+is a frame whose origin is between the feet of the robot. It's positive Z-axis
+always points upwards and positive X-axis always points forwards. It is useful
+when specifying navigation targets, relative to the Nao's current pose.
 
-\begin{figure}
+\paragraph{FRAME\_WORLD}
+is a frame that is coincident with FRAME\_ROBOT when the Nao is started,
+and remains static for the life of the run. It is useful for specifying navigation
+and manipulation targets in a global coordinate sense.
+
+\begin{figure}[H]
 \centering
 \includegraphics[height=0.75\textheight]{nao_diagrams/frame_definition_combo.png}
 \caption{Nao frames.}
 \label{fig:nao_frames1}
 \end{figure}
+
+Orientation targets for the Nao are commonly expressed using Tait-Bryan angles,
+more commonly known as roll, pitch, and yaw. As can be seen in
+Figure~\ref{fig:nao_rpy_def1}, yaw is expressed as rotation about the Z-axis,
+roll is about the X-axis, and pitch is about the Y-axis.
+When the robot is being referenced from the FRAME\_TORSO and is
+initialized in the StandZero posture referenced in the proceeding section,
+the naming conventions of the joints become clear. All joints whose axis
+are parallel to the torso frame Y-axis are postfixed with the word ``Pitch'',
+those parallel to the Z-axis are postfixed with the word ``Yaw'', and X-axis
+with ``Roll''. The only exception to this rule is the ganged pelvis joint
+axis. Each side of this degree of freedom rotates along a vector that is
+in the plane formed by the torso Z-Y axes and is therefore postfixed with the
+term ``YawPitch''.
 
 \begin{figure}
 \centerline{\includegraphics[width=0.5\textwidth]{nao_diagrams/rollPitchYaw.png}
@@ -86,8 +118,24 @@ when the robot first starts.
 \label{fig:nao_rpy_def1}
 \end{figure}
 
-\subsubsection{Kinematics or Link Joints things}
-Talking about what the links are, where, symmetry.
+
+\subsubsection{Links and Joints}
+The Nao H25 is a bipedal platform with two legs, two arms, and an articulate
+head. Each arm is composed of 5 joints and 3 non-zero length links, as are 
+the legs, and the head is composed of 2 joints. There are also three fingers
+per hand and two feet. Detailed measurements and specifications on the
+Nao H25 can be found on the Aldebaran Website~\cite{nao_docs_h25}.
+We will review a few relevant characteristics of the robot below.
+
+\paragraph{Links}
+Figure~\ref{fig:nao_link_lengths1} shows some of the large scale link lengths
+of the Nao H25. The hip and neck Z offsets are measured with respect to
+FRAME\_TORSO, as are the shoulder and hip Y offsets. The thigh and tibia lengths
+are each roughly $100 mm$. Their total is $202.8 mm$. The neck and hip offsets
+sum to $211.5$, making the torso approximately the same length as the legs.
+The humerus of the robot is again nearly $100 mm$ though the forearm to the wrist
+is half as long. The wrist to the hand is again about half as long as the
+humerus, meaning in total, the arms are about as long and the legs.
 
 \begin{figure}
 \centerline{\includegraphics[width=0.45\textwidth]{nao_diagrams/hardware_lengthfront_3.3.png}
@@ -97,9 +145,13 @@ Talking about what the links are, where, symmetry.
 \label{fig:nao_link_lengths1}
 \end{figure}
 
+\paragraph{Joints}
+This needs to be said.
+In the below diagrams, the green line represents the nominal zero, the blue line
+is the min angle, and the red line is the max angle
 \begin{figure}
 \centering
-\includegraphics[width=\textwidth]{nao_diagrams/hardware_larmjoint_3.3.png}
+\includegraphics[width=\textwidth]{nao_diagrams/hardware_larmjoint_3.3_corr1.png}
 \caption{Figure showing left arm}
 \label{fig:nao_arm_joints_left1}
 \end{figure}
@@ -132,14 +184,17 @@ Talking about what the links are, where, symmetry.
 \label{fig:nao_hip_yawpitch1}
 \end{figure}
 
-
+\paragraph{Arm Symmetry}
 Need diagram showing arm symmetry for crawl results. 
+
 \begin{figure}
 \centering
-\includegraphics[width=\textwidth]{hardware_r_and_l_armjoint.png}
+\includegraphics[width=\textwidth]{hardware_r_and_l_armjoint_corr1.png}
 \caption{Figure showing arm joints and how they are a reflection.}
 \label{fig:nao_arm_joints_reflect1}
 \end{figure}
+
+\FloatBarrier
 
 \subsubsection{Joint Torques}
 % Motor torques. (Important for Chapter~\ref{ch:crawl_gait})
