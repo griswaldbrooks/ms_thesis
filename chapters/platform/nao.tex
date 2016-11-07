@@ -1,7 +1,7 @@
 \subsection{Nao Hardware}
 The Nao Humanoid Platform is made by Aldebaran Robotics. 
 Figure~\ref{fig:crrl_nao_coronal1} shows a picture of the Nao at the
-Control/Robotics Research Lab at NYU Polytechnic School of Engineering.
+Control/Robotics Research Lab of NYU Polytechnic School of Engineering.
 The robot weighs $5.4 kg$ and has a maximum forward velocity over flat
 terrain of approximately $1 \frac{m}{s}$.
 It has 25 degrees-of-freedom (DoF) embodied via a 2 DoF head, two 5 DoF legs,
@@ -13,13 +13,13 @@ Each joint has an absolute angular position encoder, while the feet each have
 four force sensitive resistors to detect ground contact.
 The head has two color cameras, one that faces forward and the other that faces
 downward to get a view of the terrain. The chest contains a 2-axis gyroscope and
-a 3-axis accelerometer for inertia measurement, and two sonar transmitter-receiver
+a 3-axis accelerometer for inertial measurement, and two sonar transmitter-receiver
 pairs for measuring the range to obstacles.
 Figure~\ref{fig:nao_features1} shows a diagram locating the various robot sensors,
 including those not listed above.
 % Battery life, weight, top speed (before and after Lidar), sonar ranges, camera angles and pixels,
 The sonars have a minimum range of $0.25 m$ and a maximum range of $2.55 m$.
-The have a resolution of $1 cm$ and detect any obstacle within a $60^\circ$
+They have a resolution of $1 cm$ and detect any obstacle within a $60^\circ$
 cone. The cameras have a $1.22 Mp$ resolution, $30 Hz$ frame rate,
 a horizontal field-of-view of $60.9^\circ$, and a vertical field-of-view of
 $47.6^\circ$.
@@ -27,11 +27,11 @@ $47.6^\circ$.
 The robot is equipped with a 1.6 GHz Intel\textsuperscript{\textregistered}
 Atom\textsuperscript{TM} CPU, 1 GB of RAM, and 2 GB of Flash memory.
 It also has Gigabit Ethernet, 802.11 b/g/n WiFi, and USB 2.0. 
-Nao's operating system is called Naoqi OS which is a customized version of
+Nao's operating system is called NAOqi OS which is a customized version of
 Gentoo Linux. Being a Linux distribution, the robot can be easily accessed
 using ssh, scp, and ftp. This allows familiar command line tools to be used
 to script behavior and manage services.
-The robot can be natively programmed using C++ or Python API.
+The robot can be natively programmed using the provided C++ or Python API.
 
 % Ok, now briefly review what's to come in the subsubsections.
 The Nao is a very feature rich platform suitable for a variety of autonomous
@@ -61,10 +61,16 @@ relevant to Chapters~\ref{ch:results_navigation} and~\ref{ch:results_crawling}.
 \label{fig:nao_joints1}
 \end{figure}
 
-
+\FloatBarrier
 
 \subsubsection{Frame Definitions}
-Talking about frames and shit!
+The NAOqi API defines three frames that can be seen in Figure~\ref{fig:nao_frames1}.
+They are \textbf{FRAME_TORSO}, \textbf{FRAME_ROBOT}, and \textbf{FRAME_WORLD}.
+The first two frames, \textbf{FRAME_TORSO} and \textbf{FRAME_ROBOT}, are rigidly
+attached to the robot, while \textbf{FRAME_WORLD} is an inertial frame initialized
+when the robot first starts.
+
+
 
 \begin{figure}
 \centering
