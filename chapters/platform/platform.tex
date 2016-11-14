@@ -1,50 +1,59 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Platform Description
-%%% Add sample data from cameras and lidar
-%%% Section 1 : Hardware Overview
-%%%		SubSection 1.1 : Pertinent Nao Statistics (and how things talk to each other)
-%%% 	SubSection 1.2 : Pertinent Lidar Statistics
-%%%		SubSection 1.3 : Design Requirements for Lidar Mount and Description
-%%% Section 2 : Software Framework
-%%%		SubSection 2.1 : NaoQi and qibuild Overview
-%%% 	SubSection 2.2 : Custom Library Framework
-%%%		SubSection 2.3 : User Operation
-%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Platform}\label{ch:platform}
 
-For this thesis we used the Nao as the mobile platform. Aldebaran makes him.
-He's a cool little robot and he allows us to explore both things we wanted to 
-look at which were navigation and gaiting. He's mobile, small, ``cost-effective''
-and has a good API that we can use to do lower-level control of things when we want to, 
-and abstract ourselves from it when we don't want to.
-The small size means he's easy to work with.
+The platform used consisted of bringing together three major pieces.
+The Aldebaran Nao H25 was used for the mobile platform, the Hokuyo URG-04LX
+Lidar was the sensor used for obstacle detection, and a custom mounting system
+was built to mount the Lidar to the Nao.
 
-There's definitely some more opening paragraph to be written here about the Nao.
-Probably say something about why he's useful to investigate crawling.
-No one's going to send Nao into a disaster zone or anything but he's not too
-far off from robots that you would send in and we don't have to spend all the 
-money or build a new lab to work with him. You can do lot's of simulations, 
-but in the end you still have to test on a real robot.
+% For this thesis we used the Nao as the mobile platform. Aldebaran makes him.
+% He's a cool little robot and he allows us to explore both things we wanted to 
+% look at which were navigation and gaiting. He's mobile, small, ``cost-effective''
+% and has a good API that we can use to do lower-level control of things when we want to, 
+% and abstract ourselves from it when we don't want to.
+% The small size means he's easy to work with.
+The Nao H25 Humanoid is made by Aldebaran Robotics. It is a small humanoid platform
+which that can navigate a variety of indoor spaces but is safe for humans to 
+work with without specialized safety equipment. It has a flexible API which allows
+operates at a range of abstractions. It allows for low-level command of individual
+joint angles when experimenting with gaiting and control algorithms or high-level
+command of navigation vectors when working with path planning.
+This makes the Nao an attractive mobile base for the topics covered in this thesis.
 
-While the Nao is cool and all, the sonar sensors just don't cut it for what we want to do.
-Lucky, Nao comes with a USB port and uses x86 and linux so it's relatively
-straightforward to add new things to him. Therefore, we added a better distance sensor.
-Specifically we added the Hokuyo URG-04LX-UG01.
-It's a good Lidar because it has a respectable range, good angular resolution,
-``cost-effective'', and is kinda lightweight. Using this sensor we could do mapping 
-if we wanted to which means this system is extensible to the broader challenges 
-of the overall navigation problem such as SLAM\@. Using the Lidar we'll be able to 
-get enough information to do the job we need to.
+% While the Nao is cool and all, the sonar sensors just don't cut it for what we want to do.
+% Lucky, Nao comes with a USB port and uses x86 and linux so it's relatively
+% straightforward to add new things to him. Therefore, we added a better distance sensor.
+% Specifically we added the Hokuyo URG-04LX-UG01.
+% It's a good Lidar because it has a respectable range, good angular resolution,
+% ``cost-effective'', and is kinda lightweight. Using this sensor we could do mapping 
+% if we wanted to which means this system is extensible to the broader challenges 
+% of the overall navigation problem such as SLAM\@. Using the Lidar we'll be able to 
+% get enough information to do the job we need to.
+To augment the Nao's sensor suite, the Hokuyo URG-04LX Lidar was added to the platform.
+The URG allows for high resolution planar sensing of obstacles in the environment.
+This is very important for effective navigation in unstructured environments.
+The URG is also compact in size and light in weight making it appropriate
+for mobile robotics applications.
 
-While it's easy to plug a USB cable into Nao's head, you still have to stick the Lidar somewhere.
-Nao doesn't have mount points that make it easy to add new hardware.
-Given that we have a nifty 3D printer (and I know Solidworks) we designed up a little suit of
-armor for Nao with a big stick coming out of it that we could mount the Lidar to, above his head.
-This works but the new dynamics destabilize Nao's default gait at certain speeds. 
-This doesn't mess with the navigation algorithm, but to increase the speed this will have to be dealt with,
-either by changing the rig or \ldots using the arms to counterbalance the new inertial forces as
-part of the walking gait.
+% While it's easy to plug a USB cable into Nao's head, you still have to stick the Lidar somewhere.
+% Nao doesn't have mount points that make it easy to add new hardware.
+% Given that we have a nifty 3D printer (and I know Solidworks) we designed up a little suit of
+% armor for Nao with a big stick coming out of it that we could mount the Lidar to, above his head.
+% This works but the new dynamics destabilize Nao's default gait at certain speeds. 
+% This doesn't mess with the navigation algorithm, but to increase the speed this will have to be dealt with,
+% either by changing the rig or \ldots using the arms to counterbalance the new inertial forces as
+% part of the walking gait.
+To mount the Lidar to the Nao, a custom mount had to be designed and constructed.
+The mount locates the Lidar around the torso of the Nao, which places it such
+that it does not interfere with the locomotion of the robot while navigating
+and minimizes the amount of motion seen by the Lidar due to gait oscillations.
+
+Together, these three components comprised the platform used to perform experiments
+in this thesis. The Chapter~\ref{ch:navigation} utilized all three of the major
+components while in Chapter~\ref{ch:crawl_gait} only the Nao was used as the
+Lidar would have interfered with the crawl gait.
 
 \section{Hardware Overview}
 % Ok so, three pieces of hardware here, the Nao, the Lidar, and the mount.
@@ -75,9 +84,12 @@ designed and constructed to allow the URG to be mounted to the Nao.
 
 
 % Subsections about each hardware piece.
-%\input{./chapters/platform/goal}
+\input{./chapters/platform/goal}
+\FloatBarrier
 \input{./chapters/platform/nao}
-%\input{./chapters/platform/lidar}
-%\input{./chapters/platform/mount}
+\FloatBarrier
+\input{./chapters/platform/lidar}
+\FloatBarrier
+\input{./chapters/platform/mount}
 
 % Need some sort of System or summary Section.
