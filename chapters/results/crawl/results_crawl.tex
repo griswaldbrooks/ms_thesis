@@ -18,7 +18,7 @@
 To test the efficacy of the Projected Profile crawling gait, a gait sequence was generated
 using MATLAB and simulated using the V-REP simulator by Coppelia Robotics.
 The crawling sequence was generated using the nominal crawling parameters. 
-The Nao humanoid platform was then programmed using the NaoQI API in C++ to use the generated sequence 
+The Nao humanoid platform was then programmed using the NAOqi API in C++ to use the generated sequence 
 to execute a crawling action. The robot was initialized to its crawling pose and placed on the 
 ground where it proceeded to crawl under a vertically constrained table. 
 During this experiment, the joint angles and joint motor 
@@ -26,7 +26,7 @@ currents were recorded for later analysis.
 To demonstrate a context under which the gait 
 would be used, the Nao was programmed to walk to a fiducial marker, position itself into
 the crawling position, crawl under the vertically constrained table, and then return to a sitting position.
-NaoQI provides functions for the Nao to walk, position itself into a set of poses from any initial
+NAOqi provides functions for the Nao to walk, position itself into a set of poses from any initial
 pose, and track a ``red ball''. The fiducial marker was a red circle on a piece of paper.
 The robot crawled under the table by executing a finite number of crawling sequences, before
 moving to a sitting position. A video of this experiment was recorded for later analysis.
@@ -46,7 +46,7 @@ Section~\ref{sec:opt_crawl_data}.
 \FloatBarrier
 \section{Experimental Setup} \label{sec:crawl_exp_setup}
 The crawl gaits were tested on the Nao humanoid in the V-REP simulator using MATLAB,
-and by having the actual robot crawl under a vertically constrained table using the NaoQI API in C++.
+and by having the actual robot crawl under a vertically constrained table using the NAOqi API in C++.
 The nominal parameters were tested both in simulation and on the actual robot, while
 the optimal parameters were only tested in simulation. MATLAB has tools to use genetic
 algorithms to optimize systems, which were used here to generate the optimal parameter
@@ -55,7 +55,7 @@ splines.
 \subsection{Mobile Platform}
 The Nao humanoid was used to test the Projected Profile algorithm.
 Details about the Nao are discussed in Chapter~\ref{ch:platform}. It makes
-a convenient platform to test crawling algorithms as NaoQI provides an extensive
+a convenient platform to test crawling algorithms as NAOqi provides an extensive
 API to control a range of parameters from individual joint angles to 
 full body positioning. Importantly, the kinematic configuration of the robot is amenable 
 to the crawling paradigm and its relatively small size allows environments to be
@@ -379,21 +379,21 @@ For this experiment, the robot executed 25 sequences in 58 seconds. The robot tr
 about 2.75 body lengths or 1,676.4 $mm$, equating to a velocity of 28.9 $\frac{mm}{s}$.
 
 \begin{figure}
-\centering
+    \centerline{
 \includegraphics[width=0.2\textwidth]{crawl/walk_to/to/12s.png}
 \includegraphics[width=0.2\textwidth]{crawl/walk_to/to/18s.png}
 \includegraphics[width=0.2\textwidth]{crawl/walk_to/to/29s.png}
 \includegraphics[width=0.2\textwidth]{crawl/walk_to/to/30s_2.png}
 \includegraphics[width=0.2\textwidth]{crawl/walk_to/to/34s.png}
-
+}
 \vspace*{0.05in}
-\centering
+\centerline{
 \includegraphics[width=0.2\textwidth]{crawl/walk_to/to/37s.png}
 \includegraphics[width=0.2\textwidth]{crawl/walk_to/to/40s.png}
 \includegraphics[width=0.2\textwidth]{crawl/walk_to/to/41s.png}
 \includegraphics[width=0.2\textwidth]{crawl/walk_to/to/43s.png}
 \includegraphics[width=0.2\textwidth]{crawl/walk_to/to/46s.png}
-
+}
 \caption{This figure shows the approach portion of the second vertically constrained table experiment.
          A red circle is used as a marker for the direction in which the robot is commanded to move.
          When the robot approaches below a specified distance threshold from the red circle,
@@ -402,21 +402,21 @@ about 2.75 body lengths or 1,676.4 $mm$, equating to a velocity of 28.9 $\frac{m
 \end{figure}
 
 \begin{figure}
-\centering
+    \centerline{
 \includegraphics[width=0.2\textwidth]{crawl/walk_to/from/8s.png}
 \includegraphics[width=0.2\textwidth]{crawl/walk_to/from/15s.png}
 \includegraphics[width=0.2\textwidth]{crawl/walk_to/from/16s.png}
 \includegraphics[width=0.2\textwidth]{crawl/walk_to/from/17s.png}
 \includegraphics[width=0.2\textwidth]{crawl/walk_to/from/18s.png}
-
+}
 \vspace*{0.05in}
-\centering
+\centerline{
 \includegraphics[width=0.2\textwidth]{crawl/walk_to/from/24s.png}
 \includegraphics[width=0.2\textwidth]{crawl/walk_to/from/30s.png}
 \includegraphics[width=0.2\textwidth]{crawl/walk_to/from/32s.png}
 \includegraphics[width=0.2\textwidth]{crawl/walk_to/from/35s.png}
 \includegraphics[width=0.2\textwidth]{crawl/walk_to/from/37s.png}
-
+}
 \caption{This figure shows the recovery portion of the second vertically constrained table experiment.
          After the Nao has executed a set number of crawl sequences, the robot transitions to
          a sitting posture.}
@@ -426,8 +426,9 @@ about 2.75 body lengths or 1,676.4 $mm$, equating to a velocity of 28.9 $\frac{m
 \subsection{Joint Data} \label{subsec:nom_crawl_joint_data}
 The NAOqi API provides functions for recording joint angles and motor currents. During the
 nominal crawl gait experiments, these values were recorded and
-Figures~\ref{fig:nao_joint_angles1},~\ref{fig:nao_joint_angles_long_seq},~and~\ref{fig:nao_currents} plot the results.
-Figure\ref{fig:nao_joint_angles1} plots the joint angles for the arms and legs of the
+Figures~\ref{fig:nao_joint_angles1}, \ref{fig:nao_joint_angles_long_seq},
+and~\ref{fig:nao_currents} plot the results.
+Figure~\ref{fig:nao_joint_angles1} plots the joint angles for the arms and legs of the
 robot during the execution of multiple gait cycles. As expected, the plots show a clear
 periodicity to the gait.
 As the gait is laterally symmetric, the joint angles for the left and right side of the robot
@@ -553,7 +554,7 @@ to support their weight in similar positions.
 % Here's the V-REP simulation. The knees and hips are doing different things.
 % The arms are down the whole time.
 The V-REP simulation of the Nao executing the optimized gait can be seen in
-Figure~\ref{vrep_nao_opt_gait1}. As with the
+Figure~\ref{fig:vrep_nao_opt_gait1}. As with the
 simplified kinematic model, the Nao can be seen to be using its hips and knees to arch its back during the gait sequence.
 
 \begin{figure}

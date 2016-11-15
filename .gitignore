@@ -3,3 +3,8 @@
 *.pdf
 *.swp
 *.swo
+*.bbl
+*.blg
+*.lof
+*.lot
+*.toc
