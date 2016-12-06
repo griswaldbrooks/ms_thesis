@@ -1,19 +1,45 @@
+\chapter{Conclusion} \label{ch:conclusion}
+% INTRO TO SUMMARY
 % Summarize the point of the thesis.
 % - showed the makeup of the platform
 % - nav
 % - crawl
 In this thesis, two experiments relating to fundamental issues surrounding
 mobile humanoid robotics were explored, navigation and gaiting.
-We also talked about the platform that was used to facilitate these
-experiments. The Nao's humanoid form allowed the exploration of the
-crawling gait. The addition of the Lidar allowed the exploration of its use
-with humanoid robots using a stateless navigation algorithm.
+% We also talked about the platform that was used to facilitate these
+% experiments.
+Chapter~\ref{ch:platform} reviewed the platform, which detailed the major 
+components and the design decisions behind the selections.
+% The addition of the Lidar allowed the exploration of its use
+% with humanoid robots using a stateless navigation algorithm.
+The navigation algorithm was detailed in Chapter~\ref{ch:navigation} while the
+experimental results were discussed in Chapter~\ref{ch:results_navigation}.
+The algorithm is a lightweight stateless local planner, which performs well when
+coupled with sensors that can give environmental obstacle data, such as Lidar.
+% The Nao's humanoid form allowed the exploration of the crawling gait.
+The gaiting methodology allowed a humanoid with a large number of
+degrees-of-freedom to produce an optimized crawl gait using only three
+parameters. Chapter~\ref{ch:crawl_gait} explained the method, while
+Chapter~\ref{ch:results_crawl_gait} showed the results of the implementation.
+% Chapter summary.
+Here, the main ideas and issues will be briefly discussed, and ideas for
+improvement proposed.
 
-% Platform summary.
-Nao was a good platform for exploring crawl gaits, with some limitations.
-The Lidar was good for the navigation in terms of providing planar obstacle
-avoidance. It wouldn't work for everything, as the world is 3D.
+% PLATFORM SUMMARY
+% Nao was a good platform for exploring crawl gaits, with some limitations.
+The platform used consisted of a Nao H25 Humanoid, Hokuyo URG-04LX-UG01 Lidar, 
+and a 3D printed mount to join the two. With regards to the navigation 
+experiment, the Nao provided platform locomotion, onboard processing, and goal 
+localization via the camera in the head. The Lidar provided range data about
+obstacles in the environment. While the range was limited to 5 meters, this
+was more than adequate as obstacle avoidance is a local schema.
 
+For the crawling experiment, the Nao was used
+without the Lidar and was used only for locomotion.
+% The Lidar was good for the navigation in terms of providing planar obstacle
+% avoidance. It wouldn't work for everything, as the world is 3D.
+
+% NAVIGATION SUMMARY
 % Summarize what was trying to be shown with the navigation chapter.
 Navigation is one of the most fundamental challenges to the area of mobile 
 robotics. Navigation needs a layered approach. Here we explored a local
@@ -23,32 +49,40 @@ across a large distance.
 We used the platform to get it around a number of environments.
 These environments were of varying degrees of complexity, going after a goal.
 
+% CRAWLING SUMMARY
 % Summarize what was trying to be shown with the crawling chapter.
 Different modes of locomotion allow the robot to navigate through a larger set
 of environments. Crawling is something that humanoids do quite often, so it's
 a good thing to explore. Suprisingly, not a lot of papers on that.
 % Talk about how we were able to show these things with the Nao.
-So, we were able to devise a simple crawl gait for humanoids, which we showed
+So, we were able to devise a simple crawl gait for humanoids
+(or really any robot like this), which we showed
 on the Nao.
 
+% CONCLUSION OF SUMMARY
 % Summarize how we were able to use the Nao to achieve the objectives of the
 % thesis.
-Ultimately, the Nao navigated, and cralwed.
+Ultimately, the Nao navigated, and crawled.
 
-% Future work
+% FUTURE WORK INTRO
 While things worked, there are things that could be improved on.
-% Improvements to platform
+
+% IMPROVEMENTS TO PLATFORM
 Lidar prevents crawling, but high up prevents walking.
 Walking gait needs to be improved in order to account for the additional mass
 in a different place. One idea is to swing the arms in a way to stabilize
 the platform.
-% Improvements to navigation
+
+% IMPROVEMENTS TO NAVIGATION
 Stuck detection is always a bitch, and almost cannot be done memoryless,
 by definition. Trap avoidance is also hard. Likely, some of those other layers
 will need to be implemented to avoid these issues.
-% Improvements to crawl
+
+% IMPROVEMENTS TO CRAWLING
 Need to turn. Probably modulate the arm and leg cycles.
 There are also energy efficient things to tune.
 Also, we could have other goals, like back stabiliztion to keep the lidar
 in the right orientation.
 Try other terrains, use the IMU.
+
+% FUTURE WORK CONCLUSION
