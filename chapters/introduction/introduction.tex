@@ -1,23 +1,6 @@
 \chapter{Introduction} \label{ch:introduction}
 
 \section{Concept and Motivation}
-% We are trying to make things that help the robot get from A to B.
-% The problem of getting the robot from A to B looks like this: stuff, stuff, stuff.
-% A common task for robotic systems is for a mobile platform to transport itself from one location to another
-% in the presence of environmental obstacles. Within this general task there are many subproblems. The system
-% must have some sort of awareness of the destination objective and usually some notion of where it is relative
-% to that destination. The destination location and the location of the robot can be encoded in a map that
-% the mobile platform or some off board system is responsible for maintaining. Within the environment there may 
-% be obstacles that prevent the robot from moving through that space which can also be encoded into the map. 
-% Given these notions of robot, goal, and obstacle locations often an initial path is planned to allow the robot
-% to reach the goal location. In addition to these higher level concepts, the robot must have a scheme by which it
-% transports itself through the environment be rolling, walking, flying and controls for each of those methods.
-% Solutions to these subproblems, map building, robot localization, obstacle localization,
-% path planning, locomoting and others work together to accomplish the overall goal. 
-% Each of these subproblems can be expanded upon and this thesis works on three of these components: 
-% local navigation, obstacle detection and characterization, and gaiting. Used to work on these problems
-% was the Nao Humanoid Platform by Aldebaran Robotics.
-
 % What are we trying to get done here?
 % Navigating a humanoid robot.
 % Crawling a humanoid robot.
@@ -49,21 +32,6 @@
 % We've done crawling.
 
 \section{Platform Overview}
-% As a medium we worked with the Nao. The Nao is good because this: stuff, stuff, stuff.
-% The broader task of moving an agent from one location to another is applicable to a wide range of robots but
-% each platform will have details that change the scope of the problem and the method used to approach it.
-% The three problems focused on (local navigation, obstacle detection, and gaiting) for a flying robot with 
-% a global camera system will require different solutions than a wheeled robot with only rangefinders.
-% For this thesis, the Nao H25 V4 Humanoid Platform by Aldebaran Robotics was chosen to act as the mobile base. 
-% With the future goal of having robots interact in human environments, humanoid platforms have become an active
-% area of research as they are physically compatible with such environments. 
-% While Nao is a 1.9 ft tall humanoid weighing 9.5 lbs and therefore only an appropriate analog for a young human toddler,
-% the humanoid format is of primary importance to algorithmic development\.
-% with 25 degrees of freedom including two legs, two arms, and two grippers. 
-% Figure~\ref{fig:nao_diagram1} shows a cursory illustration of the humanoid configuration.
-% This lightweight but capable configuration enables research into mobile manipulation, humanoid gaiting, and terrain adaptation
-% without the need for specialized support equipment such as belays or dedicated experimentation areas as the
-% robot is safe for humans to interact with.
 
 \begin{figure}
 	\centering
@@ -72,24 +40,6 @@
 	{Coronal view of the Nao humanoid with a few pertinent features highlighted. }
 	\label{fig:nao_diagram1}
 \end{figure}
-
-% The robot comes with a suite of sensors including two cameras, two ultrasonic rangefinders, 
-% a 3-axis accelerometer and 2-axis gyro, foot contact sensors, and angular position encoders on every joint.
-% Such a complement of sensors aids the robot in creating an estimate of a number of variables including 
-% the robot state and environment characteristics. 
-% Nao has a built-in WiFi radio and 1.6 GHz Intel Atom processor running a version of the Linux operating system 
-% allowing the robot to be programmed in C++ or Python using standard libraries that can be remotely uploaded.
-% These features allow the use of a wide variety of tools when constructing new algorithms and for program
-% iteration to happen at a rapid pace.
-% 
-% With all of these features the Nao makes for a convenient platform for the development of mobile robot algorithms.
-
-% Then we stuck a Hokuyo laser on the Nao and used that for navigation. Why was this a good idea?
-% To augment the sensor suite, a Hokuyo URG-04LX-UG01 Scanning Laser Rangefinder (Lidar) was mounted to the Nao and
-% interfaced via a USB connection to the Nao's onboard computer. The sensor has a scanning area of $240^\circ$ with 
-% an angular resolution of $0.36^\circ$ and a range of 5 meters. It is used to generate a planar point cloud representing
-% the range to the nearest occlusion at a set of fixed bearing relative to the robot. Lidars are commonly used in mobile
-% robotics so developing algorithms utilizing them is of practical concern.
 
 % What equipment did we use?
 % - Nao
@@ -103,26 +53,6 @@
 % Why did we go for this?
 
 \section{Crawl Gait}
-
-% Many robots that enjoy practical use are not mobile. They are affixed to a table or floor
-% and do not depend on their environment in order to produce a commanded movement. They 
-% utilize a motion model that describes how their parts interact with each other to move an
-% end effector and typically avoid interacting with objects in their environment other than those
-% they are required to manipulate.
-% Mobile robots also use a motion model to plan their movements but, in contrast to fixed robots, must interact
-% with their environment to produce movement. 
-% While this can be a more challenging problem than motion planning for fixed robots, the use of
-% the environment to produce motion leads to mobile robots having a richer and more adaptable set of movements.
-% Aerial and aquatic vehicles push against water or air,
-% wheeled robots roll over the ground, legged robots walk, run, and crawl.
-% Not only can mobile robots operate through a wider set of environments than fixed robots, but different
-% actuation schemes can be employed to produce different movements. Legged robots are a particularly interesting
-% platform for ground locomotion, as opposed to wheeled platforms, because they are more adaptable
-% to a wide range of environments by actuating their legs according to a different strategy.
-% Collectively, the method by which legged robots actuate their legs as a function of time is called 
-% gaiting. Different gaits produce different characteristics such as the range of
-% achievable speeds, endurance, terrain adaptability and a host of other things.
-
 % Briefly, what's crawling?
 % Why crawling?
 % What approach did we go for?
