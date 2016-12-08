@@ -12,7 +12,7 @@ Chapter~\ref{ch:platform} reviewed the platform, which detailed the major
 components and the design decisions behind the selections.
 % The addition of the Lidar allowed the exploration of its use
 % with humanoid robots using a stateless navigation algorithm.
-The navigation algorithm was detailed in Chapter~\ref{ch:navigation} while the
+The navigation algorithm was detailed in Chapter~\ref{ch:navigation}, while the
 experimental results were discussed in Chapter~\ref{ch:results_navigation}.
 The algorithm is a lightweight stateless local planner, which performs well when
 coupled with sensors that can give environmental obstacle data, such as Lidar.
@@ -25,64 +25,167 @@ Chapter~\ref{ch:results_crawl_gait} showed the results of the implementation.
 Here, the main ideas and issues will be briefly discussed, and ideas for
 improvement proposed.
 
-% PLATFORM SUMMARY
+\section{Platform}
 % Nao was a good platform for exploring crawl gaits, with some limitations.
 The platform used consisted of a Nao H25 Humanoid, Hokuyo URG-04LX-UG01 Lidar, 
 and a 3D printed mount to join the two. With regards to the navigation 
 experiment, the Nao provided platform locomotion, onboard processing, and goal 
 localization via the camera in the head. The Lidar provided range data about
 obstacles in the environment. While the range was limited to 5 meters, this
-was more than adequate as obstacle avoidance is a local schema.
+was more than adequate as obstacle avoidance is a local schema. What is more
+problematic is that the Lidar only provides a planar view of the environment,
+and obstacles above or below this plane are not detectable.
+This means that the robot could inadvertently collide with them and damage
+itself or the environment.
 
-For the crawling experiment, the Nao was used
-without the Lidar and was used only for locomotion.
+For the crawling experiment, the Nao was used without the Lidar and was used 
+only for locomotion. It was a satisfactory humanoid configuration for static
+crawling experiments, though it was limited to a certain set of crawling
+gaits. What was most limiting is that the joint motors had insufficient
+torque to use only the arms or legs to pull/push the robot forward requiring
+arm-leg cooperation to perform a crawl. Furthermore, the gearboxes in each
+joint were not designed to take such loads, and frequently broke, requiring
+the robot to be sent in for maintenance.
 % The Lidar was good for the navigation in terms of providing planar obstacle
 % avoidance. It wouldn't work for everything, as the world is 3D.
 
-% NAVIGATION SUMMARY
+\section{Navigation}
 % Summarize what was trying to be shown with the navigation chapter.
-Navigation is one of the most fundamental challenges to the area of mobile 
-robotics. Navigation needs a layered approach. Here we explored a local
-approach. Even though it was a local approach, it was able to get the robot
-across a large distance.
-% Talk about how we were able to show these things with the Nao.
-We used the platform to get it around a number of environments.
-These environments were of varying degrees of complexity, going after a goal.
+% Navigation is one of the most fundamental challenges to the area of mobile 
+% robotics. 
+Navigation is a core issue for mobile robots. Without the ability to navigate
+safely in an environment, the robot can damage both itself and its surroundings.
+% Navigation needs a layered approach. Here we explored a local approach. 
+Navigation requires a layered approach, with global path planning typically
+utilizing different schemas to local navigation and obstacle avoidance.
+GODZILA is a local approach, based on the potential field idea.
+With the Lidar providing rich environmental data, GODZILA was able to guide
+the robot around different obstacle configurations. It was also computationally
+fast and required a small memory footprint, as it does not build a map.
+While it was able to successfully navigate in the environments shown, potential
+field approaches have some short-comings. Narrow corridors can present a problem
+as tuning the algorithm to make them traversable, typically also brings the
+robot too close to obstacles in other scenarios. Escaping traps is also an
+issue. Theoretically, this issue can again be overcome by appropriate tuning,
+but it will cause the performance to suffer in other areas.
+Ultimately, both of these scenarios require more detailed analysis of the
+environment to resolve, recover, or avoid these problems and bias parameters
+or produce intermediate goal points. This is why the navigation problem is
+typically approached using many algorithms, layered together.
 
-% CRAWLING SUMMARY
+\section{Crawl Gait}
 % Summarize what was trying to be shown with the crawling chapter.
 Different modes of locomotion allow the robot to navigate through a larger set
-of environments. Crawling is something that humanoids do quite often, so it's
-a good thing to explore. Suprisingly, not a lot of papers on that.
+of environments. Walking gaits are important to humanoid locomotion, but are
+not appropriate in all scenarios.
+% Crawling is something that humanoids do quite often, so it's
+% a good thing to explore.
+Crawling is more stable than walking, and allows a humanoid to traverse
+beneath low overhangs and small apertures. This extends the navigable area of
+and environment.
 % Talk about how we were able to show these things with the Nao.
-So, we were able to devise a simple crawl gait for humanoids
-(or really any robot like this), which we showed
-on the Nao.
+Using the Projected Profile approach, the Nao was able to crawl under objects
+hanging 8 inches above the ground. When standing, the Nao is 23 inches tall.
+% So, we were able to devise a simple crawl gait for humanoids
+% (or really any robot like this), which we showed on the Nao.
+In addition, the crawl gait is able to parameterize a 25 degree-of-freedom
+system using only 3 parameters. By modifying these parameters, the robot can
+devise an energy efficient gait, or control the pose of the back throughout
+the gait.
+One issue with the current implementation, is that there are no parameters
+available to control the direction of travel. Therefore, the robot can only
+crawl forward in an open loop fashion, unable to correct its trajectory if it
+starts to veer off course. Such a low profile, also prevents the Nao from using
+the Lidar to sense the environment. This is because the mount designed for the
+Lidar, puts it at the waist of the robot which will interfere with the gait.
 
-% CONCLUSION OF SUMMARY
-% Summarize how we were able to use the Nao to achieve the objectives of the
-% thesis.
-Ultimately, the Nao navigated, and crawled.
-
-% FUTURE WORK INTRO
-While things worked, there are things that could be improved on.
-
+\section{Future Work}
+% While things worked, there are things that could be improved on.
+The presented work provides a foundation to expand the capabilities for
+mobile humanoid robots. Using this, several improvements are planned to both
+improve the experimental platform and the algorithms used to be more effective.
 % IMPROVEMENTS TO PLATFORM
-Lidar prevents crawling, but high up prevents walking.
-Walking gait needs to be improved in order to account for the additional mass
-in a different place. One idea is to swing the arms in a way to stabilize
-the platform.
+% Lidar prevents crawling, but high up prevents walking.
+The addition of the Lidar to the platform greatly expands the obstacle avoidance
+capabilities of the robot, as well as allowing the use of commonly available
+Lidar based simultaneous localization and mapping algorithms.
+An issue with adding such a device is positioning it on the Nao humanoid.
+Placing the Lidar at hip level is a good choice for navigation as it is one of
+the parts of the robot that moves the least, but makes locomotion modalities
+such as crawling problematic. A better choice might be mounting it on the head,
+as it will not interfere with crawling, and can be oriented using the neck.
+This could also allow the robot to choose the scan plane during locomotion
+and might allow obstacle detecting during crawling.
+The major obstacle to this path is the lack of walking gait parameters to be 
+tuned using the NAOqi API. The effect is, due to the walking gait not knowing
+about the additional mass and change in inertia, the gait is destabilized.
+When used with the current Lidar mount, this caused the robot to fall over
+during navigation. When experimenting with mounting the Lidar on the head,
+the problem was magnified and, in general, prevented the robot from walking
+any significant distance.
+Two options are available to overcome this challenge.
+This first is to devise a new walking gait, where these unmodeled parameters
+can be accounted for. A second approach is to command the arms of the robot
+to counteract the instability. This is potentially an easier approach than
+devising a new walking gait. It could also produce a new line of research into
+not only improving walking gaits, but reducing the occurrence of humanoids
+falling over when encountering unanticipated hazards. 
+An additional platform enhancement would be to use a 3D Lidar.
+This would allow the robot to detect obstacles in the entire collision space
+of the robot and make navigation safer.
+Finally, as the Nao is equipped with cameras in the head, as vision-based
+approach to obstacle detection is also possible. As the robot is not equipped
+with a stereo pair, stereo vision techniques are infeasible. Despite this,
+a set of related algorithms called structure-from-motion are compatible with
+monocular-camera configurations.
+% Walking gait needs to be improved in order to account for the additional mass
+% in a different place. 
+% One idea is to swing the arms in a way to stabilize the platform.
+
+% 3D Lidar.
 
 % IMPROVEMENTS TO NAVIGATION
-Stuck detection is always a bitch, and almost cannot be done memoryless,
-by definition. Trap avoidance is also hard. Likely, some of those other layers
-will need to be implemented to avoid these issues.
+% Stuck detection is always a bitch, and almost cannot be done memoryless,
+% by definition. Trap avoidance is also hard. Likely, some of those other layers
+% will need to be implemented to avoid these issues.
+While the benefits of the GODZILA technique have been presented, extensions
+are needed to form a robust navigation solution in complicated environments.
+Memoryless algorithms are unable to handle all trap conditions, and a system
+to detect and recover or avoid these scenarios is necessary. Some form of map
+is needed so the scenario can be analyzed. A local sliding window map that the
+robot can localize itself within, could be used to detect if the
+Nao hasn't moved from a region within a reasonable time and form a new plan
+or mark the trap as a virtual obstacle. A global map would inform
+the robot if it hasn't made significant progress toward the goal or facilitate 
+the planning of a path that avoids many traps. Each of these approaches comes 
+at the cost of increased memory footprint and computational complexity.
 
 % IMPROVEMENTS TO CRAWLING
-Need to turn. Probably modulate the arm and leg cycles.
-There are also energy efficient things to tune.
-Also, we could have other goals, like back stabiliztion to keep the lidar
-in the right orientation.
-Try other terrains, use the IMU.
+% Need to turn. Probably modulate the arm and leg cycles.
+The current Projected Profile scheme does not reason about the robot turning.
+This will have to be addressed in order to make it more robust and widely 
+applicable as the ability to correct the robot's path is a necessary feature.
+% There are also energy efficient things to tune.
+The presented implementation of the Projected Profile algorithm was optimized
+to minimize static joint torques. An extension to this is to optimize for
+dynamic torques by having the optimization routine choose a parameter set and 
+test the resultant gait with the simulator. Additionally, instead of having
+a single parameter set utilized by the robot, an entire library of parameters
+could be produced for use by the robot. This would allow the robot to choose
+which parameters to use based on other gaiting criteria such as speed, head
+stability, or trajectory controllability. 
+% Also, we could have other goals, like back stabiliztion to keep the lidar
+% in the right orientation.
+% Use the camera to avoid obstacles.
+% Try other terrains, use the IMU.
+IMU's have become a common addition to mobile robots and is a standard
+feature on the Nao humanoids. The IMU on the Nao, could be used to inform the
+pose of the torso and infer if the robot is on a sloping terrain. The robot
+could then adjust its posture during gaiting to more aggressively crawl up
+a hill, or be more cautious when crawling into a pit.
 
 % FUTURE WORK CONCLUSION
+There are many areas using the current platform that can be improved to produce
+a more robust set of solutions for use with humanoid robots. We look forward
+to exploring these in the future and are excited for the possibilities in the
+field.
