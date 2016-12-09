@@ -38,31 +38,54 @@ People relate to humanoids.
 % Who's done humanoids before?
 When was the first humanoid?
  - WABOT-1 1970
- Ichiro Kato, “Development of biped walking robot WABOT-1,” Biomechanism 2, pp.173-214,
- 1973 (in Japanese).
-Notable humanoids:
-- QRIO https://www.techfak.uni-bielefeld.de/~rhaschke/lehre/WS04/humanoids/papers/qrio-mechanics.pdf
-- DARWIN http://www.romela.org/wp-content/uploads/2015/05/Development-of-open-humanoid-platform-DARwIn-OP.pdf
-- Nao http://lars.mec.ua.pt/public/LAR%20Projects/Humanoid/2011_RicardoGodinho/Pesquisa%20Disserta%C3%A7%C3%A3o/Mechatronic%20design%20of%20NAO%20humanoid.pdf
-- iCub http://vislab.isr.ist.utl.pt/publications/07-JAR-icub-compress.pdf
+ \cite{Kato73}
+
+ Notable humanoids:
+ - QRIO \cite{Ishida2003}
+ - DARWIN \cite{Ha2011} 
+ - Nao \cite{Gouaillier2009}
+ - iCub \cite{Tsagarakis2007iCubTD}
 
 Big boys
-- ASIMO
-- ATLAS
-- Robonaut
-- Valkyrie.
+- ASIMO \cite{asimo_website}
+- ATLAS   \cite{atlas_website}
+- Robonaut \cite{robonaut_website}
+- Valkyrie \cite{Radford2015}
 
  Stuff that has been done with humanoids:
 Walking gaits
- - zero moment point
-DRC, HRI with the Nao.
+ - zero moment point \cite{Vukobratovic1969}
+
+ flexible muscle
+ \cite{Geijtenbeek2013}
+
+foot step planner
+\cite{Deits2014}
+
+
+DRC \cite{drc_website}
+
+HRI with the Nao \cite{Ismail2012}
 % What is the problem of navigating, briefly.
 Navigation is fundamental. Get the robot somewhere safely. Otherwise it might
 as well not be mobile.
 Layered approach.
 % Who's done navigation?
-Search based planners: ASTAR, RRT, other search.
-Continuous planners: Potential field, Backstepping, DWA, Feedback Linearization
+Search based planners: ASTAR, \cite{HART1986}
+sbpl http://www.cs.cmu.edu/~maxim/files/planincontspace_socs11.pdf
+     https://papers.nips.cc/paper/2382-ara-anytime-a-with-provable-bounds-on-sub-optimality.pdf
+RRT, http://msl.cs.uiuc.edu/~lavalle/papers/Lav98c.pdf
+
+Continuous planners: 
+Potential field,
+
+Backstepping, 
+https://web.eecs.umich.edu/~kuipers/papers/Park-icra-11.pdf
+
+DWA, 
+D. Fox, W. Burgard, and S. Thrun. "The dynamic window approach to collision avoidance". The Dynamic Window Approach to local control.
+
+
 % We've done navigation.
 Our Nao paper on GODZILA\@.
 Original GODZILA paper.
