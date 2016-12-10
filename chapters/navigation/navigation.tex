@@ -228,7 +228,7 @@ where $\norm{M}$ is the number of obstacles (modeled as a discrete set).
 
 \section{GODZILA}\label{sec:navgodzila}
 
-GODZILA (Game-theoretic Optimal Deformable Zone with Inertia and Local Approach)~\cite{Krishnamurthy07} is a local 
+GODZILA (Game-theoretic Optimal Deformable Zone with Inertia and Local Approach)~\cite{Krishnamurthy2007} is a local 
 continuous navigation algorithm based on the potential fields idea. In contrast to some potential fields formulations
 which work on the range and bearing of objects in the environment, GODZILA uses the sensor information about occlusion
 locations directly in order to formulate navigation commands. It is a memoryless algorithm and does not attempt to
@@ -326,7 +326,7 @@ The final term $J_3(\alpha_r^\prime)$ is a class-${\cal K}$ function that penali
 
 This term is present to prevent high frequency oscillations and is analogous to giving the robot a physical inertia.
 All of the functions $f_{11}, f_{21}, f_{31}, g_{11}, g_{21}, g_{22}, g_{23}, g_{24}, g_{25}, g_{26}$ in the optimization are tunable by the designer but
-it was noted in~\cite{Krishnamurthy07} that in the case where the controlled functions $f_{11}, g_{24}, g_{26}, f_{31}$ are 
+it was noted in~\cite{Krishnamurthy2007} that in the case where the controlled functions $f_{11}, g_{24}, g_{26}, f_{31}$ are 
 chosen to be quadratic, the optimization problem can be solved in closed form producing the solution seen in equation~\ref{eq:closed_form1}.
 
 \begin{align}
@@ -402,5 +402,5 @@ is typically selected to be smaller than the distance to the nearest occlusion $
 goal position is set back to $x_g$. If the trap condition is detected multiple times then the next escape procedure is
 repeated that many times before being restored to $x_g$. One possible method to detect a trap condition is to integrate
 a sliding window of vehicle linear velocities $v_r$ and if those values integrate to a position close to zero then is is likely
-that the robot has encountered a trap condition. It is shown in~\cite{Krishnamurthy07} that with all of these mechanisms the position of the robot 
+that the robot has encountered a trap condition. It is shown in~\cite{Krishnamurthy2007} that with all of these mechanisms the position of the robot 
 $x_r$ will converge to $x_g$ in finite time with probability 1.

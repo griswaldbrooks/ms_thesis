@@ -31,71 +31,64 @@ Crawling can get you over difficult terrain.
 \section{Background}
 % Review previous work here as well.
 % Why humanoids?
-Humanoid platforms are very adaptable. Various terrains. 
-Humanoids can locomote and manipulate.
-Humanoids are compatible with our humanoid orient environment.
-People relate to humanoids.
-% Who's done humanoids before?
-When was the first humanoid?
- - WABOT-1 1970
- \cite{Kato73}
+% Humanoid platforms are very adaptable. Various terrains. 
+% Humanoids can locomote and manipulate.
+% Humanoids are compatible with our humanoid orient environment.
+% People relate to humanoids.
+Humanoid robots offer a number of attractive features and interesting
+challenges.
+They range in size from the size of children \cite{Ishida2003, Ha2011,
+Gouaillier2009, Tsagarakis2007iCubTD}, to the size of an average
+adult \cite{asimo_website, atlas_website, robonaut_website, Radford2015}.
+As a legged platform, it has a configuration that is adaptable 
+to various terrains \cite{Iida2010, Wu2010, Lutz2012}, 
+while using a minimal number of limbs to accomplish locomotion. 
+In addition to being a mobile base, humanoids are also manipulators. 
+This opens up possibilities for interesting interactions
+with the environment \cite{levine2016, Koval2015, coleman2015}.
+Humanoid platforms are also a good choice for experimenting with robots that
+are expected to operate in human oriented environments as 
+homes and offices are already configured to be traversable by humans.
+This is showcased by competitions such as the DARPA Robotics Challenge
+\cite{drc_website} and the RoboCup@Home Competitions
+\cite{robocupathome_website} which both aim to further the field of robotics
+toward operating in human oriented environments.
+As well as being useful for navigation and manipulation, humanoid platforms
+are perhaps uniquely suited for studying interactions between robots and
+humans \cite{Ismail2012, Moshkina2011}. They allow for increased control
+of an experiment and ensure a greater about of repeatability between
+experiments.
 
- Notable humanoids:
- - QRIO \cite{Ishida2003}
- - DARWIN \cite{Ha2011} 
- - Nao \cite{Gouaillier2009}
- - iCub \cite{Tsagarakis2007iCubTD}
-
-Big boys
-- ASIMO \cite{asimo_website}
-- ATLAS   \cite{atlas_website}
-- Robonaut \cite{robonaut_website}
-- Valkyrie \cite{Radford2015}
-
- Stuff that has been done with humanoids:
-Walking gaits
- - zero moment point \cite{Vukobratovic1969}
-
- flexible muscle
- \cite{Geijtenbeek2013}
-
-foot step planner
-\cite{Deits2014}
-
-
-DRC \cite{drc_website}
-
-HRI with the Nao \cite{Ismail2012}
+%%% NAVIGATION %%%
 % What is the problem of navigating, briefly.
-Navigation is fundamental. Get the robot somewhere safely. Otherwise it might
-as well not be mobile.
-Layered approach.
+% Navigation is fundamental. Get the robot somewhere safely. Otherwise it might
+% as well not be mobile.
+% Layered approach.
+Moving a robot from one location to another in central to the problem of
+mobile robotics. Navigating a mobile robot is typically implemented using
+multiple approaches addressing different aspects of the problem.
 % Who's done navigation?
-Search based planners: ASTAR, \cite{HART1986}
-sbpl http://www.cs.cmu.edu/~maxim/files/planincontspace_socs11.pdf
-     https://papers.nips.cc/paper/2382-ara-anytime-a-with-provable-bounds-on-sub-optimality.pdf
-RRT, http://msl.cs.uiuc.edu/~lavalle/papers/Lav98c.pdf
-
-Continuous planners: 
-Potential field,
-
-Backstepping, 
-https://web.eecs.umich.edu/~kuipers/papers/Park-icra-11.pdf
-
-DWA, 
-D. Fox, W. Burgard, and S. Thrun. "The dynamic window approach to collision avoidance". The Dynamic Window Approach to local control.
-
-
+Search-based planners, such as A* search \cite{Hart1968, gonzalez2011search,
+Likhachev04ara} and Rapidly Exploring Random Trees \cite{Lavalle98rapidly} are
+typically used to efficiently address global path planning, but often produce
+unsmooth paths.
+Planners which consider a continuous function space such as the Potential Field
+algorithm \cite{ArambulaCosio2004, Koren1991, Hogan1984, Fox1997} or
+Backstepping approaches \cite{Park2011, Park2015} produce smooth paths but can
+have problems with complicated environments.
 % We've done navigation.
-Our Nao paper on GODZILA\@.
-Original GODZILA paper.
-% What is the problem of crawling, briefly.
-Call it, humanoid quadrupedal locomotion.
-More stable than walking, can deal with more terrains, can get you under things.
-% Who's done crawling?
-CPG actor critic paper. Maybe there's another one?
-% We've done crawling.
-Our paper on crawling.
+The navigation algorithm used in this thesis was based on a Potential Field
+approach \cite{Krishnamurthy2007}, with which we have previous experience
+\cite{Brooks2013}.
+
+%%% CRAWLING %%%
+Humanoid robots have been used as a platform for exploring walking
+\cite{Vukobratovic1969, Geijtenbeek2013, Deits2014}, which is important for the
+field of mobile human robots. Equally important is the ability to have multiple
+gaiting strategies available to traversing difficult terrain.
+Humanoid crawling has been explored before in \cite{Li2011, Li_crawlingposture, 
+righetti2006} and provides an interesting opportunity to expand the set of
+feasible humanoid gaits \cite{Brooks2015}.
 
 \section{Platform Overview}
 
