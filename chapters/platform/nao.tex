@@ -1,4 +1,4 @@
-\subsection{Nao Hardware}
+\section{Nao Hardware}
 The Nao Humanoid Platform is made by Aldebaran Robotics. 
 Figure~\ref{fig:crrl_nao_coronal1} shows a picture of the Nao at the
 Control/Robotics Research Lab of NYU Polytechnic School of Engineering.
@@ -63,7 +63,7 @@ relevant to Chapters~\ref{ch:results_navigation}~and~\ref{ch:results_crawl_gait}
 
 \FloatBarrier
 
-\subsubsection{Frame Definitions}
+\subsection{Frame Definitions}
 The NAOqi API defines three frames that can be seen in Figure~\ref{fig:nao_frames1}.
 They are FRAME\_TORSO, FRAME\_ROBOT, and FRAME\_WORLD\@.
 The first two frames, FRAME\_TORSO and FRAME\_ROBOT, are rigidly attached to the robot, \\
@@ -119,7 +119,7 @@ term ``YawPitch''.
 \end{figure}
 
 
-\subsubsection{Links and Joints}
+\subsection{Links and Joints}
 The Nao H25 is a bipedal platform with two legs, two arms, and an articulate
 head. Each arm is composed of 5 joints and 3 non-zero length links, as are 
 the legs. The neck is composed of 2 joints. 
@@ -277,7 +277,7 @@ shows that when all joints are in their zero positions, the arms point forwards.
 
 \FloatBarrier
 
-\subsubsection{Joint Torques}
+\subsection{Joint Torques}
 % Motor torques. (Important for Chapter~\ref{ch:crawl_gait})
 % Talking about the joint motor torques, tables, gearboxes, blah.
 The actuators for each joint are sized according to their expected capacity
@@ -347,7 +347,7 @@ Aldebaran Website~\cite{nao_docs_h25}.
 \label{tab:joint_motor_gear}
 \end{table}
 
-\subsubsection{Postures}
+\subsection{Postures}
 % Talking about the different postures of the robot.
 The NAOqi API contains a module called ALRobotPosture which allows the robot
 to be commanded to any one of a number of predefined kinematic configurations,
