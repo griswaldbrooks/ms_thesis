@@ -1,13 +1,36 @@
 {\msabstract{Dr. Farshad Khorrami}}
 {
 % This thesis shows what I did over the course of two years.
-This thesis details the development and implementation of Projected Profile
+This thesis details the development and implementation of the Projected Profile
 crawling gait and the GODZILA navigation algorithm using the Nao Humanoid
-platform. 
-The Projected Profile crawling gait summary.
-GODZILA summary.
-Platform summary.
-Results testing?
+robot by Aldebaran Robotics.
+
+GODZILA is based on the Potential Field navigation concept. It is a local
+navigation algorithm with trap escape strategy and straight-line path planner 
+when the goal is within the line-of-sight. GODZILA was implemented using the Nao
+as a mobile base and the Hokuyo URG-04lX-UG01 Lidar as the obstacle avoidance
+sensor. The platform was placed in several environments with different
+obstacles and walked to reach a goal point, represented by a red cube. 
+
+The Projected Profile gait uses a multimodal kinematic approach to
+allow a humanoid robot to crawl with a very low profile.
+In the first mode the torso of the robot is on the ground, allowing the
+arms and legs to be positioned. In the second mode, the toes and forearms
+are in contact with the ground and the entire robot is viewed as a single 
+closed chain. This allows for the center-of-mass to be moved forward and the
+cycle can restart.
+The gait was implemented on the Nao Humanoid robot which could crawl under
+obstacles as low as 8 inches. This is in contrast to the standing height of the
+Nao of 23 inches. The gait was also optimized to minimize the joint torque 
+required to crawl.
+
+Finally, the design and construction of the platform is detailed.
+The Nao Humanoid was combined with the Hokuyo URG using a custom 3D printed
+mount to allow the robot to carry the Lidar payload.
+The Lidar supplemented the Nao's sensor suite in order to provide detailed
+range information about environmental obstacles. This allowed the navigation
+system to operate with higher performance. 
+
 % I did something with the Nao robot and made it move and look at things
 %  and stuff.
 % You'll see.
