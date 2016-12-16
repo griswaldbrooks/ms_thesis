@@ -2,7 +2,7 @@
 %\mathindent 0pt
 
 %%% Use includeonly to pdf only one chapter %%% <-------------------------------------------------------------------------------------------------------------
-\includeonly{./chapters/introduction/introduction}
+%\includeonly{./chapters/introduction/introduction}
 
 \input{./chapters/preamble}
 %\input{epsf}
@@ -40,10 +40,10 @@
 %%% Comment out below when pdfing only one chapter %%% <-------------------------------------------------------------------------------------------------------------
 \title{Projected Profile Humanoid Crawl Gait and Lidar Based Navigation using GODZILA}
 \author{Griswald Brooks}
-\date{November, 2016}
+\date{December 2016}
 \committee{1}
 
-%\mstitlepage
+\mstitlepage
 %%% Comment out above when pdfing only one chapter %%% <-------------------------------------------------------------------------------------------------------------
 
 \topmargin=0.4in
@@ -72,17 +72,17 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \setcounter{page}{1}
 \pagenumbering{roman}
-%\include{./chapters/vita}
+\include{./chapters/vita}
 %\include{./chapters/publications}
-%\include{./chapters/acknowledgements}
-%\include{./chapters/dedications}
-%\include{./chapters/abstract}
+\include{./chapters/acknowledgements}
+\include{./chapters/dedications}
+\include{./chapters/abstract}
 
 \normalsize
 %%% Comment out below when pdfing only one chapter %%% <-------------------------------------------------------------------------------------------------------------
-%\tableofcontents
-%\listoffigures
-%\listoftables
+\tableofcontents
+\listoffigures
+\listoftables
 %%% Comment out above when pdfing only one chapter %%% <-------------------------------------------------------------------------------------------------------------
 \newpage
 \setcounter{page}{1}
@@ -109,14 +109,14 @@
 
 %%% Who did I steal from?
 %%% Comment out below when pdfing only one chapter %%% <-------------------------------------------------------------------------------------------------------------
-%\addcontentsline{toc}{chapter}{References}
-%\newpage
-%	\begin{center}
-%		\textbf{REFERENCES}
-%	\end{center}
+\addcontentsline{toc}{chapter}{References}
+\newpage
+	\begin{center}
+		\textbf{REFERENCES}
+	\end{center}
 %%%%\bibliographystyle{ieeetran}
-%\bibliographystyle{plain}
-%\bibliography{./chapters/refs}
+\bibliographystyle{plain}
+\bibliography{./chapters/refs}
 %%% Comment out above when pdfing only one chapter %%% <-------------------------------------------------------------------------------------------------------------
 
 \end{document}
