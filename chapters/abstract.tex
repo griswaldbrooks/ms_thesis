@@ -17,20 +17,27 @@ attach the Lidar to the Nao.
 The Lidar supplemented the Nao's sensor suite in order to provide detailed
 range information about environmental obstacles. This allowed the navigation
 system to operate with higher performance. 
+
 The theory behind both the navigation and crawling algorithms is discussed
 next. 
 % GODZILA
 % GODZILA is based on the Potential Field navigation concept. It is a local
 % navigation algorithm with trap escape strategy and straight-line path planner 
 % when the goal is within the line-of-sight.
- 
+The navigation scheme used is the GODZILA path planning algorithm.
+Based on the Potential Field concept, it is a local
+navigation algorithm with trap escape strategy and straight-line path planner 
+when the goal is within the line-of-sight.
+The Projected Profile crawling gait uses a multimodal kinematic approach to
+allow a humanoid robot to crawl under very low objects.
+The gait alternates between positioning the arms and legs while the torso is in
+contact with the ground and the arms and legs touching the ground while 
+positioning the torso.
 % GODZILA was implemented using the Nao
 % as a mobile base and the Hokuyo URG-04lX-UG01 Lidar as the obstacle avoidance
 % sensor. 
- 
 % The platform was placed in several environments with different
 % obstacles and walked to reach a goal point, represented by a red cube. 
-
 % CRAWL
 % The Projected Profile gait uses a multimodal kinematic approach to
 % allow a humanoid robot to crawl with a very low profile.
@@ -39,12 +46,20 @@ next.
 % are in contact with the ground and the entire robot is viewed as a single 
 % closed chain. This allows for the center-of-mass to be moved forward and the
 % cycle can restart.
- 
 % The gait was implemented on the Nao Humanoid robot which could crawl under
 % obstacles as low as 8 inches. This is in contrast to the standing height of the
 % Nao of 23 inches. The gait was also optimized to minimize the joint torque 
 % required to crawl.
 
+Lastly, the results from the navigation and crawling experiments are shown.
+During the navigation experiments, the Nao is placed in several environments
+with different obstacles to show the path planning effectiveness. The robot
+was commanded to a goal location indicated by a red cube that the Nao
+detected using its onboard camera. The Lidar was used to guide the robot around
+the obstacles.
+The crawling experiments showed that the Nao could crawl under obstacles as low
+as 8 inches. This is in contrast to the 23 inch standing height of the robot.
+The gait was also optimized to minimize the joint torque required to crawl.
 
 \clearpage}
 {\endmsabstract}
